@@ -20,7 +20,7 @@ Paginita is a Content Management System (CMS) that uses [Strapi](https://strapi.
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/paginita.git
+   git clone https://github.com/carlos-a-dev/paginita.git
    cd paginita
    ```
 
