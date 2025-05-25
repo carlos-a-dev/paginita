@@ -4,12 +4,15 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['nuxt-quasar-ui', '@nuxtjs/strapi'],
   strapi: {
-    url: process.env.STRAPI_URL || 'http://localhost:1337',
+    url: process.env.STRAPI_URL,
     // token: process.env.STRAPI_TOKEN || undefined,
     prefix: '/api',
     admin: '/admin',
     version: 'v5',
     cookie: {},
     cookieName: 'strapi_jwt'
+  },
+  experimental: {
+    payloadExtraction: true
   }
 })
