@@ -10,8 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxtjs/strapi": "2.0.0",
     "@quasar/extras": "^1.17.0",
+    "@strapi/client": "^1.4.0",
     "nuxt": "^3.17.4",
     "nuxt-quasar-ui": "2.1.12",
     "quasar": "^2.18.1",

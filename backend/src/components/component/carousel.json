@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_component_carousels",
+  "info": {
+    "displayName": "Carousel",
+    "icon": "picture"
+  },
+  "options": {},
+  "attributes": {
+    "images": {
+      "allowedTypes": [
+        "files",
+        "images"
+      ],
+      "type": "media",
+      "multiple": true,
+      "required": true
+    }
+  }
+}

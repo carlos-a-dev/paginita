@@ -542,6 +542,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
   collectionName: 'home_pages';
   info: {
+    description: '';
     displayName: 'HomePage';
     pluralName: 'home-pages';
     singularName: 'home-page';
@@ -555,7 +556,9 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    body: Schema.Attribute.DynamicZone<['shared.slider', 'shared.rich-text']>;
+    body: Schema.Attribute.DynamicZone<
+      ['shared.rich-text', 'component.carousel']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
