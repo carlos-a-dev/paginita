@@ -1,9 +1,9 @@
 <template>
-  <component-carousel v-for="(carousel, index) in homePage?.body" :key="index" :strapi-data="carousel" />
+  <component v-for="(ccomponent, index) in homePage?.body" :key="index"
+    :is="resolveComponent(ccomponent.__component.replace('.', '-'))" :strapi-data="ccomponent" />
 </template>
 
 <script lang="ts" setup>
-
 const { data: homePage } = await useAsyncData(
   'home-page',
   async () => (await useStrapi().single('home-page').find({
