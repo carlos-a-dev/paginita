@@ -14,9 +14,10 @@
 
 <script setup lang="ts">
 import type { Global } from '~/types/global'
+const { findOne } = useStrapi()
 
 const { data: global } = await useAsyncData(
   'globalSettings',
-  async () => (await useStrapi().single('global').find({ populate: '*' })).data as Global
+  async () => (await findOne<Global>('global', { populate: '*' })).data
 )
 </script>

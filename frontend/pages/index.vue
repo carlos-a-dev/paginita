@@ -4,9 +4,11 @@
 </template>
 
 <script lang="ts" setup>
+const { findOne } = useStrapi()
+
 const { data: homePage } = await useAsyncData(
   'home-page',
-  async () => (await useStrapi().single('home-page').find({
+  async () => (await findOne('home-page', {
     populate: {
       body: {
         on: {
