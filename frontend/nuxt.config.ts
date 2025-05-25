@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: ['nuxt-quasar-ui', '@nuxtjs/strapi'],
   strapi: {
     url: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
-    devtools: true,
+    devtools: false,
     version: 'v5',
   }
 })
