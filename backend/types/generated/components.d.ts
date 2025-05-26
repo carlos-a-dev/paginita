@@ -36,6 +36,17 @@ export interface HomeHero extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeServices extends Struct.ComponentSchema {
+  collectionName: 'components_home_services';
+  info: {
+    description: '';
+    displayName: 'Services';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -103,6 +114,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'component.carousel': ComponentCarousel;
       'home.hero': HomeHero;
+      'home.services': HomeServices;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

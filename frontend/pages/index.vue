@@ -5,25 +5,17 @@
 </template>
 
 <script lang="ts" setup>
+import type { HomePage } from '~/types/homePage';
+
 const { findOne } = useStrapi()
 
-const { data: homePage } = await useAsyncData(
+const { data: homePage } = await useAsyncData<HomePage>(
   'home-page',
-  async () => (await findOne('home-page', {
+  async () => (await findOne<HomePage>('home-page', {
     populate: {
       body: {
-        on: {
-          'shared.rich-text': {
-            populate: '*'
-          },
-          'component.carousel': {
-            populate: '*'
-          },
-          'home.hero': {
-            populate: '*'
-          }
-        }
-      },
+        populate: '*'
+      }
     }
   })).data
 )

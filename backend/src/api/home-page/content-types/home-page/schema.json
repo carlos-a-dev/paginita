@@ -20,7 +20,8 @@
       "type": "dynamiczone",
       "components": [
         "component.carousel",
-        "home.hero"
+        "home.hero",
+        "home.services"
       ]
     }
   }
