@@ -22,6 +22,20 @@ export interface ComponentCarousel extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeHero extends Struct.ComponentSchema {
+  collectionName: 'components_home_heroes';
+  info: {
+    displayName: 'Hero';
+  };
+  attributes: {
+    background: Schema.Attribute.Media<'images' | 'files'>;
+    callToAction: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    message: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -88,6 +102,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'component.carousel': ComponentCarousel;
+      'home.hero': HomeHero;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

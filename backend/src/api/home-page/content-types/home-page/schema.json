@@ -19,8 +19,8 @@
     "body": {
       "type": "dynamiczone",
       "components": [
-        "shared.rich-text",
-        "component.carousel"
+        "component.carousel",
+        "home.hero"
       ]
     }
   }

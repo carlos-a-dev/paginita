@@ -6,7 +6,7 @@
                     <img :src="useStrapiMedia(global?.siteLogo.formats.thumbnail?.url ?? global?.siteLogo.url ?? '')"
                         :alt="global?.siteLogo.alternativeText ?? ''" />
                 </q-avatar>
-                <div>{{ global.siteName }}</div>
+                <div>{{ global?.siteName }}</div>
             </q-toolbar-title>
         </q-toolbar>
     </q-footer>

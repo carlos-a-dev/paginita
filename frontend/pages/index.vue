@@ -18,6 +18,9 @@ const { data: homePage } = await useAsyncData(
           },
           'component.carousel': {
             populate: '*'
+          },
+          'home.hero': {
+            populate: '*'
           }
         }
       },

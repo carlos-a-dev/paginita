@@ -1,7 +1,7 @@
 <template>
-  <q-header class="bg-grey text-white">
+  <q-header class="transparent text-white">
     <q-toolbar>
-      <q-avatar>
+      <q-avatar class="bg-white">
         <img :src="useStrapiMedia(global?.siteLogo.formats.thumbnail?.url ?? global?.siteLogo.url ?? '')"
           :alt="global?.siteLogo.alternativeText ?? ''" />
       </q-avatar>
