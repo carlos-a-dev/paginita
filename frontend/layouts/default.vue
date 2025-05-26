@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fff">
 
     <app-header />
 
-    <q-page-container>
+    <q-page-container style="padding-top: 0!important;">
       <slot />
     </q-page-container>
 

@@ -1,6 +1,5 @@
 <template>
-  <component v-for="(ccomponent, index) in homePage?.body" :key="index"
-    :is="resolveComponent(ccomponent.__component.replace('.', '-'))" :strapi-data="ccomponent" />
+  <component-renderer v-for="(ccomponent, index) in homePage?.body" :key="index" v-bind="ccomponent" />
 </template>
 
 <script lang="ts" setup>

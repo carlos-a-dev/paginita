@@ -3,12 +3,22 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface ComponentCarousel extends Struct.ComponentSchema {
   collectionName: 'components_component_carousels';
   info: {
+    description: '';
     displayName: 'Carousel';
     icon: 'picture';
   };
   attributes: {
+    animated: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    arrows: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    autoplay: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    class: Schema.Attribute.Text;
     images: Schema.Attribute.Media<'files' | 'images', true> &
       Schema.Attribute.Required;
+    infinite: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    navigation: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    swipeable: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    thumbnails: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    vertical: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
