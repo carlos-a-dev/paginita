@@ -530,6 +530,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    quasarTheme: Schema.Attribute.Component<'shared.theme', false>;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteLogo: Schema.Attribute.Media<'images' | 'files'>;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;

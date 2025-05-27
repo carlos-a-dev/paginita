@@ -34,6 +34,18 @@ useHead({
       property: 'og:image',
       content: useStrapiMedia(global.value?.defaultSeo.shareImage.url ?? '')
     }
+  ],
+  style: [
+    {
+      textContent: `:root {
+        ${Object.entries(global.value?.quasarTheme || {}).filter(([key, val]) => key != 'id' && val)
+          .map(([key, val]) => `--q-${key}: ${val};`)
+          .join('')}
+        }`,
+      // type: 'text/css',
+      tagPosition: 'bodyOpen',
+      tagPriority: 1
+    }
   ]
 })
 </script>

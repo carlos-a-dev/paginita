@@ -2,9 +2,8 @@
     <q-footer class="bg-grey-8 text-white">
         <q-toolbar>
             <q-toolbar-title>
-                <q-avatar>
-                    <img :src="useStrapiMedia(global?.siteLogo.formats.thumbnail?.url ?? global?.siteLogo.url ?? '')"
-                        :alt="global?.siteLogo.alternativeText ?? ''" />
+                <q-avatar v-if="logoSrc">
+                    <img :src="logoSrc" :alt="global?.siteName" />
                 </q-avatar>
                 <div>{{ global?.siteName }}</div>
             </q-toolbar-title>
@@ -14,4 +13,8 @@
 
 <script setup lang="ts">
 const { global } = useGlobalSettings()
+
+const logoSrc = computed(() => {
+    return global.value?.siteLogo?.url ? useStrapiMedia(global.value.siteLogo.url + '?' + global.value.siteName) : ''
+})
 </script>
