@@ -5,40 +5,40 @@
 </template>
 
 <script setup lang="ts">
-const { global, fetchGlobal } = useGlobalSettings()
+const { globalSettings, fetchGlobal } = useGlobalSettings()
 await fetchGlobal()
 
 useHead({
-  title: global.value?.siteName ?? '',
+  title: globalSettings.value.siteName,
   link: [
     {
       rel: 'icon',
       type: 'image/x-icon',
-      href: global.value?.favicon?.url ? useStrapiMedia(global.value?.favicon?.url) : '/favicon.ico'
+      href: globalSettings.value.favicon ? useStrapiMedia(globalSettings.value.favicon) : '/favicon.ico'
     },
   ],
   meta: [
     {
       name: 'description',
-      content: global.value?.siteDescription ?? ''
+      content: globalSettings.value.siteDescription
     },
     {
       property: 'og:title',
-      content: global.value?.defaultSeo.metaTitle ?? ''
+      content: globalSettings.value.metaTitle
     },
     {
       property: 'og:description',
-      content: global.value?.defaultSeo.metaDescription ?? ''
+      content: globalSettings.value.metaDescription
     },
     {
       property: 'og:image',
-      content: useStrapiMedia(global.value?.defaultSeo.shareImage.url ?? '')
+      content: useStrapiMedia(globalSettings.value.shareImage)
     }
   ],
   style: [
     {
       textContent: `:root {
-        ${Object.entries(global.value?.quasarTheme || {}).filter(([key, val]) => key != 'id' && val)
+        ${Object.entries(globalSettings.value.quasarTheme || {}).filter(([key, val]) => key != 'id' && val)
           .map(([key, val]) => `--q-${key}: ${val};`)
           .join('')}
         }`,

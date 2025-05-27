@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { HomePage } from '~/types/homePage';
+import type { HomePage } from '~/types/strapi/homePage';
 
 const { findOne } = useStrapi()
 

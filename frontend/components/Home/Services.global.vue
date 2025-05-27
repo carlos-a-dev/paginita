@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Service } from '~/types/service';
+import type { Service } from '~/types/strapi/service';
 
 const $props = defineProps<{
     __component: string;

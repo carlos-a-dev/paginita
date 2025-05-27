@@ -557,9 +557,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    body: Schema.Attribute.DynamicZone<
-      ['component.carousel', 'home.hero', 'home.services']
-    >;
+    body: Schema.Attribute.DynamicZone<['home.hero', 'home.services']>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

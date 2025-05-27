@@ -1,4 +1,4 @@
-import type { MediaImage } from "../mediaImage";
+import type { MediaImage } from "../strapi/mediaImage";
 
 export type HomeHeroProps = {
     __component: string;

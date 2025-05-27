@@ -1,12 +1,26 @@
-import type { Global } from '~/types/global'
+import type { GlobalSettings } from '~/types/globalSettings'
+import type { Global } from '~/types/strapi/global'
+
+const globalToGlobalSettings = (global: Global): GlobalSettings => {
+  return {
+    siteName: global.siteName,
+    siteDescription: global.siteDescription,
+    siteLogo: global.siteLogo?.formats?.thumbnail?.url || global.siteLogo?.url || '',
+    favicon: global.favicon?.url || '',
+    metaTitle: global.defaultSeo?.metaTitle || '',
+    metaDescription: global.defaultSeo?.metaDescription || '',
+    shareImage: global.defaultSeo?.shareImage?.url || '',
+    quasarTheme: global.quasarTheme
+  }
+}
 
 export const useGlobalSettings = () => {
-  const global = useCookie<Global>('globalSettings', {
+  const globalSettings = useCookie<GlobalSettings>('globalSettings', {
     maxAge: 60 * 60 * 24, // 1 day
   })
 
   const fetchGlobal = async () => {
-    if (global.value && process.env.NODE_ENV === 'production') {
+    if (globalSettings.value && process.env.NODE_ENV === 'production') {
       return
     }
 
@@ -24,29 +38,12 @@ export const useGlobalSettings = () => {
     })).data)
     
     if (data.value) {
-      // Remove unnecessary fields from the global settings
-      // delete data.value?.createdAt
-      // delete data.value?.updatedAt
-      // delete data.value?.publishedAt
-      // delete data.value?.documentId
-      // delete data.value?.id
-
-      // delete data.value?.defaultSeo?.id
-      // delete data.value?.defaultSeo?.shareImage?.id
-      // delete data.value?.defaultSeo?.shareImage?.documentId
-
-      // delete data.value?.siteLogo?.id
-      // delete data.value?.siteLogo?.documentId
-
-      // delete data.value?.favicon?.id
-      // delete data.value?.favicon?.documentId
-
-      global.value = data.value
+      globalSettings.value = globalToGlobalSettings(data.value)
     }
   }
 
   return {
-    global,
+    globalSettings,
     fetchGlobal
   }
 }

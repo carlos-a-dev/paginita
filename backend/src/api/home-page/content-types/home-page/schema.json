@@ -19,7 +19,6 @@
     "body": {
       "type": "dynamiczone",
       "components": [
-        "component.carousel",
         "home.hero",
         "home.services"
       ]

@@ -3,18 +3,18 @@
         <q-toolbar>
             <q-toolbar-title>
                 <q-avatar v-if="logoSrc">
-                    <img :src="logoSrc" :alt="global?.siteName" />
+                    <img :src="logoSrc" :alt="globalSettings?.siteName" />
                 </q-avatar>
-                <div>{{ global?.siteName }}</div>
+                <div>{{ globalSettings?.siteName }}</div>
             </q-toolbar-title>
         </q-toolbar>
     </q-footer>
 </template>
 
 <script setup lang="ts">
-const { global } = useGlobalSettings()
+const { globalSettings } = useGlobalSettings()
 
 const logoSrc = computed(() => {
-    return global.value?.siteLogo?.url ? useStrapiMedia(global.value.siteLogo.url + '?' + global.value.siteName) : ''
+    return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value.siteLogo + '?' + globalSettings.value.siteName) : ''
 })
 </script>
