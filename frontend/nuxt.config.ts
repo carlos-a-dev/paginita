@@ -7,5 +7,10 @@ export default defineNuxtConfig({
     url: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
     devtools: false,
     version: 'v5',
+  },
+  quasar: {
+    extras: {
+      fontIcons: ['fontawesome-v6']
+    }
   }
 })

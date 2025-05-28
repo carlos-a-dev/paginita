@@ -7,6 +7,9 @@
       <q-toolbar-title>
         {{ globalSettings?.siteName }}
       </q-toolbar-title>
+
+      <q-btn round flat icon="brightness_6" @click="$q.dark.toggle()" aria-label="Toggle dark mode"
+        title="Toggle dark mode" />
     </q-toolbar>
   </q-header>
 </template>
