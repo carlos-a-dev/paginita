@@ -1,6 +1,8 @@
 import type { GlobalSettings } from '~/types/globalSettings'
 import type { Global } from '~/types/strapi/global'
 
+// This function converts a Global object from Strapi to a GlobalSettings object
+// that can be used in the application.
 const globalToGlobalSettings = (global: Global): GlobalSettings => {
   return {
     siteName: global.siteName,
@@ -15,30 +17,30 @@ const globalToGlobalSettings = (global: Global): GlobalSettings => {
 }
 
 export const useGlobalSettings = () => {
-  const globalSettings = useCookie<GlobalSettings>('globalSettings', {
-    maxAge: 60 * 60 * 24, // 1 day
-  })
+  const { data: globalSettings } = useNuxtData<GlobalSettings>('globalSettings')
 
   const fetchGlobal = async () => {
-    if (globalSettings.value && process.env.NODE_ENV === 'production') {
-      return
-    }
-
-    const { data } = await useAsyncData<Global>('globalSettings', async () => (await useStrapi().findOne<Global>('global', { 
-      populate: {
-        favicon: { fields: ['url'] },
-        siteLogo: { fields: ['url', 'alternativeText'] },
-        defaultSeo: {
-          populate: {
-            shareImage: { fields: ['url'] }
-          }
-        },
-        quasarTheme: '*'
+    const { data, refresh } = await useAsyncData<GlobalSettings>('globalSettings', async () => {
+      const params = { 
+        populate: {
+          favicon: { fields: ['url'] },
+          siteLogo: { fields: ['url', 'alternativeText'] },
+          defaultSeo: {
+            populate: {
+              shareImage: { fields: ['url'] }
+            }
+          },
+          quasarTheme: '*'
+        }
       }
-    })).data)
+
+      const { data: global } = await useStrapi().findOne<Global>('global', params)
+
+      return globalToGlobalSettings(global)
+    })
     
     if (data.value) {
-      globalSettings.value = globalToGlobalSettings(data.value)
+      globalSettings.value = data.value
     }
   }
 

@@ -15,6 +15,6 @@
 const { globalSettings } = useGlobalSettings()
 
 const logoSrc = computed(() => {
-    return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value.siteLogo + '?' + globalSettings.value.siteName) : ''
+    return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value?.siteLogo) : ''
 })
 </script>

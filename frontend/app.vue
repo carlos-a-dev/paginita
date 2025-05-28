@@ -5,47 +5,53 @@
 </template>
 
 <script setup lang="ts">
-const { globalSettings, fetchGlobal } = useGlobalSettings()
-await fetchGlobal()
+const { globalSettings } = useGlobalSettings()
 
 useHead({
-  title: globalSettings.value.siteName,
+  title: globalSettings.value?.siteName,
   link: [
     {
       rel: 'icon',
       type: 'image/x-icon',
-      href: globalSettings.value.favicon ? useStrapiMedia(globalSettings.value.favicon) : '/favicon.ico'
+      href: globalSettings.value?.favicon ? useStrapiMedia(globalSettings.value?.favicon ?? '') : '/favicon.ico'
     },
   ],
   meta: [
     {
       name: 'description',
-      content: globalSettings.value.siteDescription
+      content: globalSettings.value?.siteDescription
     },
     {
       property: 'og:title',
-      content: globalSettings.value.metaTitle
+      content: globalSettings.value?.metaTitle
     },
     {
       property: 'og:description',
-      content: globalSettings.value.metaDescription
+      content: globalSettings.value?.metaDescription
     },
     {
       property: 'og:image',
-      content: useStrapiMedia(globalSettings.value.shareImage)
-    }
-  ],
-  style: [
-    {
-      textContent: `:root {
-        ${Object.entries(globalSettings.value.quasarTheme || {}).filter(([key, val]) => key != 'id' && val)
-          .map(([key, val]) => `--q-${key}: ${val};`)
-          .join('')}
-        }`,
-      // type: 'text/css',
-      tagPosition: 'bodyOpen',
-      tagPriority: 1
+      content: useStrapiMedia(globalSettings.value?.shareImage ?? '')
     }
   ]
 })
+
+if (globalSettings.value?.quasarTheme) {
+  useHead({
+    style: [
+      {
+        textContent: getThemeStyle(globalSettings.value?.quasarTheme),
+        tagPosition: 'bodyOpen',
+        tagPriority: 1
+      }
+    ]
+  })
+}
+
+function getThemeStyle(quasarTheme: Record<string, string | null> | undefined) {
+  if (!quasarTheme) return ''
+  return `:root { ${Object.entries(quasarTheme)
+    .map(([key, val]) => `--q-${key}: ${val};`)
+    .join('')} }`
+}
 </script>

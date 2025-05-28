@@ -2,7 +2,7 @@
   <q-header class="transparent text-white">
     <q-toolbar>
       <q-avatar v-if="logoSrc" class="bg-white">
-        <img :src="logoSrc" :alt="globalSettings.siteName" />
+        <img :src="logoSrc" :alt="globalSettings?.siteName" />
       </q-avatar>
       <q-toolbar-title>
         {{ globalSettings?.siteName }}
@@ -15,6 +15,6 @@
 const { globalSettings } = useGlobalSettings()
 
 const logoSrc = computed(() => {
-  return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value.siteLogo) : ''
+  return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value?.siteLogo) : ''
 })
 </script>
