@@ -5,6 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import { Dark } from 'quasar'
+import type { QuasarTheme } from './types/globalSettings'
+
 const { globalSettings } = useGlobalSettings()
 
 useHead({
@@ -48,14 +51,12 @@ if (globalSettings.value?.quasarTheme) {
   })
 }
 
-function getThemeStyle(quasarTheme: Record<string, string | null> | undefined) {
+function getThemeStyle(quasarTheme: QuasarTheme | undefined) {
   if (!quasarTheme) return ''
   return `:root { ${Object.entries(quasarTheme)
     .map(([key, val]) => `--q-${key}: ${val};`)
     .join('')} }`
 }
-
-import { Dark } from 'quasar'
 
 onMounted(async () => {
   const darkModeStorage = localStorage.getItem('dark-mode')
