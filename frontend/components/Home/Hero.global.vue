@@ -5,7 +5,8 @@
             <p v-if="message" class="text-h4 q-mt-md">
                 {{ message }}
             </p>
-            <q-btn v-if="callToAction && link" unelevated color="secondary" :label="callToAction" class="q-mt-lg"
+            <q-btn
+v-if="callToAction && link" unelevated color="secondary" :label="callToAction" class="q-mt-lg"
                 :href="link" />
         </div>
     </div>

@@ -20,7 +20,7 @@ export const useGlobalSettings = () => {
   const { data: globalSettings } = useNuxtData<GlobalSettings>('globalSettings')
 
   const fetchGlobal = async () => {
-    const { data, refresh } = await useAsyncData<GlobalSettings>('globalSettings', async () => {
+    const { data } = await useAsyncData<GlobalSettings>('globalSettings', async () => {
       const params = { 
         populate: {
           favicon: { fields: ['url'] },

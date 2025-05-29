@@ -1,11 +1,12 @@
 <template>
-    <component v-if="component !== 'not-found'" v-bind="$props" :is="component" />
+    <component v-bind="$props" :is="component" v-if="component !== 'not-found'" />
 </template>
 
 <script setup lang="ts">
 const $props = defineProps<{
+    // eslint-disable-next-line vue/prop-name-casing
     __component: string,
-    [key: string]: any
+    [key: string]: unknown
 }>()
 
 const component = computed(() => {

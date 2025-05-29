@@ -3,7 +3,7 @@
         <q-toolbar class="justify-between">
             <div class="row items-center">
                 <q-avatar v-if="logoSrc" size="42px" class="q-mr-sm">
-                    <img :src="logoSrc" :alt="globalSettings?.siteName" />
+                    <img :src="logoSrc" :alt="globalSettings?.siteName" >
                 </q-avatar>
                 <div class="text-h6">{{ globalSettings?.siteName }}</div>
             </div>

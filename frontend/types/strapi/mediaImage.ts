@@ -34,7 +34,7 @@ export type MediaImage = {
     url: string;
     previewUrl: string | null;
     provider: string;
-    provider_metadata: any | null;
+    provider_metadata: unknown | null;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;

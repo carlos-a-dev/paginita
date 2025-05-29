@@ -1,6 +1,7 @@
 <template>
     <div class="row items-center">
-        <q-btn v-for="socialNetwork in socialNetworks" :key="socialNetwork.id" flat dense :icon="socialNetwork.icon"
+        <q-btn
+v-for="socialNetwork in socialNetworks" :key="socialNetwork.id" flat dense :icon="socialNetwork.icon"
             :title="`Follow us on ${socialNetwork.name}`" :aria-label="`Follow us on ${socialNetwork.name}`"
             :href="socialNetwork.url" target="_blank" class="q-ml-xs" />
     </div>

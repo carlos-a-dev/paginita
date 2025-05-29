@@ -2,7 +2,7 @@
   <q-header class="text-white" v-bind="$props" reveal>
     <q-toolbar>
       <q-avatar v-if="logoSrc" class="bg-white">
-        <img :src="logoSrc" :alt="globalSettings?.siteName" />
+        <img :src="logoSrc" :alt="globalSettings?.siteName" >
       </q-avatar>
       <q-toolbar-title>
         {{ globalSettings?.siteName }}
@@ -14,8 +14,9 @@
 
       <q-space />
 
-      <q-btn round flat icon="brightness_6" @click="toggleDarkMode()" aria-label="Toggle dark mode"
-        title="Toggle dark mode" />
+      <q-btn
+round flat icon="brightness_6" aria-label="Toggle dark mode" title="Toggle dark mode"
+        @click="toggleDarkMode()" />
     </q-toolbar>
   </q-header>
 </template>

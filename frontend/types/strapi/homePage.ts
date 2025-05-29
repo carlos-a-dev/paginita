@@ -1,3 +1,3 @@
 export type HomePageResponse = {
-    body: any[]
+    body: unknown[]
 }
