@@ -3,7 +3,7 @@
     <component-renderer
       v-for="(ccomponent, index) in homePage?.body"
       :key="index"
-      v-bind="ccomponent"
+      v-bind="ccomponent || {}"
     />
   </q-page>
 </template>

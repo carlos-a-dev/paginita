@@ -11,10 +11,7 @@
     "build"
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  //   "eslint.useFlatConfig": true,
-  "editor.formatOnSave": true,
-  // "editor.formatOnPaste": false,
-  // "editor.formatOnType": false,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   }
