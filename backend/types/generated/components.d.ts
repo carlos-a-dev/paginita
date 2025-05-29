@@ -40,6 +40,22 @@ export interface SharedSeo extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSocialNetwork extends Struct.ComponentSchema {
+  collectionName: 'components_shared_social_networks';
+  info: {
+    displayName: 'SocialNetwork';
+    icon: 'twitter';
+  };
+  attributes: {
+    icon: Schema.Attribute.String & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
 export interface SharedTheme extends Struct.ComponentSchema {
   collectionName: 'components_shared_themes';
   info: {
@@ -73,6 +89,7 @@ declare module '@strapi/strapi' {
       'home.hero': HomeHero;
       'home.services': HomeServices;
       'shared.seo': SharedSeo;
+      'shared.social-network': SharedSocialNetwork;
       'shared.theme': SharedTheme;
     }
   }

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_social_networks",
+  "info": {
+    "displayName": "SocialNetwork",
+    "icon": "twitter"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "visible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  },
+  "config": {}
+}

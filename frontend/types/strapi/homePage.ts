@@ -1,3 +1,3 @@
-export type HomePage = {
+export type HomePageResponse = {
     body: any[]
 }

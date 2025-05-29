@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "social_networks",
+  "info": {
+    "singularName": "social-network",
+    "pluralName": "social-networks",
+    "displayName": "SocialNetwork"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "items": {
+      "type": "component",
+      "component": "shared.social-network",
+      "repeatable": true
+    }
+  }
+}

@@ -5,13 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { HomePage } from '~/types/strapi/homePage';
+import type { HomePageResponse } from '~/types/strapi/homePage';
 
 const { findOne } = useStrapi()
 
-const { data: homePage } = await useAsyncData<HomePage>(
+const { data: homePage } = await useAsyncData<HomePageResponse>(
   'home-page',
-  async () => (await findOne<HomePage>('home-page', {
+  async () => (await findOne<HomePageResponse>('home-page', {
     populate: {
       body: {
         populate: '*'

@@ -7,13 +7,7 @@
                 </q-avatar>
                 <div class="text-h6">{{ globalSettings?.siteName }}</div>
             </div>
-            <div class="row items-center">
-                <q-btn flat dense icon="fa-brands fa-github" href="https://github.com/" target="_blank"
-                    class="q-mr-xs" />
-                <q-btn flat dense icon="fa-brands fa-twitter" href="https://twitter.com/" target="_blank"
-                    class="q-mr-xs" />
-                <q-btn flat dense icon="fa-solid fa-envelope" href="mailto:info@example.com" />
-            </div>
+            <social-networks />
         </q-toolbar>
         <div class="text-caption text-grey-4 text-center q-mt-sm">
             &copy; {{ new Date().getFullYear() }} {{ globalSettings?.siteName }}. All rights reserved.

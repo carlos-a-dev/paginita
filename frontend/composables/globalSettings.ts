@@ -1,9 +1,9 @@
 import type { GlobalSettings } from '~/types/globalSettings'
-import type { Global } from '~/types/strapi/global'
+import type { GlobalResponse } from '~/types/strapi/global'
 
 // This function converts a Global object from Strapi to a GlobalSettings object
 // that can be used in the application.
-const globalToGlobalSettings = (global: Global): GlobalSettings => {
+const globalToGlobalSettings = (global: GlobalResponse): GlobalSettings => {
   return {
     siteName: global.siteName,
     siteDescription: global.siteDescription,
@@ -34,7 +34,7 @@ export const useGlobalSettings = () => {
         }
       }
 
-      const { data: global } = await useStrapi().findOne<Global>('global', params)
+      const { data: global } = await useStrapi().findOne<GlobalResponse>('global', params)
 
       return globalToGlobalSettings(global)
     })

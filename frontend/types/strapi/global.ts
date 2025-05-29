@@ -1,7 +1,7 @@
 import type { MediaImage } from './mediaImage';
 import type { Seo } from './seo';
 
-export type Global = {
+export type GlobalResponse = {
     id: number;
     documentId: string;
     siteName: string;
