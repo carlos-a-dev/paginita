@@ -14,16 +14,23 @@
 
       <q-space />
 
-      <q-btn round flat icon="brightness_6" @click="$q.dark.toggle()" aria-label="Toggle dark mode"
+      <q-btn round flat icon="brightness_6" @click="toggleDarkMode()" aria-label="Toggle dark mode"
         title="Toggle dark mode" />
     </q-toolbar>
   </q-header>
 </template>
 
 <script setup lang="ts">
+import { Dark } from 'quasar'
+
 const { globalSettings } = useGlobalSettings()
 
 const logoSrc = computed(() => {
   return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value?.siteLogo) : ''
 })
+
+const toggleDarkMode = () => {
+  Dark.toggle()
+  localStorage.setItem('dark-mode', Dark.isActive ? 'true' : 'false')
+}
 </script>

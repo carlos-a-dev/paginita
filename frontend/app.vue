@@ -54,4 +54,16 @@ function getThemeStyle(quasarTheme: Record<string, string | null> | undefined) {
     .map(([key, val]) => `--q-${key}: ${val};`)
     .join('')} }`
 }
+
+import { Dark } from 'quasar'
+
+onMounted(async () => {
+  const darkModeStorage = localStorage.getItem('dark-mode')
+  if (darkModeStorage) {
+    Dark.set(darkModeStorage === 'true')
+  } else {
+    // Fallback to system preference if no storage value
+    Dark.set(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  }
+})
 </script>
