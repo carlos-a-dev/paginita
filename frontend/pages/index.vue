@@ -7,16 +7,16 @@
 <script lang="ts" setup>
 import type { HomePageResponse } from '~/types/strapi/homePage';
 
-const { findOne } = useStrapi()
-
 const { data: homePage } = await useAsyncData<HomePageResponse>(
   'home-page',
-  async () => (await findOne<HomePageResponse>('home-page', {
+  async () => (await useStrapi().findOne<HomePageResponse>('home-page', {
     populate: {
-      body: {
-        populate: '*'
-      }
+      body: { populate: '*' }
     }
   })).data
 )
+
+definePageMeta({
+  layout: 'home'
+})
 </script>
