@@ -16,27 +16,27 @@ useHead({
     {
       rel: 'icon',
       type: 'image/x-icon',
-      href: globalSettings.value?.favicon ? useStrapiMedia(globalSettings.value?.favicon ?? '') : '/favicon.ico'
+      href: globalSettings.value?.favicon ? useStrapiMedia(globalSettings.value?.favicon ?? '') : '/favicon.ico',
     },
   ],
   meta: [
     {
       name: 'description',
-      content: globalSettings.value?.siteDescription
+      content: globalSettings.value?.siteDescription,
     },
     {
       property: 'og:title',
-      content: globalSettings.value?.metaTitle
+      content: globalSettings.value?.metaTitle,
     },
     {
       property: 'og:description',
-      content: globalSettings.value?.metaDescription
+      content: globalSettings.value?.metaDescription,
     },
     {
       property: 'og:image',
-      content: useStrapiMedia(globalSettings.value?.shareImage ?? '')
-    }
-  ]
+      content: useStrapiMedia(globalSettings.value?.shareImage ?? ''),
+    },
+  ],
 })
 
 if (globalSettings.value?.quasarTheme) {
@@ -45,9 +45,9 @@ if (globalSettings.value?.quasarTheme) {
       {
         textContent: getThemeStyle(globalSettings.value?.quasarTheme),
         tagPosition: 'bodyOpen',
-        tagPriority: 1
-      }
-    ]
+        tagPriority: 1,
+      },
+    ],
   })
 }
 
@@ -62,7 +62,8 @@ onMounted(async () => {
   const darkModeStorage = localStorage.getItem('dark-mode')
   if (darkModeStorage) {
     Dark.set(darkModeStorage === 'true')
-  } else {
+  }
+  else {
     // Fallback to system preference if no storage value
     Dark.set(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
   }

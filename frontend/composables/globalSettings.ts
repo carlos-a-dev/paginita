@@ -12,7 +12,7 @@ const globalToGlobalSettings = (global: GlobalResponse): GlobalSettings => {
     metaTitle: global.defaultSeo?.metaTitle || '',
     metaDescription: global.defaultSeo?.metaDescription || '',
     shareImage: global.defaultSeo?.shareImage?.url || '',
-    quasarTheme: global.quasarTheme
+    quasarTheme: global.quasarTheme,
   }
 }
 
@@ -21,24 +21,24 @@ export const useGlobalSettings = () => {
 
   const fetchGlobal = async () => {
     const { data } = await useAsyncData<GlobalSettings>('globalSettings', async () => {
-      const params = { 
+      const params = {
         populate: {
           favicon: { fields: ['url'] },
           siteLogo: { fields: ['url', 'alternativeText'] },
           defaultSeo: {
             populate: {
-              shareImage: { fields: ['url'] }
-            }
+              shareImage: { fields: ['url'] },
+            },
           },
-          quasarTheme: '*'
-        }
+          quasarTheme: '*',
+        },
       }
 
       const { data: global } = await useStrapi().findOne<GlobalResponse>('global', params)
 
       return globalToGlobalSettings(global)
     })
-    
+
     if (data.value) {
       globalSettings.value = data.value
     }
@@ -46,6 +46,6 @@ export const useGlobalSettings = () => {
 
   return {
     globalSettings,
-    fetchGlobal
+    fetchGlobal,
   }
 }
