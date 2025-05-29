@@ -1,23 +1,12 @@
 {
-  "kind": "collectionType",
-  "collectionName": "services",
+  "collectionName": "components_shared_services",
   "info": {
-    "singularName": "service",
-    "pluralName": "services",
     "displayName": "Service"
   },
-  "options": {
-    "draftAndPublish": false
-  },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "options": {},
   "attributes": {
     "icon": {
       "type": "customField",
-      "required": true,
       "customField": "plugin::material-symbols.icon"
     },
     "title": {
@@ -25,13 +14,14 @@
       "required": true
     },
     "description": {
-      "type": "string",
+      "type": "text",
       "required": true
     },
     "visible": {
       "type": "boolean",
-      "default": true,
-      "required": true
+      "required": true,
+      "default": true
     }
-  }
+  },
+  "config": {}
 }

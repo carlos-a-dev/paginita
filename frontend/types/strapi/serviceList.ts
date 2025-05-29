@@ -5,3 +5,9 @@ export type Service = {
     icon: string;
     visible: boolean;
 }
+
+export type ServiceListResponse = {
+    id: number;
+    title: string;
+    services: Service[];
+}

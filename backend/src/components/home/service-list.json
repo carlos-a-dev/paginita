@@ -1,8 +1,7 @@
 {
-  "collectionName": "components_home_services",
+  "collectionName": "components_home_service_lists",
   "info": {
-    "displayName": "Services",
-    "description": ""
+    "displayName": "ServiceList"
   },
   "options": {},
   "attributes": {
@@ -10,5 +9,6 @@
       "type": "string",
       "required": true
     }
-  }
+  },
+  "config": {}
 }

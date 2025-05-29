@@ -451,7 +451,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    body: Schema.Attribute.DynamicZone<['home.hero', 'home.services']>;
+    body: Schema.Attribute.DynamicZone<['home.hero', 'home.service-list']>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -467,15 +467,15 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiServiceService extends Struct.CollectionTypeSchema {
-  collectionName: 'services';
+export interface ApiServiceListServiceList extends Struct.SingleTypeSchema {
+  collectionName: 'service_lists';
   info: {
-    displayName: 'Service';
-    pluralName: 'services';
-    singularName: 'service';
+    displayName: 'ServiceList';
+    pluralName: 'service-lists';
+    singularName: 'service-list';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   pluginOptions: {
     i18n: {
@@ -486,23 +486,22 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.String & Schema.Attribute.Required;
-    icon: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.CustomField<'plugin::material-symbols.icon'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::service.service'
+      'api::service-list.service-list'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    services: Schema.Attribute.Component<'shared.service', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    visible: Schema.Attribute.Boolean &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -1046,7 +1045,7 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::global.global': ApiGlobalGlobal;
       'api::home-page.home-page': ApiHomePageHomePage;
-      'api::service.service': ApiServiceService;
+      'api::service-list.service-list': ApiServiceListServiceList;
       'api::social-network.social-network': ApiSocialNetworkSocialNetwork;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

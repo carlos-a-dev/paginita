@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Service } from '~/types/strapi/service';
+import type { Service, ServiceListResponse } from '~/types/strapi/serviceList';
 
 const $props = defineProps<{
     __component: string;
@@ -21,14 +21,14 @@ const $props = defineProps<{
 }>();
 
 const { data: services } = await useAsyncData<Partial<Service>[]>(
-    'services',
-    async () => (await useStrapi().find<Partial<Service>>('services', {
-        fields: ['title', 'description', 'icon'],
-        filters: {
-            visible: {
-                $eq: true
+    'serviceList',
+    async () => (await useStrapi().findOne<ServiceListResponse>('service-list', {
+        populate: {
+            services: {
+                fields: ['id', 'title', 'description', 'icon'],
+                filters: { visible: { $eq: true } }
             }
         }
-    })).data
+    })).data.services || []
 );
 </script>

@@ -14,11 +14,10 @@ export interface HomeHero extends Struct.ComponentSchema {
   };
 }
 
-export interface HomeServices extends Struct.ComponentSchema {
-  collectionName: 'components_home_services';
+export interface HomeServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_home_service_lists';
   info: {
-    description: '';
-    displayName: 'Services';
+    displayName: 'ServiceList';
   };
   attributes: {
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -37,6 +36,22 @@ export interface SharedSeo extends Struct.ComponentSchema {
     metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     metaTitle: Schema.Attribute.String & Schema.Attribute.Required;
     shareImage: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface SharedService extends Struct.ComponentSchema {
+  collectionName: 'components_shared_services';
+  info: {
+    displayName: 'Service';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::material-symbols.icon'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -87,8 +102,9 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'home.hero': HomeHero;
-      'home.services': HomeServices;
+      'home.service-list': HomeServiceList;
       'shared.seo': SharedSeo;
+      'shared.service': SharedService;
       'shared.social-network': SharedSocialNetwork;
       'shared.theme': SharedTheme;
     }
