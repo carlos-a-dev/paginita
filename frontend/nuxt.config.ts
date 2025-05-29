@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   eslint: {
     config: {
-      stylistic: true, // <---
+      stylistic: true,
     },
   },
   quasar: {
@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   strapi: {
     url: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
-    devtools: false,
+    devtools: true,
     version: 'v5',
   },
 })
