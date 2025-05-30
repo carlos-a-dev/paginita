@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   modules: ['nuxt-quasar-ui', '@nuxtjs/strapi', '@nuxt/eslint'],
   devtools: { enabled: true },
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
   compatibilityDate: '2025-05-15',
   eslint: {
     config: {
@@ -11,6 +15,7 @@ export default defineNuxtConfig({
   quasar: {
     extras: {
       fontIcons: ['fontawesome-v6'],
+      animations: 'all',
     },
     plugins: ['Notify', 'Loading'],
   },

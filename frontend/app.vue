@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { Dark } from 'quasar'
 import type { QuasarTheme } from '~/types/globalSettings'
 
 const { globalSettings } = useGlobalSettings()
@@ -58,14 +57,31 @@ function getThemeStyle(quasarTheme: QuasarTheme | undefined) {
     .join('')} }`
 }
 
-onMounted(async () => {
-  const darkModeStorage = localStorage.getItem('dark-mode')
-  if (darkModeStorage) {
-    Dark.set(darkModeStorage === 'true')
-  }
-  else {
-    // Fallback to system preference if no storage value
-    Dark.set(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+const darkMode = useCookie<boolean | 'auto'>('dark-mode', { default: () => 'auto' })
+
+if (darkMode.value !== 'auto') {
+  useNuxtApp().$q.dark.set(darkMode.value)
+}
+
+onMounted(() => {
+  if (darkMode.value === 'auto') {
+    useNuxtApp().$q.dark.set('auto')
   }
 })
 </script>
+
+<style>
+.layout-enter-active {
+  animation: fadeIn 0.3s;
+}
+.layout-leave-active {
+  animation: fadeOut 0.3s;
+}
+
+.page-enter-active {
+  animation: fadeIn 0.2s;
+}
+.page-leave-active {
+  animation: fadeOut 0.2s;
+}
+</style>

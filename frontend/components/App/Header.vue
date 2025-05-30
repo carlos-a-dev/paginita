@@ -5,9 +5,7 @@
     reveal
   >
     <q-toolbar>
-      <q-avatar
-        class="bg-white"
-      >
+      <q-avatar style="background-color: rgba(255, 255, 255, 0.8);">
         <app-logo />
       </q-avatar>
       <q-toolbar-title>
