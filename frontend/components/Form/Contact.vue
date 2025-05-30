@@ -7,7 +7,7 @@
     <q-input
       v-model="form.name"
       filled
-      label="Your Name"
+      label="Name"
       :rules="[val => !!val || 'Name is required']"
     />
     <q-input
@@ -25,7 +25,12 @@
       filled
       label="Message"
       type="textarea"
-      :rules="[val => !!val || 'Message is required']"
+      :rules="[
+        val => !!val || 'Message is required',
+        val => val.length <= 500 || 'Message must be less than 500 characters',
+        val => val.length > 20 || 'Message must be more than 20 characters',
+      ]"
+      counter
     />
     <q-btn
       label="Send Message"
@@ -46,11 +51,17 @@ const form = ref({
   name: '',
   email: '',
   message: '',
+  ip: '',
 })
 
-function submitForm() {
-  if (form.value.name && form.value.email && form.value.message) {
-    // Replace with actual API or logic
+onMounted(async () => {
+  const ip_data = await $fetch('/api/ip', { server: false })
+  form.value.ip = ip_data.ip || ''
+})
+
+async function submitForm() {
+  $q.loading.show()
+  await useStrapi().create('contact-messages', form.value).then(() => {
     $q.notify({
       type: 'positive',
       message: 'Message sent successfully!',
@@ -61,12 +72,14 @@ function submitForm() {
       email: '',
       message: '',
     }
-  }
-  else {
+  }).catch(({ error }) => {
     $q.notify({
       type: 'negative',
-      message: 'Please fill in all fields.',
+      message: `${error.name}: ${error.message}`,
+      position: 'top-right',
     })
-  }
+  }).finally(() => {
+    $q.loading.hide()
+  })
 }
 </script>

@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     extras: {
       fontIcons: ['fontawesome-v6'],
     },
+    plugins: ['Notify', 'Loading'],
   },
   strapi: {
     url: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
