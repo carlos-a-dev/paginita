@@ -23,7 +23,8 @@
         color="secondary"
         :label="callToAction"
         class="q-mt-lg"
-        :href="link"
+        :to="link"
+        size="lg"
       />
     </div>
   </div>

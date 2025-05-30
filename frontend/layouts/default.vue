@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fff">
     <app-header />
 
-    <q-page-container style="padding-top: 0!important;">
+    <q-page-container>
       <slot />
     </q-page-container>
 

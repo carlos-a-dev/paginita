@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { Dark } from 'quasar'
-import type { QuasarTheme } from './types/globalSettings'
+import type { QuasarTheme } from '~/types/globalSettings'
 
 const { globalSettings } = useGlobalSettings()
 

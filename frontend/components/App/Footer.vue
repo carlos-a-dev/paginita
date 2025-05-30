@@ -7,15 +7,13 @@
           size="42px"
           class="q-mr-sm"
         >
-          <img
-            :src="logoSrc"
-            :alt="globalSettings?.siteName"
-          >
+          <app-logo />
         </q-avatar>
         <div class="text-h6">
           {{ globalSettings?.siteName }}
         </div>
       </div>
+
       <social-networks />
     </q-toolbar>
     <div class="text-caption text-grey-4 text-center q-mt-sm">
