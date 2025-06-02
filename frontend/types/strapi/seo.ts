@@ -1,4 +1,4 @@
-import type { MediaImage } from './mediaImage'
+import type { MediaImage } from './strapi'
 
 export type Seo = {
   id: number

@@ -1,6 +1,5 @@
-import type { MediaImage } from './mediaImage'
 import type { Seo } from './seo'
-import type { SingleType } from './strapi'
+import type { SingleType, MediaImage } from './strapi'
 
 export type Global = SingleType & {
   siteName: string
