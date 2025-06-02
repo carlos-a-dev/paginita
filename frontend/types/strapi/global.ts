@@ -1,14 +1,10 @@
 import type { MediaImage } from './mediaImage'
 import type { Seo } from './seo'
+import type { SingleType } from './strapi'
 
-export type GlobalResponse = {
-  id: number
-  documentId: string
+export type Global = SingleType & {
   siteName: string
   siteDescription: string
-  createdAt: string
-  updatedAt: string
-  publishedAt: string
   favicon: MediaImage
   defaultSeo: Seo
   siteLogo: MediaImage

@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout :name="nLayout">
     <NuxtPage />
   </NuxtLayout>
 </template>
@@ -8,6 +8,16 @@
 import type { QuasarTheme } from '~/types/globalSettings'
 
 const { globalSettings } = useGlobalSettings()
+const { layout } = usePage()
+const route = useRoute()
+
+const nLayout = computed(() => {
+  if (route.params.slug === undefined) {
+    return route.meta.layout || 'default'
+  }
+
+  return layout.value
+})
 
 useHead({
   title: globalSettings.value?.siteName,

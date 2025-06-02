@@ -28,6 +28,10 @@
 
 <script setup>
 // No script logic needed for this simple About page
+
+definePageMeta({
+  layout: 'default',
+})
 </script>
 
 <style scoped>
