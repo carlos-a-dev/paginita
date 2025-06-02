@@ -7,11 +7,9 @@
 </template>
 
 <script setup lang="ts">
-const $props = defineProps<{
-  // eslint-disable-next-line vue/prop-name-casing
-  __component: string
-  [key: string]: unknown
-}>()
+import type { Component } from '~/types/strapi/strapi'
+
+const $props = defineProps<Component>()
 
 const component = computed(() => {
   const componentName = $props.__component ? $props.__component.replace('.', '-') : 'not-found'
