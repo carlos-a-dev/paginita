@@ -12,6 +12,10 @@ import type { Component } from '~/types/strapi/strapi'
 const $props = defineProps<Component>()
 
 const component = computed(() => {
+  if (!$props.__component || !$props.__component.startsWith('f.')) {
+    return null
+  }
+
   const componentName = $props.__component.replace('.', '-')
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
