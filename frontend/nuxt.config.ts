@@ -1,6 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['nuxt-quasar-ui', '@nuxtjs/strapi', '@nuxt/eslint'],
+  components: [
+    {
+      path: '~/components/F',
+      global: true,
+      prefix: 'F',
+    },
+    '~/components',
+  ],
   devtools: { enabled: true },
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },

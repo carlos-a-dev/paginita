@@ -64,8 +64,8 @@
         }
       },
       "components": [
-        "home.service-list",
-        "home.hero"
+        "f.service-list",
+        "f.hero"
       ],
       "required": true
     },

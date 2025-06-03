@@ -1,5 +1,5 @@
 {
-  "collectionName": "components_home_heroes",
+  "collectionName": "components_f_heroes",
   "info": {
     "displayName": "Hero"
   },
@@ -10,15 +10,15 @@
       "required": false
     },
     "message": {
-      "type": "text"
+      "type": "text",
+      "required": false
     },
     "background": {
-      "allowedTypes": [
-        "images",
-        "files"
-      ],
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "callToAction": {
       "type": "string"
@@ -26,5 +26,6 @@
     "link": {
       "type": "string"
     }
-  }
+  },
+  "config": {}
 }

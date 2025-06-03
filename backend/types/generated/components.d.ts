@@ -1,12 +1,12 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface HomeHero extends Struct.ComponentSchema {
-  collectionName: 'components_home_heroes';
+export interface FHero extends Struct.ComponentSchema {
+  collectionName: 'components_f_heroes';
   info: {
     displayName: 'Hero';
   };
   attributes: {
-    background: Schema.Attribute.Media<'images' | 'files'>;
+    background: Schema.Attribute.Media<'images'>;
     callToAction: Schema.Attribute.String;
     link: Schema.Attribute.String;
     message: Schema.Attribute.Text;
@@ -14,8 +14,8 @@ export interface HomeHero extends Struct.ComponentSchema {
   };
 }
 
-export interface HomeServiceList extends Struct.ComponentSchema {
-  collectionName: 'components_home_service_lists';
+export interface FServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_f_service_lists';
   info: {
     displayName: 'ServiceList';
   };
@@ -101,8 +101,8 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'home.hero': HomeHero;
-      'home.service-list': HomeServiceList;
+      'f.hero': FHero;
+      'f.service-list': FServiceList;
       'shared.seo': SharedSeo;
       'shared.service': SharedService;
       'shared.social-network': SharedSocialNetwork;
