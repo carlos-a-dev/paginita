@@ -12,21 +12,7 @@
         {{ globalSettings?.siteName }}
       </q-toolbar-title>
 
-      <q-btn
-        flat
-        label="Home"
-        to="/"
-      />
-      <q-btn
-        flat
-        label="About"
-        to="/about"
-      />
-      <q-btn
-        flat
-        label="Contact"
-        to="/contact"
-      />
+      <app-nav-links />
 
       <q-space />
 
