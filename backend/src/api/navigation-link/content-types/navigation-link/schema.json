@@ -1,13 +1,13 @@
 {
   "kind": "singleType",
-  "collectionName": "service_lists",
+  "collectionName": "navigation_links",
   "info": {
-    "singularName": "service-list",
-    "pluralName": "service-lists",
-    "displayName": "Service List"
+    "singularName": "navigation-link",
+    "pluralName": "navigation-links",
+    "displayName": "Navigation Links"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {
     "i18n": {
@@ -15,16 +15,15 @@
     }
   },
   "attributes": {
-    "services": {
+    "links": {
       "type": "component",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "shared.service",
-      "repeatable": true,
-      "required": true
+      "component": "shared.nav-link",
+      "repeatable": true
     }
   }
 }

@@ -412,7 +412,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
     description: 'Define global settings';
-    displayName: 'Global';
+    displayName: 'Global Settings';
     pluralName: 'globals';
     singularName: 'global';
   };
@@ -436,6 +436,44 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteLogo: Schema.Attribute.Media<'images' | 'files'>;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNavigationLinkNavigationLink
+  extends Struct.SingleTypeSchema {
+  collectionName: 'navigation_links';
+  info: {
+    displayName: 'Navigation Links';
+    pluralName: 'navigation-links';
+    singularName: 'navigation-link';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    links: Schema.Attribute.Component<'shared.nav-link', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::navigation-link.navigation-link'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -515,7 +553,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
 export interface ApiServiceListServiceList extends Struct.SingleTypeSchema {
   collectionName: 'service_lists';
   info: {
-    displayName: 'ServiceList';
+    displayName: 'Service List';
     pluralName: 'service-lists';
     singularName: 'service-list';
   };
@@ -553,7 +591,7 @@ export interface ApiServiceListServiceList extends Struct.SingleTypeSchema {
 export interface ApiSocialNetworkSocialNetwork extends Struct.SingleTypeSchema {
   collectionName: 'social_networks';
   info: {
-    displayName: 'SocialNetwork';
+    displayName: 'Social Networks';
     pluralName: 'social-networks';
     singularName: 'social-network';
   };
@@ -1089,6 +1127,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::contact-message.contact-message': ApiContactMessageContactMessage;
       'api::global.global': ApiGlobalGlobal;
+      'api::navigation-link.navigation-link': ApiNavigationLinkNavigationLink;
       'api::page.page': ApiPagePage;
       'api::service-list.service-list': ApiServiceListServiceList;
       'api::social-network.social-network': ApiSocialNetworkSocialNetwork;

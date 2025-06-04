@@ -24,6 +24,21 @@ export interface FServiceList extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedNavLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_nav_links';
+  info: {
+    displayName: 'NavLink';
+    icon: 'link';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -103,6 +118,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'f.hero': FHero;
       'f.service-list': FServiceList;
+      'shared.nav-link': SharedNavLink;
       'shared.seo': SharedSeo;
       'shared.service': SharedService;
       'shared.social-network': SharedSocialNetwork;

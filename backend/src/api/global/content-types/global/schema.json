@@ -4,7 +4,7 @@
   "info": {
     "singularName": "global",
     "pluralName": "globals",
-    "displayName": "Global",
+    "displayName": "Global Settings",
     "description": "Define global settings"
   },
   "options": {
@@ -32,8 +32,8 @@
     },
     "defaultSeo": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "repeatable": false
     },
     "siteLogo": {
       "type": "media",
@@ -45,10 +45,9 @@
       ]
     },
     "quasarTheme": {
-      "displayName": "Theme",
       "type": "component",
-      "repeatable": false,
-      "component": "shared.theme"
+      "component": "shared.theme",
+      "repeatable": false
     }
   }
 }
