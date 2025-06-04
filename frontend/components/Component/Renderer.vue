@@ -1,28 +1,40 @@
 <template>
   <component
-    v-bind="$props"
     :is="component"
-    v-if="component !== null"
+    v-if="component"
+    v-bind="$props"
   />
 </template>
 
 <script setup lang="ts">
 import type { Component } from '~/types/strapi/strapi'
 
-const $props = defineProps<Component>()
+const $props = defineProps<Component & {
+  lazy?: boolean
+}>()
 
 const component = computed(() => {
-  if (!$props.__component || !$props.__component.startsWith('f.')) {
-    return null
-  }
+  const key = $props.__component
 
-  const componentName = $props.__component.replace('.', '-')
+  if (!key || !key.startsWith('f.')) return null
+
+  // Convert "f.section-title" to "SectionTitle"
+  const componentName = ($props.lazy ? 'Lazy' : '') + key
+    .replace('.', '-')
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join('')
 
-  const component = resolveComponent(componentName)
-
-  return typeof component === 'string' ? null : component
+  // Eager fallback for already-loaded/auto-imported component
+  try {
+    const component = resolveComponent(componentName)
+    console.log(`[DynamicComponent] Loaded component: ${componentName}`)
+    return typeof component === 'string' ? null : componentName
+  }
+  catch (err) {
+    console.warn(`[DynamicComponent] Component not found: ${componentName}`)
+    console.warn(err)
+    return null
+  }
 })
 </script>

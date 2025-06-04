@@ -30,7 +30,9 @@
 import type { Service, ServiceList } from '~/types/strapi/serviceList'
 import type { Component } from '~/types/strapi/strapi'
 
-const { title } = defineProps<Component>()
+const { title } = defineProps<Component & {
+  title: string
+}>()
 
 const { data: services } = await useAsyncData<Partial<Service>[]>(
   'serviceList',

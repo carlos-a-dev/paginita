@@ -20,6 +20,9 @@ export interface FServiceList extends Struct.ComponentSchema {
     displayName: 'ServiceList';
   };
   attributes: {
+    lazy: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
