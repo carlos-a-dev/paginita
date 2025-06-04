@@ -1,3 +1,5 @@
+import type { SingleType } from './strapi'
+
 export type Service = {
   id: number
   title: string
@@ -6,8 +8,7 @@ export type Service = {
   visible: boolean
 }
 
-export type ServiceListResponse = {
-  id: number
+export type ServiceList = SingleType & {
   title: string
   services: Service[]
 }

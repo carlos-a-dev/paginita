@@ -27,17 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Service, ServiceListResponse } from '~/types/strapi/serviceList'
+import type { Service, ServiceList } from '~/types/strapi/serviceList'
+import type { Component } from '~/types/strapi/strapi'
 
-defineProps<{
-  // eslint-disable-next-line vue/prop-name-casing
-  __component: string
-  title?: string
-}>()
+const { title } = defineProps<Component>()
 
 const { data: services } = await useAsyncData<Partial<Service>[]>(
   'serviceList',
-  async () => (await useStrapi().findOne<ServiceListResponse>('service-list', {
+  async () => (await useStrapi().findOne<ServiceList>('service-list', {
     populate: {
       services: {
         fields: ['id', 'title', 'description', 'icon'],

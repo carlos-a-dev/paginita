@@ -1,3 +1,5 @@
+import type { SingleType } from './strapi'
+
 export type SocialNetwork = {
   id: number
   name: string
@@ -6,7 +8,6 @@ export type SocialNetwork = {
   visible: boolean
 }
 
-export type SocialNetworkResponse = {
-  id: number
+export type SocialNetworks = SingleType & {
   items: SocialNetwork[]
 }

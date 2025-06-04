@@ -16,10 +16,10 @@
 </template>
 
 <script setup lang="ts">
-import type { SocialNetworkResponse, SocialNetwork } from '~/types/strapi/socialNetwork'
+import type { SocialNetworks, SocialNetwork } from '~/types/strapi/socialNetwork'
 
 const { data: socialNetworks } = await useAsyncData<SocialNetwork[]>('socialNetworks', async () => {
-  return (await useStrapi().findOne<SocialNetworkResponse>('social-network', {
+  return (await useStrapi().findOne<SocialNetworks>('social-network', {
     populate: {
       items: {
         fields: ['id', 'name', 'icon', 'url'],
