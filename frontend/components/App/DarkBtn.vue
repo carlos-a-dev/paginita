@@ -1,9 +1,17 @@
 <template>
-  <q-btn
-    v-bind="$props"
-    :icon="icon"
-    @click="toggleDarkMode()"
-  />
+  <transition
+    mode="out-in"
+    appear
+    enter-active-class="animated rotateIn"
+    leave-active-class="animated fadeOut faster"
+  >
+    <q-btn
+      :key="icon"
+      v-bind="$props"
+      :icon="icon"
+      @click="toggleDarkMode"
+    />
+  </transition>
 </template>
 
 <script setup lang="ts">
