@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface FContent extends Struct.ComponentSchema {
+  collectionName: 'components_f_contents';
+  info: {
+    displayName: 'Content';
+  };
+  attributes: {
+    body: Schema.Attribute.RichText & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface FHero extends Struct.ComponentSchema {
   collectionName: 'components_f_heroes';
   info: {
@@ -119,6 +130,7 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'f.content': FContent;
       'f.hero': FHero;
       'f.service-list': FServiceList;
       'shared.nav-link': SharedNavLink;

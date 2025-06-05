@@ -65,7 +65,8 @@
       },
       "components": [
         "f.service-list",
-        "f.hero"
+        "f.hero",
+        "f.content"
       ],
       "required": true
     },

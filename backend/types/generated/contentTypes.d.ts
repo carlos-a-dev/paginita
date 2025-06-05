@@ -496,7 +496,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    body: Schema.Attribute.DynamicZone<['f.service-list', 'f.hero']> &
+    body: Schema.Attribute.DynamicZone<
+      ['f.service-list', 'f.hero', 'f.content']
+    > &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
