@@ -1,7 +1,7 @@
 <template>
   <q-card
+    v-bind="$props"
     flat
-    class="q-pa-xl"
   >
     <q-card-section>
       <MDC

@@ -1,14 +1,16 @@
 <template>
-  <q-img
+  <img
     :src="src"
-    :alt="props.alt"
-    :width="props.width"
-    :height="props.height"
-  />
+    :alt="alt"
+    :width="width"
+    :height="height"
+    :loading="loading"
+    :decoding="decoding"
+  >
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   src: {
     type: String,
     default: '',
@@ -19,11 +21,19 @@ const props = defineProps({
   },
   width: {
     type: [String],
-    default: undefined,
+    default: '100%',
   },
   height: {
     type: [String],
-    default: undefined,
+    default: 'auto',
+  },
+  loading: {
+    type: String as () => 'lazy' | 'eager',
+    default: 'lazy',
+  },
+  decoding: {
+    type: String as () => 'sync' | 'async' | 'auto',
+    default: 'async',
   },
 })
 </script>
