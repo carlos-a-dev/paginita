@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nuxt/eslint": "1.4.1",
+    "@nuxtjs/mdc": "0.17.0",
     "@nuxtjs/strapi": "2.0.0",
     "@quasar/extras": "^1.17.0",
     "eslint": "^9.0.0",

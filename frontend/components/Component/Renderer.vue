@@ -28,7 +28,7 @@ const component = computed(() => {
   // Eager fallback for already-loaded/auto-imported component
   try {
     const component = resolveComponent(componentName)
-    console.log(`[DynamicComponent] Loaded component: ${componentName}`)
+    console.debug(`[DynamicComponent] Loaded component: ${componentName}`)
     return typeof component === 'string' ? null : componentName
   }
   catch (err) {

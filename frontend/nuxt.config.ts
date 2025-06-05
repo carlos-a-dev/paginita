@@ -1,7 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['nuxt-quasar-ui', '@nuxtjs/strapi', '@nuxt/eslint'],
+  modules: ['nuxt-quasar-ui', '@nuxtjs/strapi', '@nuxt/eslint', '@nuxtjs/mdc'],
   components: [
+    {
+      path: '~/components/Prose',
+      global: true,
+      prefix: 'Prose',
+    },
     {
       path: '~/components/F',
       global: true,
@@ -13,6 +18,11 @@ export default defineNuxtConfig({
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
+  },
+  mdc: {
+    components: {
+      prose: true,
+    },
   },
   compatibilityDate: '2025-05-15',
   eslint: {
