@@ -1,14 +1,8 @@
 <template>
-  <q-card
-    v-bind="$props"
-    flat
-  >
-    <q-card-section>
-      <MDC
-        :value="body"
-        tag="article"
-      />
-    </q-card-section>
+  <q-card class="q-pa-xl">
+    <MDC
+      :value="body"
+    />
   </q-card>
 </template>
 

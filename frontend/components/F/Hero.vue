@@ -1,6 +1,6 @@
 <template>
   <div
-    class="q-pa-xl text-white flex flex-center hero"
+    class="q-pa-xl text-white flex flex-center window-height hero"
     :style="style"
     :class="classes"
   >
@@ -55,6 +55,5 @@ const style = computed(() => {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 100vh;
 }
 </style>
