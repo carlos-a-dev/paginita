@@ -7,9 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Component } from '~/types/strapi/strapi'
-
-const { body } = defineProps<Component & {
+const { body } = defineProps<{
   body: string
 }>()
 </script>

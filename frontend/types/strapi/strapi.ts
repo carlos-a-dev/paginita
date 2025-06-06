@@ -19,7 +19,6 @@ export type SingleType = {
 export type Component = {
   id: number
   __component: string
-  [key: string]: unknown
 }
 
 // Media types

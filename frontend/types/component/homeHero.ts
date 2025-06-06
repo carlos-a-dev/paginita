@@ -1,8 +1,6 @@
-import type { MediaImage } from '../strapi/mediaImage'
+import type { MediaImage } from '../strapi/strapi'
 
 export type HomeHeroProps = {
-  __component: string
-  id: number
   title: string
   message: string
   callToAction: string

@@ -2,24 +2,28 @@
   <component
     :is="component"
     v-if="component"
-    v-bind="$props"
+    :class="props.classList?.class ?? []"
   />
 </template>
 
 <script setup lang="ts">
 import type { Component } from '~/types/strapi/strapi'
 
-const $props = defineProps<Component & {
+const props = defineProps<Component & {
   lazy?: boolean
+  classList?: {
+    id: number
+    class: string[]
+  }
 }>()
 
 const component = computed(() => {
-  const key = $props.__component
+  const key = props.__component
 
   if (!key || !key.startsWith('f.')) return null
 
   // Convert "f.section-title" to "SectionTitle"
-  const componentName = ($props.lazy ? 'Lazy' : '') + key
+  const componentName = (props.lazy ? 'Lazy' : '') + key
     .replace('.', '-')
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
