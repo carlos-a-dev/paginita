@@ -25,6 +25,11 @@
     },
     "link": {
       "type": "string"
+    },
+    "classList": {
+      "type": "component",
+      "component": "shared.class",
+      "repeatable": false
     }
   },
   "config": {}

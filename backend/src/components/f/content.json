@@ -12,6 +12,11 @@
     "body": {
       "type": "richtext",
       "required": true
+    },
+    "classList": {
+      "type": "component",
+      "component": "shared.class",
+      "repeatable": false
     }
   },
   "config": {}
