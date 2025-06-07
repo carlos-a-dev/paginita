@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'paginita-frontend',
-      script: 'node',
-      args: '.output/server/index.mjs',
+      script: 'pnpm',
+      args: 'start',
       cwd: '/var/www/paginita/frontend/',
       max_memory_restart: '200M',
 
