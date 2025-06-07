@@ -420,6 +420,7 @@ export interface ApiContactSettingContactSetting
     draftAndPublish: false;
   };
   attributes: {
+    bcc: Schema.Attribute.Component<'shared.emails', true>;
     cc: Schema.Attribute.Component<'shared.emails', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

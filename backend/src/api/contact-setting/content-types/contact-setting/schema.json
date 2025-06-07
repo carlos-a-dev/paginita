@@ -30,6 +30,11 @@
       "type": "component",
       "component": "shared.emails",
       "repeatable": true
+    },
+    "bcc": {
+      "type": "component",
+      "component": "shared.emails",
+      "repeatable": true
     }
   }
 }
