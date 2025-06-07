@@ -9,13 +9,20 @@
       "type": "string",
       "required": true
     },
-    "body": {
-      "type": "richtext",
+    "visible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "data": {
+      "type": "component",
+      "component": "data.content",
+      "repeatable": false,
       "required": true
     },
-    "classList": {
+    "props": {
       "type": "component",
-      "component": "shared.class",
+      "component": "props.q-card",
       "repeatable": false
     }
   },

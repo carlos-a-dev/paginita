@@ -5,14 +5,20 @@
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string",
-      "required": true
+    "data": {
+      "type": "component",
+      "component": "data.service-list",
+      "repeatable": false
     },
-    "lazy": {
+    "props": {
+      "type": "component",
+      "component": "props.q-card",
+      "repeatable": false
+    },
+    "visible": {
       "type": "boolean",
       "required": true,
-      "default": false
+      "default": true
     }
   },
   "config": {}

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_data_contents",
+  "info": {
+    "displayName": "Content"
+  },
+  "options": {},
+  "attributes": {
+    "body": {
+      "type": "richtext",
+      "required": true
+    }
+  },
+  "config": {}
+}

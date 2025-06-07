@@ -5,30 +5,20 @@
   },
   "options": {},
   "attributes": {
-    "title": {
-      "type": "string",
-      "required": false
+    "visible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
     },
-    "message": {
-      "type": "text",
-      "required": false
-    },
-    "background": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "callToAction": {
-      "type": "string"
-    },
-    "link": {
-      "type": "string"
-    },
-    "classList": {
+    "data": {
       "type": "component",
-      "component": "shared.class",
+      "component": "data.hero",
+      "repeatable": false,
+      "required": true
+    },
+    "props": {
+      "type": "component",
+      "component": "props.q-card",
       "repeatable": false
     }
   },

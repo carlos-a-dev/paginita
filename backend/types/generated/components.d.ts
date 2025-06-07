@@ -1,14 +1,52 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface DataContent extends Struct.ComponentSchema {
+  collectionName: 'components_data_contents';
+  info: {
+    displayName: 'Content';
+  };
+  attributes: {
+    body: Schema.Attribute.RichText & Schema.Attribute.Required;
+  };
+}
+
+export interface DataHero extends Struct.ComponentSchema {
+  collectionName: 'components_data_heroes';
+  info: {
+    displayName: 'Hero';
+  };
+  attributes: {
+    background: Schema.Attribute.Media<'images'>;
+    callToAction: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    message: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface DataServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_data_service_lists';
+  info: {
+    displayName: 'ServiceList';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface FContent extends Struct.ComponentSchema {
   collectionName: 'components_f_contents';
   info: {
     displayName: 'Content';
   };
   attributes: {
-    body: Schema.Attribute.RichText & Schema.Attribute.Required;
-    classList: Schema.Attribute.Component<'shared.class', false>;
+    data: Schema.Attribute.Component<'data.content', false> &
+      Schema.Attribute.Required;
+    props: Schema.Attribute.Component<'props.q-card', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -18,12 +56,12 @@ export interface FHero extends Struct.ComponentSchema {
     displayName: 'Hero';
   };
   attributes: {
-    background: Schema.Attribute.Media<'images'>;
-    callToAction: Schema.Attribute.String;
-    classList: Schema.Attribute.Component<'shared.class', false>;
-    link: Schema.Attribute.String;
-    message: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
+    data: Schema.Attribute.Component<'data.hero', false> &
+      Schema.Attribute.Required;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -33,17 +71,18 @@ export interface FServiceList extends Struct.ComponentSchema {
     displayName: 'ServiceList';
   };
   attributes: {
-    lazy: Schema.Attribute.Boolean &
+    data: Schema.Attribute.Component<'data.service-list', false>;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<false>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 
-export interface SharedClass extends Struct.ComponentSchema {
-  collectionName: 'components_shared_classes';
+export interface PropsQCard extends Struct.ComponentSchema {
+  collectionName: 'components_props_q_cards';
   info: {
-    displayName: 'Class';
+    displayName: 'QCard';
   };
   attributes: {
     class: Schema.Attribute.JSON &
@@ -1090,7 +1129,16 @@ export interface SharedClass extends Struct.ComponentSchema {
         ]
       > &
       Schema.Attribute.DefaultTo<'[]'>;
+    flat: Schema.Attribute.Boolean;
   };
+}
+
+export interface SharedClass extends Struct.ComponentSchema {
+  collectionName: 'components_shared_classes';
+  info: {
+    displayName: 'Class';
+  };
+  attributes: {};
 }
 
 export interface SharedNavLink extends Struct.ComponentSchema {
@@ -1185,9 +1233,13 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'data.content': DataContent;
+      'data.hero': DataHero;
+      'data.service-list': DataServiceList;
       'f.content': FContent;
       'f.hero': FHero;
       'f.service-list': FServiceList;
+      'props.q-card': PropsQCard;
       'shared.class': SharedClass;
       'shared.nav-link': SharedNavLink;
       'shared.seo': SharedSeo;

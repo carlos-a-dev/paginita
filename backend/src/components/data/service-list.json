@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_data_service_lists",
+  "info": {
+    "displayName": "ServiceList"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}
