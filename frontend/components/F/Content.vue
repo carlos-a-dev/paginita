@@ -3,23 +3,19 @@
     v-once
     class="q-pa-xl"
   >
-    <MDC
-      :value="data.body"
-    />
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div v-html="result" />
   </q-card>
 </template>
 
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    data?: {
-      body: string
-    }
-  }>(),
-  {
-    data: () => ({
-      body: '',
-    }),
-  },
-)
+const props = defineProps<{
+  data?: {
+    body: string
+  }
+}>()
+
+const { md } = useMarkdown()
+
+const result = md.render(props.data?.body || '')
 </script>

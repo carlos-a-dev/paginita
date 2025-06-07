@@ -2,7 +2,7 @@
   <component
     :is="component"
     v-if="component"
-    v-bind="$props.props"
+    v-bind="cprops"
     :data="$props.data"
   />
 </template>
@@ -15,6 +15,12 @@ const rProps = defineProps<Component & {
   props?: Record<string, unknown>
   data?: Record<string, unknown>
 }>()
+
+const cprops = computed(() => {
+  return Object.fromEntries(
+    Object.entries(rProps.props as object).filter(([key]) => !['id'].includes(key)),
+  )
+})
 
 const component = computed(() => {
   const key = rProps.__component
