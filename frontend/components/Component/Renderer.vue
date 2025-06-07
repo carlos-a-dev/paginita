@@ -18,7 +18,7 @@ const rProps = defineProps<Component & {
 
 const cprops = computed(() => {
   return Object.fromEntries(
-    Object.entries(rProps.props as object).filter(([key]) => !['id'].includes(key)),
+    Object.entries(rProps.props ?? {} as object).filter(([key]) => !['id'].includes(key)),
   )
 })
 
