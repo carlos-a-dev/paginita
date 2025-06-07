@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_emails",
+  "info": {
+    "displayName": "Emails"
+  },
+  "options": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    }
+  },
+  "config": {}
+}

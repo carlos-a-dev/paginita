@@ -1141,6 +1141,18 @@ export interface SharedClass extends Struct.ComponentSchema {
   attributes: {};
 }
 
+export interface SharedEmails extends Struct.ComponentSchema {
+  collectionName: 'components_shared_emails';
+  info: {
+    displayName: 'Emails';
+  };
+  attributes: {
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+  };
+}
+
 export interface SharedNavLink extends Struct.ComponentSchema {
   collectionName: 'components_shared_nav_links';
   info: {
@@ -1241,6 +1253,7 @@ declare module '@strapi/strapi' {
       'f.service-list': FServiceList;
       'props.q-card': PropsQCard;
       'shared.class': SharedClass;
+      'shared.emails': SharedEmails;
       'shared.nav-link': SharedNavLink;
       'shared.seo': SharedSeo;
       'shared.service': SharedService;

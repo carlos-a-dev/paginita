@@ -1,34 +1,30 @@
-import { send } from "process";
+// import type { ApiContactSettingContactSetting } from '../../../../../types/generated/contentTypes';
 
 const lifecycles = {
   async afterCreate({ result }) {
     try {
-        // 1. Fetch recipient emails from singleton
-    // const settings = await strapi.entityService.findOne(
-    //   'api::notification-settings.notification-settings',
-    //   {} // no ID needed for singleton
-    // );
+        const settings = (await strapi.db.query('api::contact-setting.contact-setting').findOne({
+            populate: ['to', 'cc']
+        }))
+        
+        if (!settings.sendContactMessages) {
+            console.log(settings);
+            return;
+        }
 
-    // const rawRecipients = settings?.recipients ?? '';
-    // const recipients: string[] = Array.isArray(rawRecipients)
-    //   ? rawRecipients
-    //   : rawRecipients
-    //       .split(',')
-    //       .map((email: string) => email.trim())
-    //       .filter(Boolean);
+        const to = settings.to.map((recipient) => recipient.email)
+        const cc = settings.cc.map((recipient) => recipient.email)
 
-    // 2. Send email using a template defined in Strapi Admin
     await strapi
       .plugin('email-designer-v5')
       .service('email')
       .sendTemplatedEmail(
         {
-          to: 'carlos.alexander.dev@gmail.com',
-          replyTo: result.email
+          to: to,
+          cc: cc,
+          replyTo: result.email,
         },
-        {
-          templateReferenceId: 2, // must match Admin templateRef
-        },
+        { templateReferenceId: settings.emailTemplateId },
         {
           name: result.name,
           email: result.email,

@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact_settings",
+  "info": {
+    "singularName": "contact-setting",
+    "pluralName": "contact-settings",
+    "displayName": "ContactSettings"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "sendContactMessages": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "emailTemplateId": {
+      "type": "integer",
+      "required": true
+    },
+    "to": {
+      "type": "component",
+      "component": "shared.emails",
+      "repeatable": true,
+      "required": true
+    },
+    "cc": {
+      "type": "component",
+      "component": "shared.emails",
+      "repeatable": true
+    }
+  }
+}

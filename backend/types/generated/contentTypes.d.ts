@@ -408,6 +408,41 @@ export interface ApiContactMessageContactMessage
   };
 }
 
+export interface ApiContactSettingContactSetting
+  extends Struct.SingleTypeSchema {
+  collectionName: 'contact_settings';
+  info: {
+    displayName: 'ContactSettings';
+    pluralName: 'contact-settings';
+    singularName: 'contact-setting';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    cc: Schema.Attribute.Component<'shared.emails', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    emailTemplateId: Schema.Attribute.Integer & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-setting.contact-setting'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sendContactMessages: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    to: Schema.Attribute.Component<'shared.emails', true> &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -1225,6 +1260,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::contact-message.contact-message': ApiContactMessageContactMessage;
+      'api::contact-setting.contact-setting': ApiContactSettingContactSetting;
       'api::global.global': ApiGlobalGlobal;
       'api::navigation-link.navigation-link': ApiNavigationLinkNavigationLink;
       'api::page.page': ApiPagePage;
