@@ -23,7 +23,9 @@ export const useGlobalSettings = () => {
     const params = {
       populate: {
         favicon: { fields: ['url'] },
-        siteLogo: { fields: ['url', 'alternativeText'] },
+        siteLogo: {
+          fields: ['url', 'alternativeText', 'formats'],
+        },
         defaultSeo: {
           populate: {
             shareImage: { fields: ['url'] },
