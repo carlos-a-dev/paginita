@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-xl">
     <div class="text-h4 text-center q-mb-xl">
-      {{ title }}
+      {{ data.title }}
     </div>
     <div class="q-gutter-xl row justify-center">
       <q-card
@@ -29,8 +29,10 @@
 <script setup lang="ts">
 import type { Service, ServiceList } from '~/types/strapi/serviceList'
 
-const { title } = defineProps<{
-  title: string
+defineProps<{
+  data: {
+    title: string
+  }
 }>()
 
 const { data: services } = await useAsyncData<Partial<Service>[]>(

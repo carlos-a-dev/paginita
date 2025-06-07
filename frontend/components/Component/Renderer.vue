@@ -2,28 +2,27 @@
   <component
     :is="component"
     v-if="component"
-    :class="props.classList?.class ?? []"
+    v-bind="$props.props"
+    :data="$props.data"
   />
 </template>
 
 <script setup lang="ts">
 import type { Component } from '~/types/strapi/strapi'
 
-const props = defineProps<Component & {
+const rProps = defineProps<Component & {
   lazy?: boolean
-  classList?: {
-    id: number
-    class: string[]
-  }
+  props?: Record<string, unknown>
+  data?: Record<string, unknown>
 }>()
 
 const component = computed(() => {
-  const key = props.__component
+  const key = rProps.__component
 
   if (!key || !key.startsWith('f.')) return null
 
   // Convert "f.section-title" to "SectionTitle"
-  const componentName = (props.lazy ? 'Lazy' : '') + key
+  const componentName = (rProps.lazy ? 'Lazy' : '') + key
     .replace('.', '-')
     .split('-')
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))

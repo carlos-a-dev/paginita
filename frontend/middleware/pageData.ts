@@ -4,6 +4,7 @@ import type { LayoutKey } from '#build/types/layouts'
 export default defineNuxtRouteMiddleware(async (to) => {
   const { slug, page, layout } = usePage(to)
 
+  const componentPopulate = { populate: { data: { populate: '*' }, props: { populate: '*' } }, filters: { visible: { $eq: true } } }
   const response = await useStrapi<Page>().find('pages', {
     filters: {
       slug: {
@@ -11,7 +12,14 @@ export default defineNuxtRouteMiddleware(async (to) => {
       },
     },
     populate: {
-      body: { populate: '*' },
+      body: {
+        populate: '*',
+        on: {
+          'f.hero': componentPopulate,
+          'f.content': componentPopulate,
+          'f.service-list': componentPopulate,
+        },
+      },
     },
   })
 

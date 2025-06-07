@@ -1,50 +1,60 @@
 <template>
-  <div
+  <q-card
+    v-once
     class="q-pa-xl text-white flex flex-center window-height hero"
     :style="style"
     :class="classes"
+    flat
   >
     <div class="text-center">
       <h1
-        v-if="title"
+        v-if="data.title"
         class="text-h2 text-bold"
       >
-        {{ title }}
+        {{ data.title }}
       </h1>
       <p
-        v-if="message"
+        v-if="data.message"
         class="text-h4 q-mt-md"
       >
-        {{ message }}
+        {{ data.message }}
       </p>
       <q-btn
-        v-if="callToAction && link"
+        v-if="data.callToAction && data.link"
         unelevated
         color="secondary"
-        :label="callToAction"
+        :label="data.callToAction"
         class="q-mt-lg"
-        :to="link"
+        :to="data.link"
         size="lg"
       />
     </div>
-  </div>
+  </q-card>
 </template>
 
 <script setup lang="ts">
-import type { HomeHeroProps } from '~/types/component/homeHero'
+import type { MediaImage } from '~/types/strapi/strapi'
 
-const $props = defineProps<HomeHeroProps>()
+const { data } = defineProps<{
+  data: {
+    title?: string
+    message?: string
+    callToAction?: string
+    link?: string
+    background?: MediaImage
+  }
+}>()
 
 const classes = computed(() => {
   return {
-    'bg-primary': !$props.background?.url,
+    'bg-primary': !data.background?.url,
   }
 })
 
 const style = computed(() => {
-  return $props.background?.url
+  return data.background?.url
     ? {
-        backgroundImage: `url('${useStrapiMedia($props.background?.url)}')`,
+        backgroundImage: `url('${useStrapiMedia(data.background?.url)}')`,
       }
     : null
 })
