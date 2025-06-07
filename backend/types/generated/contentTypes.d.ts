@@ -757,47 +757,6 @@ export interface PluginI18NLocale extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface PluginLifecycleNotifierLifecycleSubscription
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'lifecycle-subscription';
-  info: {
-    displayName: 'Lifecycle subscriptions';
-    pluralName: 'lifecycle-subscriptions';
-    singularName: 'lifecycle-subscription';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    collectionName: Schema.Attribute.String;
-    content: Schema.Attribute.Text;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    eventType: Schema.Attribute.String;
-    interceptors: Schema.Attribute.JSON;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::lifecycle-notifier.lifecycle-subscription'
-    > &
-      Schema.Attribute.Private;
-    mediaFields: Schema.Attribute.JSON;
-    publishedAt: Schema.Attribute.DateTime;
-    recipients: Schema.Attribute.JSON;
-    relations: Schema.Attribute.JSON;
-    subject: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface PluginReviewWorkflowsWorkflow
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_workflows';
@@ -1177,7 +1136,6 @@ declare module '@strapi/strapi' {
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
-      'plugin::lifecycle-notifier.lifecycle-subscription': PluginLifecycleNotifierLifecycleSubscription;
       'plugin::review-workflows.workflow': PluginReviewWorkflowsWorkflow;
       'plugin::review-workflows.workflow-stage': PluginReviewWorkflowsWorkflowStage;
       'plugin::upload.file': PluginUploadFile;

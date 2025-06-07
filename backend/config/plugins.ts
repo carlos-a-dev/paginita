@@ -13,8 +13,4 @@ export default ({ env }) => ({
       },
     },
   },
-  "lifecycle-notifier": {
-    enabled: true,
-    config: {},
-  }
 });
