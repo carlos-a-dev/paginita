@@ -13,4 +13,5 @@ export default ({ env }) => ({
       },
     },
   },
+  'email-designer-v5': { enabled: true }
 });
