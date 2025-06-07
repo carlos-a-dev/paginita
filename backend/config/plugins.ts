@@ -1,6 +1,6 @@
 export default ({ env }) => ({
-    'material-symbols': true,
-    email: {
+  'material-symbols': true,
+  email: {
     config: {
       provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
       providerOptions: {
@@ -13,4 +13,8 @@ export default ({ env }) => ({
       },
     },
   },
+  "lifecycle-notifier": {
+    enabled: true,
+    config: {},
+  }
 });
