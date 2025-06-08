@@ -7,4 +7,5 @@ export type Page = CollectionType & {
   layout: string
   body: Component[]
   seo: object | null
+  props?: Record<string, unknown>
 }
