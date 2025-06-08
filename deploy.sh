@@ -3,12 +3,34 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Attempt to set up Node.js environment, particularly for pnpm.
+# This is often needed when running scripts via cron, which has a minimal environment.
+
+# If using NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  \. "$NVM_DIR/nvm.sh"  # Source NVM
+  # You might want to uncomment and use a specific Node version if needed:
+  # nvm use default # or nvm use <your-project-node-version>
+fi
+
+# If pnpm is installed via another method (e.g., standalone installer like ~/.local/share/pnpm)
+# and not found after sourcing NVM, you might need to add its path explicitly here:
+# export PATH="$HOME/.local/share/pnpm:$PATH"
+
 # Determine the script's directory and navigate to it.
 # This assumes the script is in the project root.
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR"
 
 PM2_ECOSYSTEM_FILE="ecosystem.config.cjs" # Define your PM2 ecosystem file name here
+
+# Verify pnpm is available before proceeding
+if ! command -v pnpm > /dev/null; then
+  echo "Error: pnpm command not found. Please ensure pnpm is installed and in your PATH."
+  echo "The script attempted to source NVM. If pnpm is installed via a different method (e.g., standalone installer or global npm package not managed by NVM for the current user/shell), you may need to adjust the PATH explicitly in this script or ensure your cron environment has the correct PATH."
+  exit 1
+fi
 
 # Check for remote changes before proceeding
 echo "Checking for remote changes..."
