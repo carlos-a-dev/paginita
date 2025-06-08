@@ -19,9 +19,14 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
   # nvm use default # or nvm use <your-project-node-version>
 fi
 
-# If pnpm is installed via another method (e.g., standalone installer like ~/.local/share/pnpm)
+# If pnpm is installed via another method (e.g., standalone installer for a specific user)
 # and not found after sourcing NVM, you might need to add its path explicitly here:
-# export PATH="$HOME/.local/share/pnpm:$PATH"
+PNPM_STANDALONE_DIR="/home/nginx/.local/share/pnpm" # Directory containing the pnpm executable
+if [ -x "$PNPM_STANDALONE_DIR/pnpm" ]; then
+  log "Found pnpm via standalone path: $PNPM_STANDALONE_DIR. Adding to PATH."
+  export PATH="$PNPM_STANDALONE_DIR:$PATH"
+fi
+
 
 # Determine the script's directory and navigate to it.
 # This assumes the script is in the project root.
