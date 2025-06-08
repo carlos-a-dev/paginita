@@ -425,6 +425,7 @@
     "fixed-top",
     "fixed-top-left",
     "fixed-top-right",
+    "flex",
     "flex-center",
     "flip-horizontal",
     "flip-vertical",
