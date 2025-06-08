@@ -3,6 +3,11 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Logging function with timestamp
+log() {
+  echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
+}
+
 # Attempt to set up Node.js environment, particularly for pnpm.
 # This is often needed when running scripts via cron, which has a minimal environment.
 
@@ -27,20 +32,20 @@ PM2_ECOSYSTEM_FILE="ecosystem.config.cjs" # Define your PM2 ecosystem file name 
 
 # Verify pnpm is available before proceeding
 if ! command -v pnpm > /dev/null; then
-  echo "Error: pnpm command not found. Please ensure pnpm is installed and in your PATH."
-  echo "The script attempted to source NVM. If pnpm is installed via a different method (e.g., standalone installer or global npm package not managed by NVM for the current user/shell), you may need to adjust the PATH explicitly in this script or ensure your cron environment has the correct PATH."
+  log "Error: pnpm command not found. Please ensure pnpm is installed and in your PATH."
+  log "The script attempted to source NVM. If pnpm is installed via a different method (e.g., standalone installer or global npm package not managed by NVM for the current user/shell), you may need to adjust the PATH explicitly in this script or ensure your cron environment has the correct PATH."
   exit 1
 fi
 
 # Check for remote changes before proceeding
-echo "Checking for remote changes..."
+log "Checking for remote changes..."
 git fetch # Update local refs with remote changes
 
 # Ensure the current branch is tracking an upstream branch
 if ! git rev-parse --abbrev-ref '@{u}' > /dev/null 2>&1; then
     CURRENT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-    echo "Error: Current branch '$CURRENT_BRANCH_NAME' is not tracking an upstream branch."
-    echo "Please set an upstream branch, e.g., git branch --set-upstream-to=origin/main $CURRENT_BRANCH_NAME"
+    log "Error: Current branch '$CURRENT_BRANCH_NAME' is not tracking an upstream branch."
+    log "Please set an upstream branch, e.g., git branch --set-upstream-to=origin/main $CURRENT_BRANCH_NAME"
     exit 1
 fi
 
@@ -48,48 +53,48 @@ fi
 CHANGES_TO_PULL=$(git rev-list HEAD..@{u} --count)
 
 if [ "$CHANGES_TO_PULL" -eq 0 ]; then
-    echo "No new commits to pull from remote. Local branch is up-to-date or ahead."
-    echo "Deployment not required. Exiting."
+    log "No new commits to pull from remote. Local branch is up-to-date or ahead."
+    log "Deployment not required. Exiting."
     exit 0
 fi
 
-echo "$CHANGES_TO_PULL new commit(s) found on remote. Proceeding with deployment."
-echo "Starting deployment process..." # This message now appears only if deployment proceeds
+log "$CHANGES_TO_PULL new commit(s) found on remote. Proceeding with deployment."
+log "Starting deployment process..."
 
 # 1. Git Pull
-echo "Pulling latest changes from git..."
+log "Pulling latest changes from git..."
 git pull
-echo "Git pull complete."
+log "Git pull complete."
 # 2. Backend operations
-echo "Navigating to backend directory..."
+log "Navigating to backend directory..."
 pushd backend > /dev/null
 
-echo "Installing backend dependencies..."
+log "Installing backend dependencies..."
 pnpm install
-echo "Backend dependencies installed."
+log "Backend dependencies installed."
 
-echo "Building backend..."
+log "Building backend..."
 NODE_OPTIONS="--max-old-space-size=2048" pnpm build
-echo "Backend build complete."
+log "Backend build complete."
 
 popd > /dev/null # Return to SCRIPT_DIR (project root)
 
 # 3. Frontend operations
-echo "Navigating to frontend directory..."
+log "Navigating to frontend directory..."
 pushd frontend > /dev/null
 
-echo "Installing frontend dependencies..."
+log "Installing frontend dependencies..."
 pnpm install
-echo "Frontend dependencies installed."
+log "Frontend dependencies installed."
 
-echo "Building frontend..."
+log "Building frontend..."
 NODE_OPTIONS="--max-old-space-size=2048" pnpm build
-echo "Frontend build complete."
+log "Frontend build complete."
 
 popd > /dev/null # Return to SCRIPT_DIR (project root)
 
 # 4. Return to root and restart PM2
-echo "Restarting PM2 ecosystem..."
+log "Restarting PM2 ecosystem..."
 pm2 restart "$PM2_ECOSYSTEM_FILE" --env production
 
-echo "Deployment process finished successfully!"
+log "Deployment process finished successfully!"
