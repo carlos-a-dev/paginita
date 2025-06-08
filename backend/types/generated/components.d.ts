@@ -1,5 +1,13 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface DataContactForm extends Struct.ComponentSchema {
+  collectionName: 'components_data_contact_forms';
+  info: {
+    displayName: 'ContactForm';
+  };
+  attributes: {};
+}
+
 export interface DataContent extends Struct.ComponentSchema {
   collectionName: 'components_data_contents';
   info: {
@@ -34,14 +42,27 @@ export interface DataServiceList extends Struct.ComponentSchema {
   };
 }
 
+export interface FContactForm extends Struct.ComponentSchema {
+  collectionName: 'components_f_contact_forms';
+  info: {
+    displayName: 'ContactForm';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.contact-form', false>;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
 export interface FContent extends Struct.ComponentSchema {
   collectionName: 'components_f_contents';
   info: {
     displayName: 'Content';
   };
   attributes: {
-    data: Schema.Attribute.Component<'data.content', false> &
-      Schema.Attribute.Required;
+    data: Schema.Attribute.Component<'data.content', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     visible: Schema.Attribute.Boolean &
@@ -56,8 +77,7 @@ export interface FHero extends Struct.ComponentSchema {
     displayName: 'Hero';
   };
   attributes: {
-    data: Schema.Attribute.Component<'data.hero', false> &
-      Schema.Attribute.Required;
+    data: Schema.Attribute.Component<'data.hero', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -1125,7 +1145,7 @@ export interface PropsQCard extends Struct.ComponentSchema {
           'window-height',
           'window-width',
           'wrap',
-          'z-absolute',
+          'z-absolute'
         ]
       > &
       Schema.Attribute.DefaultTo<'[]'>;
@@ -1147,9 +1167,7 @@ export interface SharedEmails extends Struct.ComponentSchema {
     displayName: 'Emails';
   };
   attributes: {
-    email: Schema.Attribute.Email &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    email: Schema.Attribute.Email & Schema.Attribute.Required & Schema.Attribute.Unique;
   };
 }
 
@@ -1190,8 +1208,7 @@ export interface SharedService extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
-    icon: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::material-symbols.icon'>;
+    icon: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::material-symbols.icon'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -1221,33 +1238,26 @@ export interface SharedTheme extends Struct.ComponentSchema {
     displayName: 'Theme';
   };
   attributes: {
-    accent: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    dark: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    darkPage: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    info: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    negative: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    positive: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    primary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    secondary: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    warning: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    accent: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    dark: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    darkPage: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    info: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    negative: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    positive: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    primary: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    secondary: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    warning: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'data.contact-form': DataContactForm;
       'data.content': DataContent;
       'data.hero': DataHero;
       'data.service-list': DataServiceList;
+      'f.contact-form': FContactForm;
       'f.content': FContent;
       'f.hero': FHero;
       'f.service-list': FServiceList;

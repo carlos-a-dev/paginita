@@ -18,6 +18,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
           'f.hero': componentPopulate,
           'f.content': componentPopulate,
           'f.service-list': componentPopulate,
+          'f.contact-form': componentPopulate,
         },
       },
     },

@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_f_contact_forms",
+  "info": {
+    "displayName": "ContactForm"
+  },
+  "options": {},
+  "attributes": {
+    "visible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "data": {
+      "type": "component",
+      "component": "data.contact-form",
+      "repeatable": false
+    },
+    "props": {
+      "type": "component",
+      "component": "props.q-card",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

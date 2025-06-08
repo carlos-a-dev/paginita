@@ -1,7 +1,6 @@
 <template>
   <q-card
     v-once
-    class="q-pa-xl"
   >
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="result" />

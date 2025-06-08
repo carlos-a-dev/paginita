@@ -1,7 +1,7 @@
 <template>
   <component
     :is="component"
-    v-if="component"
+    v-if="component && visible"
     v-bind="cprops"
     :data="$props.data"
   />
@@ -10,11 +10,18 @@
 <script setup lang="ts">
 import type { Component } from '~/types/strapi/strapi'
 
-const rProps = defineProps<Component & {
-  lazy?: boolean
-  props?: Record<string, unknown>
-  data?: Record<string, unknown>
-}>()
+const rProps = withDefaults(
+  defineProps<Component & {
+    lazy?: boolean
+    visible?: boolean
+    props?: Record<string, unknown>
+    data?: Record<string, unknown>
+  }>(),
+  {
+    lazy: false,
+    visible: true,
+  },
+)
 
 const cprops = computed(() => {
   return Object.fromEntries(

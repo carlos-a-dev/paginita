@@ -42,12 +42,6 @@
       type="submit"
       class="full-width"
     />
-    <q-btn
-      label="reset"
-      color="secondary"
-      class="full-width"
-      @click="contactForm.reset()"
-    />
   </q-form>
 </template>
 
