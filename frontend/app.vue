@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout :name="nLayout">
-    <NuxtPage />
+    <NuxtPage :key="route.path" />
   </NuxtLayout>
 </template>
 
@@ -21,6 +21,11 @@ const nLayout = computed(() => {
 
 useHead({
   title: globalSettings.value?.siteName,
+  titleTemplate: (subTitle) => {
+    return subTitle
+      ? `${subTitle} - ${globalSettings.value?.siteName}`
+      : globalSettings.value?.siteName
+  },
   link: [
     {
       rel: 'icon',
