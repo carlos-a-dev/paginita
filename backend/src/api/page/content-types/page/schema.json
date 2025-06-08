@@ -78,6 +78,16 @@
           "localized": true
         }
       }
+    },
+    "props": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "props.q-page",
+      "repeatable": false
     }
   }
 }

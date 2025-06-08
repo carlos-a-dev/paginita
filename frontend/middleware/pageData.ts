@@ -12,6 +12,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
       },
     },
     populate: {
+      props: {
+        populate: '*',
+      },
       body: {
         populate: '*',
         on: {

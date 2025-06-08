@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_props_q_cards",
+  "collectionName": "components_props_q_pages",
   "info": {
-    "displayName": "QCard"
+    "displayName": "QPage"
   },
   "options": {},
   "attributes": {
@@ -11,7 +11,7 @@
       "default": "[]",
       "options": []
     },
-    "flat": {
+    "padding": {
       "type": "boolean"
     }
   },
