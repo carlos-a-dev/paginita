@@ -1,17 +1,20 @@
 <template>
   <q-form
-    class="q-gutter-md"
+    ref="contactForm"
+    class="q-gutter-sm"
     style="width: 100%; max-width: 500px"
     @submit.prevent="submitForm"
+    @reset="onReset"
   >
     <q-input
-      v-model="form.name"
+      v-model="formData.name"
       filled
       label="Name"
       :rules="[val => !!val || 'Name is required']"
+      lazy-rules
     />
     <q-input
-      v-model="form.email"
+      v-model="formData.email"
       filled
       label="Email"
       type="email"
@@ -19,9 +22,10 @@
         val => !!val || 'Email is required',
         val => /.+@.+\..+/.test(val) || 'Enter a valid email',
       ]"
+      lazy-rules
     />
     <q-input
-      v-model="form.message"
+      v-model="formData.message"
       filled
       label="Message"
       type="textarea"
@@ -38,48 +42,70 @@
       type="submit"
       class="full-width"
     />
+    <q-btn
+      label="reset"
+      color="secondary"
+      class="full-width"
+      @click="contactForm.reset()"
+    />
   </q-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 
 const $q = useQuasar()
-
-const form = ref({
+const contactForm = ref()
+const formData = ref({
   name: '',
   email: '',
   message: '',
-  ip: '',
-})
-
-onMounted(async () => {
-  const ip_data = await $fetch('/api/ip', { server: false })
-  form.value.ip = ip_data.ip || ''
 })
 
 async function submitForm() {
   $q.loading.show()
-  await useStrapi().create('contact-messages', form.value).then(() => {
+  try {
+    if (!contactForm.value?.validate()) {
+      return
+    }
+
+    const ip_data = await $fetch('/api/ip')
+    await useStrapi().create('contact-messages', {
+      ...formData.value,
+      ip: ip_data.ip ?? '',
+    })
+
     $q.notify({
       type: 'positive',
       message: 'Message sent successfully!',
     })
 
-    form.value = {
-      name: '',
-      email: '',
-      message: '',
+    contactForm.value?.reset()
+  }
+  catch (error) {
+    if (error instanceof Error) {
+      $q.notify({
+        type: 'negative',
+        message: `${error.name}: ${error.message}`,
+        position: 'top-right',
+      })
     }
-  }).catch(({ error }) => {
-    $q.notify({
-      type: 'negative',
-      message: `${error.name}: ${error.message}`,
-      position: 'top-right',
-    })
-  }).finally(() => {
+    else {
+    // Handle cases where the thrown value is not an Error
+      console.error('An unexpected error occurred:', error)
+    }
+  }
+  finally {
     $q.loading.hide()
-  })
+  }
+}
+
+function onReset() {
+  formData.value = {
+    name: '',
+    email: '',
+    message: '',
+  }
 }
 </script>
