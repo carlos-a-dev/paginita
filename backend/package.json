@@ -14,7 +14,9 @@
     "prod": "strapi build && strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix"
   },
   "dependencies": {
     "@strapi/plugin-color-picker": "^5.14.0",
@@ -33,10 +35,17 @@
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
+    "@eslint/js": "^9.28.0",
     "@types/node": "^20.17.52",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
-    "typescript": "^5.8.3"
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "globals": "^16.2.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
