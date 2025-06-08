@@ -1,59 +1,52 @@
-# Paginita
+# Paginita Project
 
-Paginita is a Content Management System (CMS) that uses [Strapi](https://strapi.io/) as the backend, [Nuxt](https://nuxt.com/) as the frontend framework, and [Quasar](https://quasar.dev/) as the UI library.
+This project consists of a frontend and a backend application.
 
-## Features
+## Development
 
-- Modern CMS with a customizable backend (Strapi)
-- Fast, SEO-friendly frontend (Nuxt)
-- Beautiful UI components (Quasar)
+To start both the frontend and backend services for development, use the `paginita_dev.sh` script:
 
-## Getting Started
+```bash
+./paginita_dev.sh
+```
+
+This script will:
+1. Start the backend service in development mode.
+2. Wait for the backend to be ready (checks if port 1337 is open).
+3. Start the frontend service in development mode.
+
+Both services will output their logs prefixed with `[BACKEND]` and `[FRONTEND]` respectively.
+
+## Deployment (`deploy.sh`)
+
+The `deploy.sh` script automates the deployment process for the production environment.
 
 ### Prerequisites
 
-- Node.js (v16+ recommended)
-- [pnpm](https://pnpm.io/) package manager
+*   `git` installed and configured.
+*   The current local branch must be tracking a remote upstream branch (e.g., `origin/main`).
+*   `pnpm` installed.
+*   `pm2` installed and configured to manage your applications (see `ecosystem.config.cjs`).
 
-### Installation
+### How it Works
 
-1. **Clone the repository:**
+1.  **Checks for Remote Changes**: Fetches updates from the remote repository and checks if there are new commits on the upstream branch.
+2.  **Exits if No Changes**: If the local branch is up-to-date, the script exits without performing a deployment.
+3.  **Pulls Changes**: If new commits are found, it pulls the latest code.
+4.  **Builds Backend**: Navigates to the `backend` directory, installs dependencies (`pnpm install`), and builds the backend (`pnpm build`).
+5.  **Builds Frontend**: Navigates to the `frontend` directory, installs dependencies (`pnpm install`), and builds the frontend (`pnpm build`).
+6.  **Restarts Services**: Restarts the applications managed by PM2 using the `ecosystem.config.cjs` file in the production environment.
 
-   ```bash
-   git clone https://github.com/carlos-a-dev/paginita.git
-   cd paginita
-   ```
+### Usage
 
-2. **Install dependencies for backend (Strapi):**
+Run the script from the project root directory:
 
-   ```bash
-   cd backend
-   pnpm install
-   ```
+```bash
+./deploy.sh
+```
 
-3. **Install dependencies for frontend (Nuxt + Quasar):**
-   ```bash
-   cd ../frontend
-   pnpm install
-   ```
+This script is suitable for automation, such as being run by a cron job to periodically check for updates and deploy them.
 
-### Running in Development Mode
+### PM2 Configuration
 
-1. **Start the Strapi backend:**
-
-   ```bash
-   cd backend
-   pnpm run develop
-   ```
-
-2. **Start the Nuxt frontend:**
-   ```bash
-   cd ../frontend
-   pnpm run dev
-   ```
-
-The frontend will typically be available at `http://localhost:3000` and the backend admin panel at `http://localhost:1337/admin`.
-
-## License
-
-MIT
+The `ecosystem.config.cjs` file defines how PM2 should run the frontend and backend applications, including environment variables, logging, and instance management for production.
