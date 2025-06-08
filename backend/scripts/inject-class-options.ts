@@ -8,11 +8,8 @@ const sharedClass = JSON.parse(fs.readFileSync(optionsPath, 'utf-8'));
 function injectOptionsIntoComponent(componentPath) {
   const json = JSON.parse(fs.readFileSync(componentPath, 'utf-8'));
 
-  if (json.attributes && json.attributes.class) {
-    json.attributes.class = {
-      ...sharedClass,
-      ...json.attributes.class, // in case you want to allow overrides
-    };
+  if (json.attributes?.class?.customField === 'plugin::multi-select.multi-select') {
+    json.attributes.class.options = sharedClass;
 
     fs.writeFileSync(componentPath, JSON.stringify(json, null, 2));
     console.log(`✅ Injected class options into ${path.basename(componentPath)}`);
