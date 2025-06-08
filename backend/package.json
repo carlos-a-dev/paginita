@@ -4,7 +4,7 @@
   "private": true,
   "description": "A Strapi application",
   "scripts": {
-    "prebuild": "node scripts/inject-class-options.ts",
+    "sync:class": "node scripts/inject-class-options.ts",
     "build": "strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
