@@ -1,15 +1,23 @@
 import type { Page } from '~/types/strapi/page'
 import type { LayoutKey } from '#build/types/layouts'
 
-export const usePage = (route = useRoute()) => {
-  const slug = route.params.slug !== undefined
-    ? (route.params.slug[0] ?? route.params.slug) || 'index'
-    : null
+const componentPopulate = { populate: { data: { populate: '*' }, props: { populate: '*' } }, filters: { visible: { $eq: true } } }
 
-  const page = slug ? useState<Page>(`page/${slug}`) : null
+export default () => {
   const layout = useState<LayoutKey>('layout', () => 'default')
 
+  const getSlug = (route = useRoute()) => {
+    return route.params.slug !== undefined
+      ? (route.params.slug[0] ?? route.params.slug) || 'index'
+      : route.path.split('/').pop() || 'index'
+  }
+
   const fetchPage = async (slug: string) => {
+    const page = useState<Page>(`page/${slug}`)
+    if (page.value) {
+      return page
+    }
+
     const response = await useStrapi<Page>().find('pages', {
       filters: {
         slug: {
@@ -17,21 +25,36 @@ export const usePage = (route = useRoute()) => {
         },
       },
       populate: {
-        body: { populate: '*' },
+        props: {
+          populate: '*',
+        },
+        body: {
+          populate: '*',
+          on: {
+            'f.hero': componentPopulate,
+            'f.content': componentPopulate,
+            'f.service-list': componentPopulate,
+            'f.contact-form': componentPopulate,
+          },
+        },
       },
     })
 
     if (response.data.length > 0) {
-      if (response.data.length === 0) {
-        useState<Page>(`page/${slug}`).value = response.data[0]
-      }
+      page.value = response.data[0]
     }
+
+    return page
+  }
+
+  const fetchRoutePage = (route = useRoute()) => {
+    return fetchPage(getSlug(route))
   }
 
   return {
-    page,
     layout,
-    slug,
     fetchPage,
+    fetchRoutePage,
+    getSlug,
   }
 }

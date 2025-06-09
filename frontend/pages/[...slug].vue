@@ -13,7 +13,8 @@ definePageMeta({
   middleware: ['page-data'],
 })
 
-const { page } = usePage()
+const { fetchPage, getSlug } = usePage()
+const page = await fetchPage(getSlug())
 
 useHead({
   title: page?.value?.title,
