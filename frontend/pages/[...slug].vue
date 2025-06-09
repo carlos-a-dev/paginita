@@ -1,5 +1,8 @@
 <template>
-  <q-page v-bind="page?.props">
+  <q-page
+    class="q-pt-xl"
+    v-bind="page?.props"
+  >
     <component-renderer
       v-for="(component, index) in page?.body"
       :key="index"

@@ -41,6 +41,7 @@ export default () => {
     })
 
     if (response.data.length > 0) {
+      delete response.data[0].props?.id
       page.value = response.data[0]
     }
 

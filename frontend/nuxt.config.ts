@@ -27,6 +27,17 @@ export default defineNuxtConfig({
       animations: 'all',
     },
     plugins: ['Notify', 'Loading'],
+    components: {
+      defaults: {
+        QBtn: {
+          rounded: true,
+          noCaps: true,
+        },
+        QBtnGroup: {
+          rounded: true,
+        },
+      },
+    },
   },
   strapi: {
     url: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',

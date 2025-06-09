@@ -2,6 +2,7 @@
   <q-card
     v-once
     class="q-pa-xl text-white flex flex-center window-height hero"
+    style="border-radius: 2em;"
     :style="style"
     :class="classes"
     flat
