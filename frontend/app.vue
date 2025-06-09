@@ -84,9 +84,9 @@ onMounted(() => {
 } */
 
 .page-enter-active {
-  animation: fadeIn 0.2s;
+  animation: fadeIn 0.3s;
 }
-.page-leave-active {
+/* .page-leave-active {
   animation: fadeOut 0.2s;
-}
+} */
 </style>

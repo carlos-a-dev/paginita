@@ -3,7 +3,6 @@
     mode="out-in"
     appear
     enter-active-class="animated rotateIn"
-    leave-active-class="animated fadeOut faster"
   >
     <q-btn
       :key="icon"
