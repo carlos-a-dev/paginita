@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page
-        class="window-height window-width row justify-center items-center bg-grey-2 text-center"
+        class="window-height window-width row justify-center items-center text-center"
       >
         <div
           class="column items-center q-pa-md"
@@ -71,10 +71,6 @@
 </template>
 
 <script setup lang="ts">
-import type { QuasarTheme } from '~/types/globalSettings'
-
-const { globalSettings } = useGlobalSettings()
-
 const props = defineProps({
   error: Object as () => ({ statusCode: number, message?: string, statusMessage?: string, data?: unknown }),
 })
@@ -108,23 +104,19 @@ useHead({
   ],
 })
 
-if (globalSettings.value?.quasarTheme) {
+const { themeStyle, darkMode } = useTheme()
+useQuasar().dark.set(darkMode.value)
+
+if (themeStyle) {
   useHead({
     style: [
       {
-        textContent: getThemeStyle(globalSettings.value?.quasarTheme),
+        textContent: themeStyle,
         tagPosition: 'bodyOpen',
         tagPriority: 1,
       },
     ],
   })
-}
-
-function getThemeStyle(quasarTheme: QuasarTheme | undefined) {
-  if (!quasarTheme) return ''
-  return `:root { ${Object.entries(quasarTheme)
-    .map(([key, val]) => `--q-${key}: ${val};`)
-    .join('')} }`
 }
 </script>
 

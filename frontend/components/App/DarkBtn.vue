@@ -27,11 +27,12 @@ withDefaults(
   },
 )
 
-const darkMode = useCookie<boolean | 'auto'>('dark-mode')
-const $qq = useQuasar()
+const { darkMode } = useTheme()
+const { dark } = useQuasar()
+
 const toggleDarkMode = () => {
   darkMode.value = darkMode.value === 'auto' ? true : (darkMode.value ? false : 'auto')
-  $qq.dark.set(darkMode.value)
+  dark.set(darkMode.value)
 }
 
 const icon = computed(() => {
@@ -41,7 +42,6 @@ const icon = computed(() => {
     case false:
       return 'light_mode'
     case 'auto':
-      return 'brightness_auto'
     default:
       return 'brightness_auto'
   }

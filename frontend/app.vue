@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import type { QuasarTheme } from '~/types/globalSettings'
-
 const { globalSettings } = useGlobalSettings()
 const { layout } = usePage()
 const route = useRoute()
@@ -53,11 +51,12 @@ useHead({
   ],
 })
 
-if (globalSettings.value?.quasarTheme) {
+const { themeStyle, darkMode } = useTheme()
+if (themeStyle) {
   useHead({
     style: [
       {
-        textContent: getThemeStyle(globalSettings.value?.quasarTheme),
+        textContent: themeStyle,
         tagPosition: 'bodyOpen',
         tagPriority: 1,
       },
@@ -65,33 +64,24 @@ if (globalSettings.value?.quasarTheme) {
   })
 }
 
-function getThemeStyle(quasarTheme: QuasarTheme | undefined) {
-  if (!quasarTheme) return ''
-  return `:root { ${Object.entries(quasarTheme)
-    .map(([key, val]) => `--q-${key}: ${val};`)
-    .join('')} }`
-}
-
-const darkMode = useCookie<boolean | 'auto'>('dark-mode', { default: () => 'auto' })
-
 if (darkMode.value !== 'auto') {
-  useNuxtApp().$q.dark.set(darkMode.value)
+  useQuasar().dark.set(darkMode.value)
 }
 
 onMounted(() => {
   if (darkMode.value === 'auto') {
-    useNuxtApp().$q.dark.set('auto')
+    useQuasar().dark.set('auto')
   }
 })
 </script>
 
 <style>
-.layout-enter-active {
+/* .layout-enter-active {
   animation: fadeIn 0.3s;
 }
 .layout-leave-active {
   animation: fadeOut 0.3s;
-}
+} */
 
 .page-enter-active {
   animation: fadeIn 0.2s;
