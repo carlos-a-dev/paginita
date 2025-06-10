@@ -74,6 +74,7 @@ async function submitForm() {
     }
 
     if ((!renderTime.value || Date.now() - renderTime.value > 5000) && !lastName.value) {
+      renderTime.value = Date.now()
       const ip_data = await $fetch('/api/ip')
       await useStrapi().create('contact-messages', {
         ...formData.value,
@@ -96,9 +97,16 @@ async function submitForm() {
         position: 'top-right',
       })
     }
+    else if (typeof error === 'object' && error !== null && 'error' in error && typeof error.error === 'object' && error.error !== null && 'name' in error.error && 'message' in error.error) {
+      $q.notify({
+        type: 'negative',
+        message: `${error.error.name}: ${error.error.message}`,
+        position: 'top-right',
+      })
+    }
     else {
     // Handle cases where the thrown value is not an Error
-      console.error('An unexpected error occurred:', error)
+      console.error('An unexpected error occurred:', error, typeof error)
     }
   }
   finally {
