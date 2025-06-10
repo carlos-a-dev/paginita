@@ -4,7 +4,7 @@ import type { MediaImage } from '~/types/strapi/strapi'
 
 interface UseResponsiveImageOptions {
   /** The Strapi media image object or a ref to it. */
-  image: MaybeRef<MediaImage | undefined | null>
+  image: MediaImage | undefined | null // No longer MaybeRef if non-reactive
   /**
    * The 'sizes' attribute string for the img tag.
    * E.g., "(max-width: 600px) 100vw, 50vw".
@@ -14,22 +14,17 @@ interface UseResponsiveImageOptions {
 }
 
 export function useResponsiveImage(options: UseResponsiveImageOptions) {
-  const reactiveImage = computed(() => unref(options.image))
+  const img = options.image
 
-  const srcset = computed<string | undefined>(() => {
-    const img = reactiveImage.value
-    if (!img) {
-      return undefined
-    }
-
+  let srcsetValue: string | undefined
+  if (img) {
     const sources: { url: string, width: number }[] = []
     const addedUrls = new Set<string>()
 
-    // Add formatted images
     if (img.formats) {
       Object.values(img.formats).forEach((format) => {
         if (format && format.url && typeof format.width === 'number') {
-          const fullUrl = useStrapiMedia(format.url) // Ensure useStrapiMedia is available
+          const fullUrl = useStrapiMedia(format.url)
           if (!addedUrls.has(fullUrl)) {
             sources.push({ url: fullUrl, width: format.width })
             addedUrls.add(fullUrl)
@@ -38,7 +33,6 @@ export function useResponsiveImage(options: UseResponsiveImageOptions) {
       })
     }
 
-    // Add the original image itself if it has a width and URL, and is not already added
     if (img.url && typeof img.width === 'number') {
       const originalFullUrl = useStrapiMedia(img.url)
       if (!addedUrls.has(originalFullUrl)) {
@@ -46,26 +40,20 @@ export function useResponsiveImage(options: UseResponsiveImageOptions) {
       }
     }
 
-    if (sources.length === 0) {
-      return undefined
+    if (sources.length > 0) {
+      sources.sort((a, b) => a.width - b.width)
+      srcsetValue = sources.map(s => `${s.url} ${s.width}w`).join(', ')
     }
+  }
 
-    sources.sort((a, b) => a.width - b.width)
-    return sources.map(s => `${s.url} ${s.width}w`).join(', ')
-  })
+  const srcValue: string | undefined = img?.url ? useStrapiMedia(img.url) : undefined
 
-  const src = computed<string | undefined>(() => {
-    return reactiveImage.value?.url ? useStrapiMedia(reactiveImage.value.url) : undefined
-  })
-
-  const alt = computed<string>(() => {
-    return reactiveImage.value?.alternativeText ?? ''
-  })
+  const altValue: string = img?.alternativeText ?? ''
 
   return {
-    src,
-    srcset,
-    sizes: computed(() => options.sizes), // Pass through consumer-provided sizes
-    alt,
+    src: srcValue,
+    srcset: srcsetValue,
+    sizes: options.sizes,
+    alt: altValue,
   }
 }

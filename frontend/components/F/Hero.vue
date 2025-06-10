@@ -1,11 +1,8 @@
 <template>
   <q-card>
     <q-img
-      v-if="props.data.background"
-      :src="responsiveImage.src.value"
-      :srcset="responsiveImage.srcset.value"
-      :sizes="responsiveImage.sizes.value"
-      :alt="responsiveImage.alt.value"
+      v-if="props.data.background && imgProps.src"
+      v-bind="imgProps"
       fetchpriority="high"
       loading="eager"
     />
@@ -25,8 +22,10 @@ const props = defineProps<{
   }
 }>()
 
-const responsiveImage = useResponsiveImage({
-  image: computed(() => props.data.background),
-  sizes: '100vw', // Hero images typically span the full viewport width
+const imgProps = computed(() => {
+  return useResponsiveImage({
+    image: props.data.background,
+    sizes: '100vw', // Hero images typically span the full viewport width
+  })
 })
 </script>
