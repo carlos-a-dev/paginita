@@ -14,6 +14,13 @@
       lazy-rules
     />
     <q-input
+      v-model="lastName"
+      type="text"
+      autocomplete="off"
+      label="Last Name"
+      class="hidden"
+    />
+    <q-input
       v-model="formData.email"
       filled
       label="Email"
@@ -56,6 +63,8 @@ const formData = ref({
   email: '',
   message: '',
 })
+const lastName = ref('')
+const renderTime = ref(0)
 
 async function submitForm() {
   $q.loading.show()
@@ -64,11 +73,13 @@ async function submitForm() {
       return
     }
 
-    const ip_data = await $fetch('/api/ip')
-    await useStrapi().create('contact-messages', {
-      ...formData.value,
-      ip: ip_data.ip ?? '',
-    })
+    if ((!renderTime.value || Date.now() - renderTime.value > 5000) && !lastName.value) {
+      const ip_data = await $fetch('/api/ip')
+      await useStrapi().create('contact-messages', {
+        ...formData.value,
+        ip: ip_data.ip ?? '',
+      })
+    }
 
     $q.notify({
       type: 'positive',
@@ -101,5 +112,9 @@ function onReset() {
     email: '',
     message: '',
   }
+
+  onMounted(() => {
+    renderTime.value = Date.now()
+  })
 }
 </script>
