@@ -2,7 +2,7 @@
   <q-btn-group
     flat
     class="text-dark q-py-sm q-px-xs"
-    style="backdrop-filter: blur(8px); background: hsla(0, 0%, 90%, .5);"
+    style="backdrop-filter: blur(5px); background: hsla(0, 0%, 90%, .5);"
   >
     <q-btn
       v-for="link in links"

@@ -19,12 +19,23 @@
         {{ globalSettings?.siteName }}
       </q-toolbar-title>
 
-      <app-dark-btn />
+      <lazy-app-dark-btn />
     </q-toolbar>
-    <app-nav-links
-      class="fixed-top-left q-mt-md gt-sm"
-      style="left: 50%; transform: translateX(-50%);"
-    />
+    <ClientOnly>
+      <transition
+        appear
+        mode="out-in"
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+        :duration="100"
+      >
+        <app-nav-links
+          class="q-mb-sm q-mt-md"
+          :class="[$q.screen.gt.sm ? 'fixed-top-left' : 'fixed-bottom-left']"
+          style="left: 50%; transform: translateX(-50%);"
+        />
+      </transition>
+    </ClientOnly>
   </q-header>
 </template>
 
