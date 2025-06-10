@@ -1,16 +1,18 @@
 <template>
   <q-btn-group
     flat
-    class="text-dark"
-    style="backdrop-filter: blur(8px); background: hsla(0, 0%, 100%, .7);"
+    class="text-dark q-py-sm q-px-xs"
+    style="backdrop-filter: blur(8px); background: hsla(0, 0%, 90%, .5);"
   >
     <q-btn
       v-for="link in links"
       :key="link.id"
       :label="link.label"
       :to="link.url"
+      size="md"
       :color="$route.path === link.url ? 'info' : undefined"
       :class="{ 'btn-active': $route.path === link.url }"
+      class="q-mx-sm"
     />
   </q-btn-group>
 </template>
@@ -34,9 +36,8 @@ const { data: links } = useAsyncData('nav-links', async () => {
 </script>
 
 <style scoped>
-.btn-active {
-  background: linear-gradient(90deg, #42a5f5 0%, #478ed1 100%);
-  color: #fff !important;
+.q-btn {
+  border-radius: 2em !important;
   font-weight: bold;
 }
 </style>

@@ -4,7 +4,7 @@
       class="transparent"
     />
 
-    <q-page-container style="padding-top: 0!important;">
+    <q-page-container>
       <slot />
     </q-page-container>
 

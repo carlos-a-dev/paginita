@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout :name="nLayout">
-    <NuxtPage :key="route.path" />
+    <NuxtPage />
   </NuxtLayout>
 </template>
 
@@ -86,7 +86,7 @@ onMounted(() => {
 .page-enter-active {
   animation: fadeIn 0.3s;
 }
-/* .page-leave-active {
-  animation: fadeOut 0.2s;
-} */
+.page-leave-active {
+  animation: fadeOut 0.1s;
+}
 </style>

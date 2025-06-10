@@ -1,6 +1,5 @@
 <template>
   <q-page
-    class="q-pt-xl"
     v-bind="page?.props"
   >
     <component-renderer

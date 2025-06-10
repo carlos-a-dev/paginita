@@ -1051,7 +1051,9 @@
       ]
     },
     "padding": {
-      "type": "boolean"
+      "type": "boolean",
+      "required": true,
+      "default": true
     }
   },
   "config": {}

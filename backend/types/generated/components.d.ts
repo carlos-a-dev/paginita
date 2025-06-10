@@ -1150,7 +1150,7 @@ export interface PropsQCard extends Struct.ComponentSchema {
         ]
       > &
       Schema.Attribute.DefaultTo<'[]'>;
-    flat: Schema.Attribute.Boolean;
+    flat: Schema.Attribute.Boolean & Schema.Attribute.Required & Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -2205,7 +2205,9 @@ export interface PropsQPage extends Struct.ComponentSchema {
         ]
       > &
       Schema.Attribute.DefaultTo<'[]'>;
-    padding: Schema.Attribute.Boolean;
+    padding: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 

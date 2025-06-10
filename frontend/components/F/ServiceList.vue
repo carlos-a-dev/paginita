@@ -1,5 +1,8 @@
 <template>
-  <div class="q-pa-xl">
+  <q-card
+    v-once
+    class="q-pa-xl"
+  >
     <div class="text-h4 text-center q-mb-xl">
       {{ data.title }}
     </div>
@@ -23,7 +26,7 @@
         </p>
       </q-card>
     </div>
-  </div>
+  </q-card>
 </template>
 
 <script setup lang="ts">
@@ -36,14 +39,20 @@ defineProps<{
 }>()
 
 const { data: services } = await useAsyncData<Partial<Service>[]>(
-  'serviceList',
-  async () => (await useStrapi().findOne<ServiceList>('service-list', {
-    populate: {
-      services: {
-        fields: ['id', 'title', 'description', 'icon'],
-        filters: { visible: { $eq: true } },
-      },
-    },
-  })).data.services || [],
+  async () => {
+    const serviceList = useState<Partial<ServiceList>[] | null>('service-list')
+    if (!serviceList.value) {
+      serviceList.value = (await useStrapi().findOne<ServiceList>('service-list', {
+        populate: {
+          services: {
+            fields: ['id', 'title', 'description', 'icon'],
+            filters: { visible: { $eq: true } },
+          },
+        },
+      })).data.services || []
+    }
+
+    return serviceList.value
+  },
 )
 </script>
