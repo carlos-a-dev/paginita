@@ -60,6 +60,10 @@ export default defineNuxtConfig({
         QBtnGroup: {
           rounded: true,
         },
+        QImg: {
+          loadingShowDelay: 300,
+          spinnerColor: 'grey-1',
+        },
       },
     },
   },

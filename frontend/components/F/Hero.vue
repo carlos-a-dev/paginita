@@ -1,11 +1,10 @@
 <template>
   <q-card style="border-radius: 2em;">
     <q-img
-      v-if="props.data.background && imgProps.src"
+      v-if="props.data.background"
       v-bind="imgProps"
       fetchpriority="high"
       loading="eager"
-      fit="cover"
       height="80vh"
     >
       <div class="fit flex flex-center text-center transparent">
@@ -14,13 +13,15 @@
         >
           <h1
             v-if="data.title"
-            class="text-h2 text-bold"
+            class="text-weight-bold"
+            :class="$q.screen.gt.xs ? 'text-h2' : 'text-h3'"
           >
             {{ data.title }}
           </h1>
           <p
             v-if="data.message"
-            class="text-h4 q-mt-md"
+            class="q-mt-md"
+            :class="$q.screen.gt.xs ? 'text-h4' : 'text-h5'"
           >
             {{ data.message }}
           </p>
@@ -53,13 +54,11 @@ const props = defineProps<{
 }>()
 
 const imgProps = computed(() => {
-  return props.data.background
-    ? useStrapiImage(props.data.background, {
-        sizes: 'xs:125vw sm:100vw md:100vw lg:100vw xl:100vw',
-      })
-    : {
-        src: 'notFound.jpg',
-        alt: 'not found',
-      }
+  if (!props.data.background) {
+    return { src: undefined } // Ensure q-img doesn't complain if v-if was only on props.data.background
+  }
+  return useStrapiImage(props.data.background, {
+    sizes: 'xs:125vw sm:100vw md:100vw lg:100vw xl:100vw',
+  })
 })
 </script>
