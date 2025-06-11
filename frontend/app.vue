@@ -64,18 +64,20 @@ if (themeStyle) {
   })
 }
 
-if (darkMode.value !== 'auto') {
-  useQuasar().dark.set(darkMode.value)
+useQuasar().dark.set(darkMode.value)
+if (import.meta.server && darkMode.value) {
+  useHead({
+    script: [
+      { innerHTML: '(function() { document.body.classList.add(\'prevent-flash\'); } ())', type: 'text/javascript', tagPosition: 'bodyOpen', tagPriority: 1 },
+    ],
+  })
 }
-
-onMounted(() => {
-  if (darkMode.value === 'auto') {
-    useQuasar().dark.set('auto')
-  }
-})
+if (!import.meta.server && darkMode.value) {
+  document.body.classList.remove('prevent-flash')
+}
 </script>
 
-<style>
+<style lang="scss">
 /* .layout-enter-active {
   animation: fadeIn 0.3s;
 }
@@ -88,5 +90,9 @@ onMounted(() => {
 }
 .page-leave-active {
   animation: fadeOut 0.1s;
+}
+
+body.prevent-flash {
+  background-color: $dark-page !important;
 }
 </style>

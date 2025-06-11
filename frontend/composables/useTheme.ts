@@ -1,5 +1,5 @@
 export default () => {
-  const darkMode = useCookie<boolean | 'auto'>('dark-mode', { default: () => false })
+  const darkMode = useCookie<boolean>('dark-mode', { default: () => false })
 
   const getThemeStyle = () => {
     const { globalSettings } = useGlobalSettings()

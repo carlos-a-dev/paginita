@@ -2,12 +2,13 @@
   <transition
     mode="out-in"
     appear
-    enter-active-class="animated rotateIn"
+    enter-active-class="animated rotateIn fadeIn faster"
+    leave-active-class="animated rotateOut fadeOut faster"
   >
     <q-btn
-      :key="icon"
       v-bind="$props"
-      :icon="icon"
+      :key="darkMode ? 'dark_mode' : 'light_mode'"
+      :icon="darkMode ? 'dark_mode' : 'light_mode'"
       @click="toggleDarkMode"
     />
   </transition>
@@ -30,19 +31,7 @@ const { darkMode } = useTheme()
 const { dark } = useQuasar()
 
 const toggleDarkMode = () => {
-  darkMode.value = darkMode.value === 'auto' ? true : (darkMode.value ? false : 'auto')
+  darkMode.value = !darkMode.value
   dark.set(darkMode.value)
 }
-
-const icon = computed(() => {
-  switch (darkMode.value) {
-    case true:
-      return 'dark_mode'
-    case false:
-      return 'light_mode'
-    case 'auto':
-    default:
-      return 'brightness_auto'
-  }
-})
 </script>
