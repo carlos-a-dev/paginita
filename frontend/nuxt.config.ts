@@ -1,6 +1,8 @@
+const strapiUrl = process.env.NUXT_PUBLIC_STRAPI_URL ?? 'http://localhost:1337'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['nuxt-quasar-ui', '@nuxtjs/strapi', '@nuxt/eslint'],
+  modules: ['nuxt-quasar-ui', '@nuxtjs/strapi', '@nuxt/eslint', '@nuxt/image'],
   components: [
     {
       path: '~/components/F',
@@ -21,11 +23,33 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
+  image: {
+    ipx: {
+      modifiers: {
+        format: 'webp',
+        quality: 80,
+      },
+    },
+    screens: {
+      'xs': 600,
+      'sm': 1024,
+      'md': 1440,
+      'lg': 1920,
+      'xl': 1920,
+      'xxl': 1920,
+      '2xl': 1920,
+    },
+    domains: [strapiUrl.replace('http://', '').replace('https://', '')],
+    alias: {
+      strapi: strapiUrl,
+    },
+  },
   quasar: {
     extras: {
       fontIcons: ['fontawesome-v6'],
       animations: 'all',
     },
+    cssAddon: true,
     plugins: ['Notify', 'Loading'],
     components: {
       defaults: {
@@ -40,7 +64,7 @@ export default defineNuxtConfig({
     },
   },
   strapi: {
-    url: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
+    url: strapiUrl,
     devtools: true,
     version: 'v5',
   },

@@ -5,13 +5,13 @@
       v-bind="imgProps"
       fetchpriority="high"
       loading="eager"
-      class="hero-img"
       fit="cover"
-      :ratio="$q.screen.width / $q.screen.height"
-      :height="$q.screen.height - 80 + 'px'"
+      height="80vh"
     >
       <div class="fit flex flex-center text-center transparent">
-        <div :class="[$q.screen.gt.xs ? 'q-pa-xl' : 'q-pa-none']">
+        <div
+          class="q-pa-xs-none q-pa-sm-lg q-pa-md-xl"
+        >
           <h1
             v-if="data.title"
             class="text-h2 text-bold"
@@ -53,9 +53,13 @@ const props = defineProps<{
 }>()
 
 const imgProps = computed(() => {
-  return useResponsiveImage({
-    image: props.data.background,
-    sizes: '100vw', // Hero images typically span the full viewport width
-  })
+  return props.data.background
+    ? useStrapiImage(props.data.background, {
+        sizes: 'xs:125vw sm:100vw md:100vw lg:100vw xl:100vw',
+      })
+    : {
+        src: 'notFound.jpg',
+        alt: 'not found',
+      }
 })
 </script>
