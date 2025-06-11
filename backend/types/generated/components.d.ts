@@ -5,7 +5,9 @@ export interface DataContactForm extends Struct.ComponentSchema {
   info: {
     displayName: 'ContactForm';
   };
-  attributes: {};
+  attributes: {
+    header: Schema.Attribute.RichText;
+  };
 }
 
 export interface DataContent extends Struct.ComponentSchema {
@@ -64,7 +66,6 @@ export interface FContent extends Struct.ComponentSchema {
   attributes: {
     data: Schema.Attribute.Component<'data.content', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<true>;

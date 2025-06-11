@@ -71,14 +71,6 @@
       ],
       "required": true
     },
-    "seo": {
-      "type": "json",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
     "props": {
       "type": "component",
       "pluginOptions": {

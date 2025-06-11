@@ -4,6 +4,10 @@
     "displayName": "ContactForm"
   },
   "options": {},
-  "attributes": {},
+  "attributes": {
+    "header": {
+      "type": "richtext"
+    }
+  },
   "config": {}
 }
