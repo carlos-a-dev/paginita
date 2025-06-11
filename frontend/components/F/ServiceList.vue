@@ -3,29 +3,33 @@
     v-once
     class="q-pa-md q-pa-md-xl"
   >
-    <div class="text-h4 text-center q-mb-xl">
-      {{ data.title }}
-    </div>
-    <div class="q-gutter-y-lg row justify-center">
+    <q-card-section>
+      <h4 class="h4 text-center">
+        {{ data.title }}
+      </h4>
+    </q-card-section>
+    <q-card-section class="q-gutter-y-lg row justify-center">
       <q-card
         v-for="service in services"
         :key="service.id"
         flat
-        class="col-xs-12 col-sm-6 col-md-3 col-lg-2 q-pa-md text-center"
+        class="col-xs-12 col-sm-6 col-md-3 col-lg-2 text-center"
       >
-        <q-icon
-          :name="service.icon"
-          size="64px"
-          color="primary"
-        />
-        <div class="text-h6 q-mt-md">
-          {{ service.title }}
-        </div>
-        <p class="text-body2">
-          {{ service.description }}
-        </p>
+        <q-card-section>
+          <q-icon
+            :name="service.icon"
+            size="64px"
+            color="primary"
+          />
+          <div class="text-h6 q-mt-md">
+            {{ service.title }}
+          </div>
+          <p class="text-body2">
+            {{ service.description }}
+          </p>
+        </q-card-section>
       </q-card>
-    </div>
+    </q-card-section>
   </q-card>
 </template>
 

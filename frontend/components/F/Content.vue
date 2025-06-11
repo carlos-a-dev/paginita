@@ -2,8 +2,10 @@
   <q-card
     v-once
   >
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div v-html="result" />
+    <q-card-section>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-html="result" />
+    </q-card-section>
   </q-card>
 </template>
 
@@ -14,7 +16,5 @@ const props = defineProps<{
   }
 }>()
 
-const { md } = useMarkdown()
-
-const result = md.render(props.data?.body || '')
+const result = useMarkdown().md.render(props.data?.body || '')
 </script>

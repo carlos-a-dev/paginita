@@ -4,7 +4,10 @@
       class="transparent"
     />
 
-    <q-page-container class="row justify-center">
+    <q-page-container
+      class="row justify-center"
+      :class="{ 'apply-xs-page-padding': $q.screen.xs }"
+    >
       <slot />
 
       <!-- For Larger formats -->
@@ -28,7 +31,7 @@
 </template>
 
 <style>
-main.q-page {
-  padding-bottom: 80px;
+.q-page-container.apply-xs-page-padding > main.q-page {
+  padding-bottom: 100px;
 }
 </style>

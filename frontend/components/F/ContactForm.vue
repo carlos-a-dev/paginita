@@ -1,60 +1,87 @@
+<!-- eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html -->
 <template>
-  <q-form
-    ref="contactForm"
-    class="q-gutter-sm"
-    style="width: 100%; max-width: 500px"
-    @submit.prevent="submitForm"
-    @reset="onReset"
-  >
-    <q-input
-      v-model="formData.name"
-      filled
-      label="Name"
-      :rules="[val => !!val || 'Name is required']"
-      lazy-rules
+  <q-card style="max-width: 600px;">
+    <q-card-section
+      v-if="data?.header"
+      class="text-center"
+      v-html="useMarkdown().md.render(data.header)"
     />
-    <q-input
-      v-model="lastName"
-      type="text"
-      autocomplete="off"
-      label="Last Name"
-      class="hidden"
-    />
-    <q-input
-      v-model="formData.email"
-      filled
-      label="Email"
-      type="email"
-      :rules="[
-        val => !!val || 'Email is required',
-        val => /.+@.+\..+/.test(val) || 'Enter a valid email',
-      ]"
-      lazy-rules
-    />
-    <q-input
-      v-model="formData.message"
-      filled
-      label="Message"
-      type="textarea"
-      :rules="[
-        val => !!val || 'Message is required',
-        val => val.length <= 500 || 'Message must be less than 500 characters',
-        val => val.length > 20 || 'Message must be more than 20 characters',
-      ]"
-      counter
-    />
-    <q-btn
-      label="Send Message"
-      color="primary"
-      type="submit"
-      class="full-width"
-    />
-  </q-form>
+    <q-card-section>
+      <q-form
+        ref="contactForm"
+        class="q-gutter-y-sm fit"
+        @submit.prevent="submitForm"
+        @reset="onReset"
+      >
+        <q-input
+          v-model="formData.name"
+          outlined
+          label="Name"
+          :rules="[val => !!val || 'Name is required']"
+          lazy-rules
+        >
+          <template #prepend>
+            <q-icon name="person" />
+          </template>
+        </q-input>
+        <q-input
+          v-model="lastName"
+          type="text"
+          autocomplete="off"
+          label="Last Name"
+          class="hidden"
+        />
+        <q-input
+          v-model="formData.email"
+          outlined
+          label="Email"
+          type="email"
+          :rules="[
+            val => !!val || 'Email is required',
+            val => /.+@.+\..+/.test(val) || 'Enter a valid email',
+          ]"
+          lazy-rules
+        >
+          <template #prepend>
+            <q-icon name="email" />
+          </template>
+        </q-input>
+        <q-input
+          v-model="formData.message"
+          outlined
+          label="Message"
+          type="textarea"
+          :rules="[
+            val => !!val || 'Message is required',
+            val => val.length <= 500 || 'Message must be less than 500 characters',
+            val => val.length > 20 || 'Message must be more than 20 characters',
+          ]"
+          counter
+        >
+          <template #prepend>
+            <q-icon name="message" />
+          </template>
+        </q-input>
+        <q-btn
+          label="Send Message"
+          color="primary"
+          type="submit"
+          class="full-width"
+        />
+      </q-form>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
+
+defineProps<{
+  data?: {
+    header?: string
+  }
+}>()
 
 const $q = useQuasar()
 const contactForm = ref()
