@@ -4,7 +4,7 @@
       class="transparent"
     />
 
-    <q-page-container>
+    <q-page-container class="row justify-center">
       <slot />
 
       <!-- For Larger formats -->

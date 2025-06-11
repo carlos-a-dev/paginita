@@ -1,7 +1,7 @@
 <template>
   <q-page
     v-bind="page?.props"
-    class="q-gutter-y-xl"
+    class="q-gutter-y-xl col-xs-12 col-md-10 col-lg-8"
   >
     <component-renderer
       v-for="(component, index) in page?.body"
