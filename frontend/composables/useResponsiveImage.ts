@@ -9,11 +9,11 @@ export function useResponsiveImage(src: string, alt?: string, options: ImageOpti
   }
 
   return {
-    ...useImage().getSizes('/strapi' + src, options),
+    ...useImage().getSizes(src, options),
     alt: alt ?? undefined,
   }
 }
 
 export function useStrapiImage(image: MediaImage, options: ImageOptions = {}) {
-  return useResponsiveImage(image.url, image.alternativeText ?? undefined, options)
+  return useResponsiveImage(`/strapi${image.url}`, image.alternativeText ?? undefined, options)
 }

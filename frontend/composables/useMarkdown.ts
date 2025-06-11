@@ -1,6 +1,7 @@
 import markdownit from 'markdown-it'
 import markdownItAttrs from 'markdown-it-attrs'
 import markdownItHighlightjs from 'markdown-it-highlightjs'
+import { useResponsiveImage } from '~/composables/useResponsiveImage'
 
 export const useMarkdown = () => {
   const md = markdownit()
@@ -35,6 +36,24 @@ export const useMarkdown = () => {
     const token = tokens[idx]
     // Add a class depending on the heading level
     token.attrJoin('class', `text-${token.tag}`)
+    return self.renderToken(tokens, idx, options)
+  }
+
+  md.renderer.rules.image = (tokens, idx, options, env, self) => {
+    const token = tokens[idx]
+    const src = token.attrGet('src')
+    const alt = token.content
+
+    if (src) {
+      const { src: newSrc, srcset, sizes } = useResponsiveImage(src, alt)
+      token.attrSet('src', newSrc ?? '')
+      if (srcset) {
+        token.attrSet('srcset', srcset)
+      }
+      if (sizes) {
+        token.attrSet('sizes', sizes)
+      }
+    }
     return self.renderToken(tokens, idx, options)
   }
 

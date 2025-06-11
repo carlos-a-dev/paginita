@@ -7,8 +7,8 @@ const globalToGlobalSettings = (global: Global): GlobalSettings => {
   return {
     siteName: global.siteName,
     siteDescription: global.siteDescription,
-    siteLogo: global.siteLogo?.formats?.thumbnail?.url || global.siteLogo?.url || '',
-    favicon: global.favicon?.url || '',
+    siteLogo: global.siteLogo?.url ? `/strapi${global.siteLogo?.url}` : '',
+    favicon: global.favicon?.url ? process.env.NUXT_PUBLIC_STRAPI_URL + global.favicon?.url : '',
     metaTitle: global.defaultSeo?.metaTitle || '',
     metaDescription: global.defaultSeo?.metaDescription || '',
     shareImage: global.defaultSeo?.shareImage?.url || '',
@@ -23,9 +23,7 @@ export const useGlobalSettings = () => {
     const params = {
       populate: {
         favicon: { fields: ['url'] },
-        siteLogo: {
-          fields: ['url', 'alternativeText', 'formats'],
-        },
+        siteLogo: { fields: ['url'] },
         defaultSeo: {
           populate: {
             shareImage: { fields: ['url'] },

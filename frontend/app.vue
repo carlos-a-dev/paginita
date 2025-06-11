@@ -28,7 +28,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/x-icon',
-      href: globalSettings.value?.favicon ? useStrapiMedia(globalSettings.value?.favicon ?? '') : '/favicon.ico',
+      href: globalSettings.value?.favicon ?? '/favicon.ico',
     },
   ],
   meta: [
