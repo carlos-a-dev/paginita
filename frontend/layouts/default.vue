@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hhh lpR fff">
+  <q-layout view="hhh lpr fff">
     <app-header
       class="transparent"
     />

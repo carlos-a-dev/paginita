@@ -1,12 +1,13 @@
 <template>
   <q-card
     v-once
-    class="q-pa-xl"
+    class="q-pa-md q-pa-md-xl"
+    style="border-radius: 2em;"
   >
     <div class="text-h4 text-center q-mb-xl">
       {{ data.title }}
     </div>
-    <div class="q-gutter-xl row justify-center">
+    <div class="q-gutter-y-lg row justify-center">
       <q-card
         v-for="service in services"
         :key="service.id"
