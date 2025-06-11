@@ -1,5 +1,5 @@
 <template>
-  <q-card style="border-radius: 2em;">
+  <q-card>
     <q-img
       v-if="props.data.background"
       v-bind="imgProps"

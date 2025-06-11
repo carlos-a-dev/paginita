@@ -26,3 +26,9 @@
     <app-footer />
   </q-layout>
 </template>
+
+<style>
+main.q-page {
+  padding-bottom: 80px;
+}
+</style>

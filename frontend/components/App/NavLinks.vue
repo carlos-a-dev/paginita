@@ -37,7 +37,7 @@ const { data: links } = useAsyncData('nav-links', async () => {
 
 <style scoped>
 .q-btn {
-  border-radius: 2em !important;
+  border-radius: 28px !important;
   font-weight: bold;
 }
 </style>

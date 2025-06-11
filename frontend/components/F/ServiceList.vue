@@ -2,7 +2,6 @@
   <q-card
     v-once
     class="q-pa-md q-pa-md-xl"
-    style="border-radius: 2em;"
   >
     <div class="text-h4 text-center q-mb-xl">
       {{ data.title }}
