@@ -1,8 +1,7 @@
 <template>
   <q-btn-group
     flat
-    class="text-dark q-py-sm q-px-xs"
-    style="backdrop-filter: blur(5px); background: hsla(0, 0%, 90%, .5);"
+    class="q-py-sm q-px-xs"
   >
     <q-btn
       v-for="link in links"
@@ -36,6 +35,18 @@ const { data: links } = useAsyncData('nav-links', async () => {
 </script>
 
 <style scoped>
+.q-btn-group {
+  backdrop-filter: blur(5px);
+}
+
+body.body--light .q-btn-group {
+  background: hsla(0, 0%, 90%, .4);
+}
+
+body.body--dark .q-btn-group {
+  background: hsla(0, 0%, 20%, .4);
+}
+
 .q-btn {
   border-radius: 28px !important;
   font-weight: bold;
