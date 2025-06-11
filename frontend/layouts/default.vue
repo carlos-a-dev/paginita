@@ -4,7 +4,7 @@
       class="transparent"
     />
 
-    <q-page-container>
+    <q-page-container style="min-height: 120vh;">
       <slot />
     </q-page-container>
 

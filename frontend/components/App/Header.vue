@@ -30,7 +30,7 @@
         :duration="100"
       >
         <app-nav-links
-          class="q-mb-sm q-mt-md"
+          class="q-mb-lg q-mt-md"
           :class="[$q.screen.gt.sm ? 'fixed-top-left' : 'fixed-bottom-left']"
           style="left: 50%; transform: translateX(-50%);"
         />
