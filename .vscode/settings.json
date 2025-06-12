@@ -22,5 +22,14 @@
     "typescriptreact",
     "vue"
   ],
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/dist": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  }
 }
