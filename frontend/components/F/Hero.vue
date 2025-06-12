@@ -14,7 +14,6 @@
         >
           <h1
             v-if="data.title"
-            class="text-weight-bold"
             :class="$q.screen.gt.xs ? 'text-h2' : 'text-h3'"
           >
             {{ data.title }}

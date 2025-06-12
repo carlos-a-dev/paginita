@@ -13,8 +13,10 @@
         </NuxtLink>
       </q-avatar>
 
-      <q-toolbar-title class="text-h2">
-        {{ globalSettings?.siteName }}
+      <q-toolbar-title>
+        <h2>
+          {{ globalSettings?.siteName }}
+        </h2>
       </q-toolbar-title>
 
       <lazy-app-dark-btn />

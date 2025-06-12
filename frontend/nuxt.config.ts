@@ -59,7 +59,7 @@ export default defineNuxtConfig({
     },
     cssAddon: true,
     plugins: ['Notify', 'Loading'],
-    sassVariables: './assets/quasar-variables.sass',
+    sassVariables: './assets/styles/quasar-variables.scss',
     components: {
       defaults: {
         QBtn: {

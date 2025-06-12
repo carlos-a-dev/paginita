@@ -8,19 +8,12 @@ body {
 }
 
 // Headings use Montserrat
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 200;
-//   margin: 0;
-}
-
-h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 200;
 }
 
 // Optional: Override Quasar specific elements
-.q-btn, .q-toolbar-title, .q-card__title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 200;
-}
+// .q-btn, .q-toolbar-title, .q-card__title {
+//   font-family: 'Montserrat', sans-serif;
+// }
