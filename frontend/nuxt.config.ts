@@ -15,8 +15,16 @@ export default defineNuxtConfig({
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@200;300&display=swap',
+        },
+      ],
+    },
   },
-  css: ['./assets/styles/highlightjs.scss'],
+  css: ['@/assets/styles/highlightjs.scss', '@/assets/styles/fonts.scss'],
   compatibilityDate: '2025-05-15',
   eslint: {
     config: {
