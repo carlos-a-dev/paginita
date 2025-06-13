@@ -1,13 +1,15 @@
 <template>
   <q-page
     v-bind="page?.props"
-    class="q-gutter-y-xl col-xs-12 col-md-10 col-lg-8"
+    class="col-xs-12 col-md-10 col-lg-8"
   >
-    <component-renderer
-      v-for="(component, index) in page?.body"
-      :key="index"
-      v-bind="component || {}"
-    />
+    <div class="q-gutter-y-xl">
+      <component-renderer
+        v-for="(component, index) in page?.body"
+        :key="index"
+        v-bind="component || {}"
+      />
+    </div>
   </q-page>
 </template>
 

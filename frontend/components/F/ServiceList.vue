@@ -3,10 +3,8 @@
     v-once
     class="q-pa-md q-pa-md-xl"
   >
-    <q-card-section>
-      <h4 class="h4 text-center">
-        {{ data.title }}
-      </h4>
+    <q-card-section class="text-h4 text-center">
+      {{ data.title }}
     </q-card-section>
     <q-card-section class="q-gutter-y-lg row justify-center">
       <q-card

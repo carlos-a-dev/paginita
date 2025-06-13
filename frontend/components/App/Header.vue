@@ -3,8 +3,8 @@
     :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
     class="q-px-md-lg"
     v-bind="$props"
-    height-hint="70px"
-    style="height: 70px;"
+    height-hint="90px"
+    style="height: 90px;"
   >
     <q-toolbar class="full-height">
       <q-avatar size="60px">

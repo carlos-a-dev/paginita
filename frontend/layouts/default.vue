@@ -6,7 +6,7 @@
 
     <q-page-container
       class="row justify-center"
-      :class="{ 'apply-xs-page-padding': $q.screen.xs }"
+      :class="{ 'apply-xs-page-padding': $q.screen.lt.md }"
     >
       <slot />
 

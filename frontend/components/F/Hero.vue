@@ -28,7 +28,7 @@
           <q-btn
             v-if="data.callToAction && data.link"
             unelevated
-            color="secondary"
+            color="primary"
             :label="data.callToAction"
             class="q-mt-lg"
             :to="data.link"

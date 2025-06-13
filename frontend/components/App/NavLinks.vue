@@ -9,7 +9,7 @@
       :label="link.label"
       :to="link.url"
       size="md"
-      :color="$route.path === link.url ? 'info' : undefined"
+      :color="$route.path === link.url ? 'secondary' : undefined"
       :class="{ 'btn-active': $route.path === link.url }"
       class="q-mx-sm"
     />
