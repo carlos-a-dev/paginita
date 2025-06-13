@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_b_lacklist_rules",
+  "info": {
+    "displayName": "BLacklistRule"
+  },
+  "options": {},
+  "attributes": {
+    "field": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "name",
+        "email",
+        "phone",
+        "message",
+        "ip"
+      ]
+    },
+    "rule": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

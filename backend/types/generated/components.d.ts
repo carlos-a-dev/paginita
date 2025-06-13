@@ -2214,6 +2214,18 @@ export interface PropsQPage extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedBLacklistRule extends Struct.ComponentSchema {
+  collectionName: 'components_shared_b_lacklist_rules';
+  info: {
+    displayName: 'BLacklistRule';
+  };
+  attributes: {
+    field: Schema.Attribute.Enumeration<['name', 'email', 'phone', 'message', 'ip']> &
+      Schema.Attribute.Required;
+    rule: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedClass extends Struct.ComponentSchema {
   collectionName: 'components_shared_classes';
   info: {
@@ -2324,6 +2336,7 @@ declare module '@strapi/strapi' {
       'f.service-list': FServiceList;
       'props.q-card': PropsQCard;
       'props.q-page': PropsQPage;
+      'shared.b-lacklist-rule': SharedBLacklistRule;
       'shared.class': SharedClass;
       'shared.emails': SharedEmails;
       'shared.nav-link': SharedNavLink;

@@ -380,6 +380,7 @@ export interface ApiContactSettingContactSetting extends Struct.SingleTypeSchema
   };
   attributes: {
     bcc: Schema.Attribute.Component<'shared.emails', true>;
+    blacklist: Schema.Attribute.Component<'shared.b-lacklist-rule', true>;
     cc: Schema.Attribute.Component<'shared.emails', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;

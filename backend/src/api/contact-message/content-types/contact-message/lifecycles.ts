@@ -32,6 +32,23 @@ const lifecycles = {
       );
       throw new errors.ApplicationError('Something went wrong');
     }
+
+    // Check blacklisted
+    const settings = (await strapi.db.query('api::contact-setting.contact-setting').findOne({
+      populate: ['blacklist']
+    })) as Data.ContentType<'api::contact-setting.contact-setting'>;
+
+    settings.blacklist.forEach((rule) => {
+      const regex = new RegExp(rule.rule);
+      if (regex.test(data[rule.field])) {
+        // A recent message from this IP or email already exists.
+        strapi.log.warn(
+          `Contact message blocked! Rule: ${rule.id} | Field: ${rule.field} | Value: ${data[rule.field]}.`,
+          data
+        );
+        throw new errors.ApplicationError('Something went wrong');
+      }
+    });
   },
   async afterCreate(event: { result: Data.ContentType<'api::contact-message.contact-message'> }) {
     const { result } = event;

@@ -35,6 +35,11 @@
       "type": "component",
       "component": "shared.emails",
       "repeatable": true
+    },
+    "blacklist": {
+      "type": "component",
+      "component": "shared.b-lacklist-rule",
+      "repeatable": true
     }
   }
 }
