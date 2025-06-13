@@ -33,7 +33,8 @@ const lifecycles = {
       throw new errors.ApplicationError('Something went wrong');
     }
   },
-  async afterCreate({ result }) {
+  async afterCreate(event: { result: Data.ContentType<'api::contact-message.contact-message'> }) {
+    const { result } = event;
     try {
       const settings = (await strapi.db.query('api::contact-setting.contact-setting').findOne({
         populate: ['to', 'cc']
@@ -69,6 +70,7 @@ const lifecycles = {
         {
           name: result.name,
           email: result.email,
+          phone: result.phone,
           message: result.message
         },
         result
