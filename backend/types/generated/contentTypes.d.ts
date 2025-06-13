@@ -360,6 +360,7 @@ export interface ApiContactMessageContactMessage extends Struct.CollectionTypeSc
       Schema.Attribute.Private;
     message: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     sent: Schema.Attribute.Boolean & Schema.Attribute.Required & Schema.Attribute.DefaultTo<false>;
     updatedAt: Schema.Attribute.DateTime;
