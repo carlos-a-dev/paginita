@@ -6,17 +6,17 @@
       class="text-center"
       v-html="useMarkdown().md.render(data.header)"
     />
-    <q-card-section>
-      <q-form
-        ref="contactForm"
-        class="q-gutter-y-sm fit"
-        @submit.prevent="submitForm"
-        @reset="onReset"
-      >
+    <q-form
+      ref="contactForm"
+      @submit.prevent="submitForm"
+      @reset="onReset"
+    >
+      <q-card-section class="q-gutter-y-sm fit">
         <q-input
           v-model="formData.name"
           outlined
           label="Name"
+          name="name"
           :rules="[val => !!val || 'Name is required']"
           lazy-rules
         >
@@ -29,12 +29,14 @@
           type="text"
           autocomplete="off"
           label="Last Name"
+          name="lastName"
           class="hidden"
         />
         <q-input
           v-model="formData.email"
           outlined
           label="Email"
+          name="email"
           type="email"
           :rules="[
             val => !!val || 'Email is required',
@@ -47,9 +49,22 @@
           </template>
         </q-input>
         <q-input
+          v-model="formData.phone"
+          outlined
+          label="Phone"
+          name="phone"
+          type="tel"
+          bottom-slots
+        >
+          <template #prepend>
+            <q-icon name="phone" />
+          </template>
+        </q-input>
+        <q-input
           v-model="formData.message"
           outlined
           label="Message"
+          name="message"
           type="textarea"
           :rules="[
             val => !!val || 'Message is required',
@@ -57,19 +72,23 @@
             val => val.length > 20 || 'Message must be more than 20 characters',
           ]"
           counter
+          maxlength="500"
         >
           <template #prepend>
             <q-icon name="message" />
           </template>
         </q-input>
+      </q-card-section>
+      <q-card-actions>
         <q-btn
+          icon="send"
           label="Send Message"
           color="primary"
           type="submit"
           class="full-width"
         />
-      </q-form>
-    </q-card-section>
+      </q-card-actions>
+    </q-form>
   </q-card>
 </template>
 
@@ -88,6 +107,7 @@ const contactForm = ref()
 const formData = ref({
   name: '',
   email: '',
+  phone: '',
   message: '',
 })
 const lastName = ref('')
@@ -145,6 +165,7 @@ function onReset() {
   formData.value = {
     name: '',
     email: '',
+    phone: '',
     message: '',
   }
 
