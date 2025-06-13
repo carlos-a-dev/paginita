@@ -10,11 +10,13 @@
     >
       <div class="fit flex flex-center text-center transparent">
         <div
-          class="q-pa-xs-none q-pa-sm-lg q-pa-md-xl"
+          class="q-px-xs-md q-py-xs-lg q-pa-sm-lg q-pa-md-xl rounded-borders"
+          :class="highlightClass"
         >
           <h1
             v-if="data.title"
             :class="$q.screen.gt.xs ? 'text-h2' : 'text-h3'"
+            class="q-my-none"
           >
             {{ data.title }}
           </h1>
@@ -50,8 +52,21 @@ const props = defineProps<{
     callToAction?: string
     link?: string
     background?: MediaImage
+    highlight?: 'dark' | 'light' | 'none'
   }
 }>()
+
+const highlightClass = computed(() => {
+  switch (props.data.highlight) {
+    case 'dark':
+      return 'transparent-dark'
+    case 'light':
+      return 'transparent-light'
+    case 'none':
+    default:
+      return ''
+  }
+})
 
 const imgProps = computed(() => {
   if (!props.data.background) {

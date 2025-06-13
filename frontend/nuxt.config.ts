@@ -24,7 +24,11 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ['@/assets/styles/highlightjs.scss', '@/assets/styles/fonts.scss'],
+  css: [
+    '@/assets/styles/fonts.scss',
+    '@/assets/styles/highlightjs.scss',
+    '@/assets/styles/main.scss',
+  ],
   compatibilityDate: '2025-05-15',
   eslint: {
     config: {

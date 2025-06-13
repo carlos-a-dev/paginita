@@ -11,18 +11,27 @@
     "message": {
       "type": "string"
     },
+    "callToAction": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "highlight": {
+      "type": "enumeration",
+      "default": "none",
+      "enum": [
+        "dark",
+        "light",
+        "none"
+      ]
+    },
     "background": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
         "images"
       ]
-    },
-    "callToAction": {
-      "type": "string"
-    },
-    "link": {
-      "type": "string"
     }
   },
   "config": {}

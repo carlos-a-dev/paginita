@@ -28,6 +28,8 @@ export interface DataHero extends Struct.ComponentSchema {
   attributes: {
     background: Schema.Attribute.Media<'images'>;
     callToAction: Schema.Attribute.String;
+    highlight: Schema.Attribute.Enumeration<['dark', 'light', 'none']> &
+      Schema.Attribute.DefaultTo<'none'>;
     link: Schema.Attribute.String;
     message: Schema.Attribute.String;
     title: Schema.Attribute.String;
