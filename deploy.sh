@@ -1,5 +1,32 @@
 #!/bin/bash
 
+# Lock file mechanism to ensure only one instance runs (with 20 min stale lock timeout)
+LOCKFILE="/tmp/paginita_deploy.sh.lock"
+MAX_AGE_MINUTES=20
+if [ -e "$LOCKFILE" ]; then
+  PID=$(cat "$LOCKFILE")
+  # Get lock file age in minutes
+  if stat --version >/dev/null 2>&1; then
+    # GNU stat (Linux)
+    FILE_AGE_MINUTES=$(( ( $(date +%s) - $(stat -c %Y "$LOCKFILE") ) / 60 ))
+  else
+    # BSD stat (macOS, *BSD)
+    FILE_AGE_MINUTES=$(( ( $(date +%s) - $(stat -f %m "$LOCKFILE") ) / 60 ))
+  fi
+  if [ $FILE_AGE_MINUTES -gt $MAX_AGE_MINUTES ]; then
+    echo "Lock file is older than $MAX_AGE_MINUTES minutes. Removing stale lock."
+    rm -f "$LOCKFILE"
+  elif [ -d "/proc/$PID" ] && grep -q "deploy.sh" "/proc/$PID/cmdline"; then
+    echo "Another instance of deploy.sh (PID $PID) is already running. Exiting."
+    exit 1
+  else
+    echo "Stale lock file found. Removing."
+    rm -f "$LOCKFILE"
+  fi
+fi
+echo $$ > "$LOCKFILE"
+trap 'rm -f "$LOCKFILE"' EXIT INT TERM
+
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
