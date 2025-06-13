@@ -8,7 +8,6 @@
       <div>
         <q-select
           v-model="selectedSize"
-          filled
           dense
           label="Component Size"
           stack-label
@@ -99,6 +98,13 @@
     <!-- Inputs -->
     <section>
       <h2>Inputs</h2>
+      <q-toggle
+        v-model="isDense"
+        label="Toggle Dense Inputs"
+        class="q-mt-md"
+        dense
+        color="primary"
+      />
       <div class="row q-gutter-md q-flex-wrap">
         <q-input
           v-model="inputs.standard"
@@ -127,16 +133,12 @@
           v-model="inputs.icon"
           label="With Icon"
           :dense="isDense"
-          prefix="mdi-magnify"
-        />
+        >
+          <template #prepend>
+            <q-icon name="search" />
+          </template>
+        </q-input>
       </div>
-      <q-toggle
-        v-model="isDense"
-        label="Toggle Dense Inputs"
-        class="q-mt-md"
-        dense
-        color="primary"
-      />
     </section>
 
     <q-separator spaced />
@@ -178,10 +180,10 @@
         </q-card>
 
         <q-card
-          style="max-width: 300px;"
           flat
           bordered
-          class="bg-grey-1"
+          :dark="false"
+          class="bg-grey-1 text-dark"
         >
           <q-card-section>
             <div class="text-h6">
@@ -431,14 +433,111 @@
         </q-card>
       </q-dialog>
     </section>
+
+    <section class="q-pa-md">
+      <h2>
+        Typography
+      </h2>
+
+      <div class="q-gutter-md">
+        <div class="text-h1">
+          Heading 1 - .text-h1
+        </div>
+        <div class="text-h2">
+          Heading 2 - .text-h2
+        </div>
+        <div class="text-h3">
+          Heading 3 - .text-h3
+        </div>
+        <div class="text-h4">
+          Heading 4 - .text-h4
+        </div>
+        <div class="text-h5">
+          Heading 5 - .text-h5
+        </div>
+        <div class="text-h6">
+          Heading 6 - .text-h6
+        </div>
+
+        <div class="text-subtitle1">
+          Subtitle 1 - .text-subtitle1
+        </div>
+        <div class="text-subtitle2">
+          Subtitle 2 - .text-subtitle2
+        </div>
+
+        <div class="text-body1">
+          Body 1 - .text-body1 (Default paragraph text)
+        </div>
+        <div class="text-body2">
+          Body 2 - .text-body2
+        </div>
+
+        <div class="text-caption">
+          Caption - .text-caption
+        </div>
+        <div class="text-overline">
+          Overline - .text-overline
+        </div>
+      </div>
+
+      <div class="q-mt-xl q-gutter-sm">
+        <div class="text-bold">
+          .text-bold
+        </div>
+        <div class="text-italic">
+          .text-italic
+        </div>
+        <div class="text-uppercase">
+          .text-uppercase
+        </div>
+        <div class="text-lowercase">
+          .text-lowercase
+        </div>
+        <div class="text-weight-thin">
+          .text-weight-thin
+        </div>
+        <div class="text-weight-light">
+          .text-weight-light
+        </div>
+        <div class="text-weight-regular">
+          .text-weight-regular
+        </div>
+        <div class="text-weight-medium">
+          .text-weight-medium
+        </div>
+        <div class="text-weight-bold">
+          .text-weight-bold
+        </div>
+      </div>
+
+      <div class="q-mt-xl">
+        <div class="text-center">
+          .text-center — Center aligned
+        </div>
+        <div class="text-left">
+          .text-left — Left aligned
+        </div>
+        <div class="text-right">
+          .text-right — Right aligned
+        </div>
+      </div>
+    </section>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-// import { useQuasar } from 'quasar'
 
-// const $q = useQuasar()
+definePageMeta({
+  middleware: [
+    function () {
+      if (process.env.NODE_ENV === 'production') {
+        return navigateTo('/404')
+      }
+    },
+  ],
+})
 
 const sizeOptions = [
   { label: 'XS', value: 'xs' },
