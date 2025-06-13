@@ -17,7 +17,7 @@
           <q-icon
             :name="service.icon"
             size="64px"
-            color="primary"
+            color="secondary"
           />
           <div class="text-h6 q-mt-md">
             {{ service.title }}

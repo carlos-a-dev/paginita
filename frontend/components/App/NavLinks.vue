@@ -1,6 +1,5 @@
 <template>
   <q-btn-group
-    flat
     class="q-py-sm q-px-xs"
   >
     <q-btn
@@ -9,7 +8,7 @@
       :label="link.label"
       :to="link.url"
       size="md"
-      :color="$route.path === link.url ? 'secondary' : undefined"
+      :color="$route.path === link.url ? 'primary' : undefined"
       :class="{ 'btn-active': $route.path === link.url }"
       class="q-mx-sm"
     />

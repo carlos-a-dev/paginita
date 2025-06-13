@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     },
     '~/components',
   ],
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
