@@ -8,6 +8,15 @@ log() {
   echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
 }
 
+# Parse arguments for --force
+FORCE_DEPLOY=0
+for arg in "$@"; do
+  if [ "$arg" = "--force" ]; then
+    FORCE_DEPLOY=1
+    log "Force deployment enabled via --force flag."
+  fi
+done
+
 # Attempt to set up Node.js environment, particularly for pnpm.
 # This is often needed when running scripts via cron, which has a minimal environment.
 
@@ -57,13 +66,18 @@ fi
 # Count commits on the remote that are not yet in the local branch HEAD
 CHANGES_TO_PULL=$(git rev-list HEAD..@{u} --count)
 
-if [ "$CHANGES_TO_PULL" -eq 0 ]; then
+if [ "$CHANGES_TO_PULL" -eq 0 ] && [ "$FORCE_DEPLOY" -ne 1 ]; then
     log "No new commits to pull from remote. Local branch is up-to-date or ahead."
     log "Deployment not required. Exiting."
     exit 0
 fi
 
-log "$CHANGES_TO_PULL new commit(s) found on remote. Proceeding with deployment."
+if [ "$FORCE_DEPLOY" -eq 1 ]; then
+    log "Proceeding with deployment due to --force flag, even though there are no new commits."
+else
+    log "$CHANGES_TO_PULL new commit(s) found on remote. Proceeding with deployment."
+fi
+
 log "Starting deployment process..."
 
 # 1. Git Pull
