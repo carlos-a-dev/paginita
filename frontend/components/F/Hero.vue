@@ -6,6 +6,7 @@
       fetchpriority="high"
       loading="eager"
       height="80vh"
+      style="max-height: 800px;"
       no-transition
     >
       <div class="fit flex flex-center text-center transparent">

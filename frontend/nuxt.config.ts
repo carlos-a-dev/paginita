@@ -18,8 +18,10 @@ export default defineNuxtConfig({
     head: {
       link: [
         {
-          rel: 'stylesheet',
+          rel: 'preload',
+          as: 'style',
           href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Montserrat:wght@200;300;400&display=swap',
+          onload: 'this.onload=null;this.rel=\'stylesheet\'',
         },
       ],
     },
@@ -59,7 +61,12 @@ export default defineNuxtConfig({
   quasar: {
     extras: {
       fontIcons: ['fontawesome-v6'],
-      animations: 'all',
+      animations: [
+        'fadeIn',
+        'fadeOut',
+        'rotateIn',
+        'rotateOut',
+      ],
     },
     cssAddon: true,
     plugins: ['Notify', 'Loading'],
