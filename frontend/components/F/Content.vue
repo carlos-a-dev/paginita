@@ -13,8 +13,23 @@
 const props = defineProps<{
   data?: {
     body: string
+    useStyledSiteName: boolean
   }
 }>()
 
-const result = useMarkdown().md.render(props.data?.body || '')
+const { globalSettings } = useGlobalSettings()
+
+const result = computed(() => {
+  let md = useMarkdown().md.render(props.data?.body || '')
+
+  if (
+    props.data?.useStyledSiteName
+    && globalSettings.value.siteNameStyled
+    && globalSettings.value.siteName !== globalSettings.value.siteNameStyled
+  ) {
+    md = md.replaceAll(globalSettings.value.siteName, globalSettings.value.siteNameStyled)
+  }
+
+  return md
+})
 </script>

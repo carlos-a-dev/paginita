@@ -8,6 +8,11 @@
     "body": {
       "type": "richtext",
       "required": true
+    },
+    "useStyledSiteName": {
+      "type": "boolean",
+      "required": true,
+      "default": true
     }
   },
   "config": {}

@@ -1,9 +1,9 @@
 <template>
   <q-card
     v-once
-    class="q-pa-md q-pa-md-xl"
+    class="q-pa-xs q-pa-md-xl"
   >
-    <q-card-section class="text-h4 text-center">
+    <q-card-section class="text-h3 text-center">
       {{ data.title }}
     </q-card-section>
     <q-card-section class="q-gutter-y-lg row justify-center">
@@ -19,10 +19,10 @@
             size="64px"
             color="secondary"
           />
-          <div class="text-h6 q-mt-md">
+          <div class="text-h4 text-weight-regular q-mt-md">
             {{ service.title }}
           </div>
-          <p class="text-body2">
+          <p class="text-plus-1 text-weight-light">
             {{ service.description }}
           </p>
         </q-card-section>

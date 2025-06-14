@@ -7,3 +7,11 @@
     background-color: hsla(0, 0%, 90%, 0.4);
     backdrop-filter: blur(2px);
 }
+
+.dimmed:after {
+    border-radius: inherit;
+}
+.light-dimmed:after {
+    border-radius: inherit;
+}
+
