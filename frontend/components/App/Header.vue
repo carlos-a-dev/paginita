@@ -14,9 +14,7 @@
       </q-avatar>
 
       <q-toolbar-title>
-        <h2>
-          {{ globalSettings?.siteName }}
-        </h2>
+        <h2 v-html="globalSettings?.siteNameStyled" />
       </q-toolbar-title>
 
       <lazy-app-dark-btn />

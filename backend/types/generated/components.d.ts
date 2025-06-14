@@ -1031,6 +1031,11 @@ export interface PropsQCard extends Struct.ComponentSchema {
           'text-lime-8',
           'text-lime-9',
           'text-lowercase',
+          'text-minus-1',
+          'text-minus-2',
+          'text-minus-3',
+          'text-minus-4',
+          'text-minus-5',
           'text-negative',
           'text-no-wrap',
           'text-orange',
@@ -1064,6 +1069,11 @@ export interface PropsQCard extends Struct.ComponentSchema {
           'text-pink-7',
           'text-pink-8',
           'text-pink-9',
+          'text-plus-1',
+          'text-plus-2',
+          'text-plus-3',
+          'text-plus-4',
+          'text-plus-5',
           'text-positive',
           'text-primary',
           'text-purple',
@@ -2086,6 +2096,11 @@ export interface PropsQPage extends Struct.ComponentSchema {
           'text-lime-8',
           'text-lime-9',
           'text-lowercase',
+          'text-minus-1',
+          'text-minus-2',
+          'text-minus-3',
+          'text-minus-4',
+          'text-minus-5',
           'text-negative',
           'text-no-wrap',
           'text-orange',
@@ -2119,6 +2134,11 @@ export interface PropsQPage extends Struct.ComponentSchema {
           'text-pink-7',
           'text-pink-8',
           'text-pink-9',
+          'text-plus-1',
+          'text-plus-2',
+          'text-plus-3',
+          'text-plus-4',
+          'text-plus-5',
           'text-positive',
           'text-primary',
           'text-purple',
@@ -2313,7 +2333,6 @@ export interface SharedTheme extends Struct.ComponentSchema {
   attributes: {
     accent: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     dark: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    darkPage: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     info: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     negative: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     positive: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::color-picker.color'>;

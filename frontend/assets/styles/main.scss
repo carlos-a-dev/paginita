@@ -1,7 +1,9 @@
 .transparent-dark {
     background-color: hsla(0, 0%, 10%, 0.6);
+    backdrop-filter: blur(2px);
 }
 
 .transparent-light {
     background-color: hsla(0, 0%, 90%, 0.4);
+    backdrop-filter: blur(2px);
 }

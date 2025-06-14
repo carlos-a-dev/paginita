@@ -6,6 +6,7 @@ import type { Global } from '~/types/strapi/global'
 const globalToGlobalSettings = (global: Global): GlobalSettings => {
   return {
     siteName: global.siteName,
+    siteNameStyled: global.siteNameStyled || global.siteName,
     siteDescription: global.siteDescription,
     siteLogo: global.siteLogo?.url ? `/strapi${global.siteLogo?.url}` : '',
     favicon: global.favicon?.url ?? '',

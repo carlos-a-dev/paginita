@@ -422,6 +422,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteLogo: Schema.Attribute.Media<'images' | 'files'>;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    siteNameStyled: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
   };

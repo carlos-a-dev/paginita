@@ -12,6 +12,7 @@ export type QuasarTheme = {
 
 export type GlobalSettings = {
   siteName: string
+  siteNameStyled: string
   siteDescription: string
   siteLogo: string
   favicon: string

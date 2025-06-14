@@ -16,6 +16,9 @@
       "type": "string",
       "required": true
     },
+    "siteNameStyled": {
+      "type": "string"
+    },
     "favicon": {
       "type": "media",
       "multiple": false,
