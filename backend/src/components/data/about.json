@@ -9,6 +9,9 @@
       "type": "component",
       "component": "shared.story",
       "repeatable": true
+    },
+    "text": {
+      "type": "text"
     }
   },
   "config": {}

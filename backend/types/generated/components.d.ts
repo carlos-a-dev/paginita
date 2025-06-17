@@ -7,6 +7,7 @@ export interface DataAbout extends Struct.ComponentSchema {
   };
   attributes: {
     stories: Schema.Attribute.Component<'shared.story', true>;
+    text: Schema.Attribute.Text;
   };
 }
 
@@ -2361,7 +2362,7 @@ export interface SharedStory extends Struct.ComponentSchema {
     avatarImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    text: Schema.Attribute.String & Schema.Attribute.Required;
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
   };
 }
 
