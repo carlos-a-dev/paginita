@@ -35,6 +35,7 @@ export default () => {
             'f.content': componentPopulate,
             'f.service-list': componentPopulate,
             'f.contact-form': componentPopulate,
+            'f.about': { populate: { data: { populate: { stories: { populate: '*' } } }, props: { populate: '*' } }, filters: { visible: { $eq: true } } },
           },
         },
       },
