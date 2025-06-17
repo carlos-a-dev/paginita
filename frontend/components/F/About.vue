@@ -4,6 +4,9 @@
       <div class="text-h2 q-mb-md">
         About Us
       </div>
+      <div class="text-h6">
+        {{ data.text }}
+      </div>
     </q-card-section>
 
     <q-card-section class="q-gutter-md row justify-center">
@@ -38,6 +41,7 @@ import type { MediaImage } from '~/types/strapi/strapi'
 
 defineProps<{
   data: {
+    text: string
     stories: {
       id: number
       avatarImage: MediaImage
