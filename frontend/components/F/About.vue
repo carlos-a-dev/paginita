@@ -1,11 +1,8 @@
 <template>
   <q-card class="about-card q-pa-md">
     <q-card-section class="text-center">
-      <div class="text-h4 text-weight-bold q-mb-md">
+      <div class="text-h2 q-mb-md">
         About Us
-      </div>
-      <div class="text-body1 text-weight-light">
-        A description
       </div>
     </q-card-section>
 
@@ -19,15 +16,15 @@
         <q-card-section class="text-center">
           <q-avatar
             v-if="story.avatarImage"
-            size="80px"
+            size="100px"
             class="q-mb-md"
           >
-            <img :src="story.avatarImage.url">
+            <img v-bind="useStrapiImage(story.avatarImage, { sizes: '100px' })">
           </q-avatar>
-          <div class="text-h6 text-weight-medium">
+          <div class="text-h4">
             {{ story.name }}
           </div>
-          <div class="text-body2 text-weight-light q-mt-sm">
+          <div class="text-body1 q-mt-sm">
             {{ story.text }}
           </div>
         </q-card-section>
