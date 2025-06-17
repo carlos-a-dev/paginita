@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_shared_stories",
+  "info": {
+    "displayName": "Story"
+  },
+  "options": {},
+  "attributes": {
+    "avatarImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

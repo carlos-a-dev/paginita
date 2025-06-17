@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_data_abouts",
+  "info": {
+    "displayName": "About"
+  },
+  "options": {},
+  "attributes": {
+    "stories": {
+      "type": "component",
+      "component": "shared.story",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

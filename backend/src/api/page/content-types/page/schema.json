@@ -67,7 +67,8 @@
         "f.service-list",
         "f.hero",
         "f.content",
-        "f.contact-form"
+        "f.contact-form",
+        "f.about"
       ],
       "required": true
     },

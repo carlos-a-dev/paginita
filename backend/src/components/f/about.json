@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_f_service_lists",
+  "collectionName": "components_f_abouts",
   "info": {
-    "displayName": "ServiceList"
+    "displayName": "About"
   },
   "options": {},
   "attributes": {
@@ -12,7 +12,7 @@
     },
     "data": {
       "type": "component",
-      "component": "data.service-list",
+      "component": "data.about",
       "repeatable": false
     },
     "props": {

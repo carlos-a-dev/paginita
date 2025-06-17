@@ -1,5 +1,15 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface DataAbout extends Struct.ComponentSchema {
+  collectionName: 'components_data_abouts';
+  info: {
+    displayName: 'About';
+  };
+  attributes: {
+    stories: Schema.Attribute.Component<'shared.story', true>;
+  };
+}
+
 export interface DataContactForm extends Struct.ComponentSchema {
   collectionName: 'components_data_contact_forms';
   info: {
@@ -46,6 +56,20 @@ export interface DataServiceList extends Struct.ComponentSchema {
   };
   attributes: {
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface FAbout extends Struct.ComponentSchema {
+  collectionName: 'components_f_abouts';
+  info: {
+    displayName: 'About';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.about', false>;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
   };
 }
 
@@ -2328,6 +2352,19 @@ export interface SharedSocialNetwork extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedStory extends Struct.ComponentSchema {
+  collectionName: 'components_shared_stories';
+  info: {
+    displayName: 'Story';
+  };
+  attributes: {
+    avatarImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    text: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedTheme extends Struct.ComponentSchema {
   collectionName: 'components_shared_themes';
   info: {
@@ -2348,10 +2385,12 @@ export interface SharedTheme extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'data.about': DataAbout;
       'data.contact-form': DataContactForm;
       'data.content': DataContent;
       'data.hero': DataHero;
       'data.service-list': DataServiceList;
+      'f.about': FAbout;
       'f.contact-form': FContactForm;
       'f.content': FContent;
       'f.hero': FHero;
@@ -2365,6 +2404,7 @@ declare module '@strapi/strapi' {
       'shared.seo': SharedSeo;
       'shared.service': SharedService;
       'shared.social-network': SharedSocialNetwork;
+      'shared.story': SharedStory;
       'shared.theme': SharedTheme;
     }
   }
