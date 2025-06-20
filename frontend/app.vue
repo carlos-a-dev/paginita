@@ -21,7 +21,7 @@ useHead({
   title: globalSettings.value?.siteName,
   titleTemplate: (subTitle) => {
     return subTitle
-      ? `${subTitle} - ${globalSettings.value?.siteName}`
+      ? `${globalSettings.value?.siteName} - ${subTitle}`
       : globalSettings.value?.siteName
   },
   link: [
@@ -30,12 +30,17 @@ useHead({
       type: 'image/x-icon',
       href: useStrapiMedia(globalSettings.value?.favicon) ?? '/favicon.ico',
     },
+    {
+      rel: 'canonical',
+      href: useRequestURL().href,
+    },
   ],
   meta: [
     {
       name: 'description',
       content: globalSettings.value?.siteDescription,
     },
+    // Facebook
     {
       property: 'og:title',
       content: globalSettings.value?.metaTitle,
@@ -46,9 +51,54 @@ useHead({
     },
     {
       property: 'og:image',
-      content: useStrapiMedia(globalSettings.value?.shareImage ?? ''),
+      content: globalSettings.value?.shareImage ? useStrapiMedia(globalSettings.value?.shareImage ?? '') : '',
+    },
+    {
+      property: 'og:url',
+      content: useRequestURL().href,
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+    // Twitter (X)
+    {
+      property: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    {
+      property: 'twitter:title',
+      content: globalSettings.value?.metaTitle,
+    },
+    {
+      property: 'twitter:description',
+      content: globalSettings.value?.metaDescription,
+    },
+    {
+      property: 'twitter:image',
+      content: globalSettings.value?.shareImage ? useStrapiMedia(globalSettings.value?.shareImage ?? '') : '',
     },
   ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": globalSettings.value?.siteName,
+        "url": useRequestURL().href,
+        "description": globalSettings.value?.metaDescription,
+        // "sameAs": [
+        //   "https://www.instagram.com/yourprofile",
+        //   "https://www.linkedin.com/company/yourcompany"
+        // ],
+        // "founders": [
+        //   { "@type": "Person", "name": "John Doe" },
+        //   { "@type": "Person", "name": "Jane Doe" }
+        // ]
+      })
+    }
+  ]
 })
 
 const { themeStyle, darkMode } = useTheme()
