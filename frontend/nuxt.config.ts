@@ -31,6 +31,11 @@ export default defineNuxtConfig({
     '@/assets/styles/highlightjs.scss',
     '@/assets/styles/main.scss',
   ],
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    },
+  },
   compatibilityDate: '2025-05-15',
   eslint: {
     config: {

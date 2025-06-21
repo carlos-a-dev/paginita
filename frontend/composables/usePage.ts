@@ -28,6 +28,16 @@ export default () => {
         props: {
           populate: '*',
         },
+        seo: {
+          populate: {
+            openGraph: {
+              populate: '*',
+            },
+            metaImage: {
+              populate: '*',
+            },
+          },
+        },
         body: {
           populate: '*',
           on: {

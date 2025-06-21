@@ -20,4 +20,8 @@ definePageMeta({
 
 const { fetchPage, getSlug } = usePage()
 const page = await fetchPage(getSlug())
+
+if (page.value.seo) {
+  useSeo(page.value.seo)
+}
 </script>
