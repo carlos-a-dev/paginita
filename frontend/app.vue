@@ -83,11 +83,11 @@ useHead({
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": globalSettings.value?.siteName,
-        "url": useRequestURL().href,
-        "description": globalSettings.value?.metaDescription,
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        'name': globalSettings.value?.siteName,
+        'url': useRequestURL().href,
+        'description': globalSettings.value?.metaDescription,
         // "sameAs": [
         //   "https://www.instagram.com/yourprofile",
         //   "https://www.linkedin.com/company/yourcompany"
@@ -96,9 +96,9 @@ useHead({
         //   { "@type": "Person", "name": "John Doe" },
         //   { "@type": "Person", "name": "Jane Doe" }
         // ]
-      })
-    }
-  ]
+      }),
+    },
+  ],
 })
 
 const { themeStyle, darkMode } = useTheme()
