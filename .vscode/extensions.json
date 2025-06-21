@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "hossaini.quasar-intellisense"
+        "hossaini.quasar-intellisense",
+        "dbaeumer.vscode-eslint"
     ]
 }
