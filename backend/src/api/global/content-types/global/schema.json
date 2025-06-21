@@ -33,11 +33,6 @@
       "type": "text",
       "required": true
     },
-    "defaultSeo": {
-      "type": "component",
-      "component": "shared.seo",
-      "repeatable": false
-    },
     "siteLogo": {
       "type": "media",
       "multiple": false,

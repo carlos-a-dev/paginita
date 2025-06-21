@@ -14,5 +14,6 @@ export default ({ env }) => ({
       }
     }
   },
-  'email-designer-v5': { enabled: true }
+  'email-designer-v5': { enabled: true },
+  seo: { enabled: true }
 });
