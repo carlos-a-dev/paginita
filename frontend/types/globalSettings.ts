@@ -16,8 +16,5 @@ export type GlobalSettings = {
   siteDescription: string
   siteLogo: string
   favicon: string
-  metaTitle: string
-  metaDescription: string
-  shareImage: string
   quasarTheme: QuasarTheme
 }

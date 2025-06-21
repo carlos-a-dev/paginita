@@ -10,9 +10,6 @@ const globalToGlobalSettings = (global: Global): GlobalSettings => {
     siteDescription: global.siteDescription,
     siteLogo: global.siteLogo?.url ? `/strapi${global.siteLogo?.url}` : '',
     favicon: global.favicon?.url ?? '',
-    metaTitle: global.defaultSeo?.metaTitle || '',
-    metaDescription: global.defaultSeo?.metaDescription || '',
-    shareImage: global.defaultSeo?.shareImage?.url || '',
     quasarTheme: global.quasarTheme,
   }
 }
@@ -25,11 +22,6 @@ export const useGlobalSettings = () => {
       populate: {
         favicon: { fields: ['url'] },
         siteLogo: { fields: ['url'] },
-        defaultSeo: {
-          populate: {
-            shareImage: { fields: ['url'] },
-          },
-        },
         quasarTheme: '*',
       },
     }

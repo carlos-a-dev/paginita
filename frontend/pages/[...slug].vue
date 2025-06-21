@@ -20,14 +20,4 @@ definePageMeta({
 
 const { fetchPage, getSlug } = usePage()
 const page = await fetchPage(getSlug())
-
-useHead({
-  title: page?.value?.title,
-  meta: [
-    {
-      name: 'description',
-      content: page?.value?.description,
-    },
-  ],
-})
 </script>

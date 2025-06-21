@@ -1,4 +1,3 @@
-import type { Seo } from './seo'
 import type { SingleType, MediaImage } from './strapi'
 
 export type Global = SingleType & {
@@ -6,7 +5,6 @@ export type Global = SingleType & {
   siteNameStyled: string
   siteDescription: string
   favicon: MediaImage
-  defaultSeo: Seo
   siteLogo: MediaImage
   quasarTheme: {
     primary: string
