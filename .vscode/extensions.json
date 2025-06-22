@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "hossaini.quasar-intellisense",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "vivaxy.vscode-conventional-commits"
     ]
 }
