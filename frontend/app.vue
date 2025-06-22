@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-const { layout } = usePage()
-const route = useRoute()
-
 const { globalSettings } = useGlobalSettings()
 
+// Layout
+const { layout } = usePage()
+const route = useRoute()
 const nLayout = computed(() => {
   if (route.params.slug === undefined) {
     return route.meta.layout || 'default'
@@ -18,6 +18,7 @@ const nLayout = computed(() => {
   return layout.value
 })
 
+// Favicon
 if (globalSettings.value.favicon) {
   useHead({
     link: [
@@ -30,6 +31,12 @@ if (globalSettings.value.favicon) {
   })
 }
 
+// Default SEO
+if (globalSettings.value.seo) {
+  useSeo(globalSettings.value.seo)
+}
+
+// Theme
 const { themeStyle, darkMode } = useTheme()
 if (themeStyle) {
   useHead({
@@ -42,8 +49,9 @@ if (themeStyle) {
     ],
   })
 }
-
+// Dark mode
 useQuasar().dark.set(darkMode.value)
+// Prevent flash of unstyled content
 if (import.meta.server && darkMode.value) {
   useHead({
     script: [

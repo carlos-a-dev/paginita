@@ -11,6 +11,7 @@ const globalToGlobalSettings = (global: Global): GlobalSettings => {
     siteLogo: global.siteLogo?.url ? `/strapi${global.siteLogo?.url}` : '',
     favicon: global.favicon?.url ?? '',
     quasarTheme: global.quasarTheme,
+    seo: global.seo,
   }
 }
 
@@ -23,6 +24,16 @@ export const useGlobalSettings = () => {
         favicon: { fields: ['url'] },
         siteLogo: { fields: ['url'] },
         quasarTheme: '*',
+        seo: {
+          populate: {
+            openGraph: {
+              populate: '*',
+            },
+            metaImage: {
+              populate: '*',
+            },
+          },
+        },
       },
     }
 

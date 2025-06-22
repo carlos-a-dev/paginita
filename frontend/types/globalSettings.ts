@@ -1,14 +1,5 @@
-export type QuasarTheme = {
-  primary: string
-  secondary: string
-  accent: string
-  dark: string
-  darkPage: string
-  positive: string
-  negative: string
-  info: string
-  warning: string
-}
+import type { QuasarTheme } from './strapi/global'
+import type { SEO } from './strapi/seo'
 
 export type GlobalSettings = {
   siteName: string
@@ -17,4 +8,5 @@ export type GlobalSettings = {
   siteLogo: string
   favicon: string
   quasarTheme: QuasarTheme
+  seo?: SEO
 }
