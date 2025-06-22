@@ -8,6 +8,8 @@
 const { layout } = usePage()
 const route = useRoute()
 
+const { globalSettings } = useGlobalSettings()
+
 const nLayout = computed(() => {
   if (route.params.slug === undefined) {
     return route.meta.layout || 'default'
@@ -15,6 +17,18 @@ const nLayout = computed(() => {
 
   return layout.value
 })
+
+if (globalSettings.value.favicon) {
+  useHead({
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: useStrapiMedia(globalSettings.value.favicon),
+      },
+    ],
+  })
+}
 
 const { themeStyle, darkMode } = useTheme()
 if (themeStyle) {
