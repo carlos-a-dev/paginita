@@ -111,33 +111,16 @@ log "Starting deployment process..."
 log "Pulling latest changes from git..."
 git pull
 log "Git pull complete."
-# 2. Backend operations
-log "Navigating to backend directory..."
-pushd backend > /dev/null
 
-log "Installing backend dependencies..."
+# 2. PNPM Install
+log "Installing dependencies..."
 pnpm install
-log "Backend dependencies installed."
+log "Installation complete."
 
-log "Building backend..."
-NODE_OPTIONS="--max-old-space-size=2048" pnpm build
-log "Backend build complete."
-
-popd > /dev/null # Return to SCRIPT_DIR (project root)
-
-# 3. Frontend operations
-log "Navigating to frontend directory..."
-pushd frontend > /dev/null
-
-log "Installing frontend dependencies..."
-pnpm install
-log "Frontend dependencies installed."
-
-log "Building frontend..."
-NODE_OPTIONS="--max-old-space-size=2048" pnpm build
-log "Frontend build complete."
-
-popd > /dev/null # Return to SCRIPT_DIR (project root)
+# 3. Build
+log "Building..."
+NODE_OPTIONS="--max-old-space-size=2048" pnpm -r build
+log "Build complete."
 
 # 4. Return to root and restart PM2
 log "Restarting PM2 ecosystem..."

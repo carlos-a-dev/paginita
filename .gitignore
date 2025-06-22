@@ -1,2 +1,2 @@
 logs/*
-frontend/public/.well-known/appspecific/com.chrome.devtools.json
+node_modules/*

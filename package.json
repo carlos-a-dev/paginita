@@ -1,0 +1,8 @@
+{
+  "name": "paginita",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
