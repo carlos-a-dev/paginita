@@ -46,6 +46,11 @@
       "type": "component",
       "component": "shared.theme",
       "repeatable": false
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
     }
   }
 }
