@@ -11,7 +11,7 @@
         v-for="service in services"
         :key="service.id"
         flat
-        class="col-xs-12 col-md-6 col-lg-4 col-xl-3 text-center"
+        class="col-xs-12 col-md-6 col-xl-4 text-center"
       >
         <q-card-section>
           <q-icon
