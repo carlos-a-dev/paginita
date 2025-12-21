@@ -3,7 +3,7 @@
     class="q-py-sm q-px-xs"
   >
     <q-btn
-      v-for="link in $q.screen.lt.sm ? links?.slice(0, 3) : links?.slice(0, 5)"
+      v-for="link in links"
       :key="link.id"
       :label="link.label"
       :to="link.url"
@@ -12,27 +12,6 @@
       :class="{ 'btn-active': $route.path === link.url }"
       class="q-mx-sm"
     />
-
-    <q-btn-dropdown
-      v-if="($q.screen.lt.sm && links && links?.length > 3) || (links && links?.length > 5)"
-      auto-close
-      size="md"
-    >
-      <q-list
-        padding
-      >
-        <q-item
-          v-for="link in $q.screen.lt.sm ? links?.slice(3) : links?.slice(5)"
-          :key="link.id"
-          clickable
-          :to="link.url"
-        >
-          <q-item-section>
-            <q-item-label>{{ link.label }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
   </q-btn-group>
 </template>
 
