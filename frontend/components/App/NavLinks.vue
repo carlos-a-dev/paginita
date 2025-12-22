@@ -1,9 +1,10 @@
 <template>
   <q-btn-group
-    class="q-py-sm q-px-xs"
+    class="q-py-sm q-px-xs text-secondary"
+    flat
   >
     <q-btn
-      v-for="link in $q.screen.lt.sm ? links?.slice(0, 3) : links?.slice(0, 5)"
+      v-for="link in links?.slice(0, 3)"
       :key="link.id"
       :label="link.label"
       :to="link.url"
@@ -14,7 +15,7 @@
     />
 
     <q-btn-dropdown
-      v-if="($q.screen.lt.sm && links && links?.length > 3) || (links && links?.length > 5)"
+      v-if="links && links?.length > 3"
       auto-close
       size="md"
     >
@@ -22,7 +23,7 @@
         padding
       >
         <q-item
-          v-for="link in $q.screen.lt.sm ? links?.slice(3) : links?.slice(5)"
+          v-for="link in links?.slice(3)"
           :key="link.id"
           clickable
           :to="link.url"
