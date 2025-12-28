@@ -48,7 +48,7 @@
             <q-icon name="email" />
           </template>
         </q-input>
-        <q-input
+        <!-- <q-input
           v-model="formData.phone"
           outlined
           label="Phone"
@@ -59,7 +59,7 @@
           <template #prepend>
             <q-icon name="phone" />
           </template>
-        </q-input>
+        </q-input> -->
         <q-input
           v-model="formData.message"
           outlined
