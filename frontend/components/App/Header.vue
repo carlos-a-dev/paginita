@@ -17,7 +17,7 @@
         <h2 v-html="globalSettings?.siteNameStyled" />
       </q-toolbar-title>
 
-      <social-networks class="text-secondary" />
+      <social-networks class="text-secondary gt-xs" />
       <lazy-app-dark-btn
         class="q-ml-md"
       />
