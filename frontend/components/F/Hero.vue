@@ -1,46 +1,43 @@
 <template>
-  <q-card>
-    <q-img
-      v-if="props.data.background"
-      v-bind="imgProps"
-      fetchpriority="high"
-      loading="eager"
-      height="80vh"
-      style="max-height: 800px;"
-      no-transition
-    >
-      <div class="fit flex flex-center text-center transparent">
-        <div
-          class="q-px-xs-md q-py-xs-lg q-pa-sm-lg q-pa-md-xl rounded-borders"
-          :class="highlightClass"
+  <q-img
+    v-if="props.data.background"
+    v-bind="imgProps"
+    fetchpriority="high"
+    loading="eager"
+    height="calc(100vh - 90px)"
+    no-transition
+  >
+    <div class="fit flex flex-center text-center transparent">
+      <div
+        class="q-px-xs-md q-py-xs-lg q-pa-sm-lg q-pa-md-xl q-mx-xs-0 q-mx-sm-lg q-mx-md-xl"
+        :class="highlightClass"
+      >
+        <h1
+          v-if="data.title"
+          :class="$q.screen.gt.xs ? 'text-h2' : 'text-h3'"
+          class="q-my-none"
         >
-          <h1
-            v-if="data.title"
-            :class="$q.screen.gt.xs ? 'text-h2' : 'text-h3'"
-            class="q-my-none"
-          >
-            {{ data.title }}
-          </h1>
-          <p
-            v-if="data.message"
-            class="q-mt-md"
-            :class="$q.screen.gt.xs ? 'text-h4' : 'text-h5'"
-          >
-            {{ data.message }}
-          </p>
-          <q-btn
-            v-if="data.callToAction && data.link"
-            unelevated
-            color="primary"
-            :label="data.callToAction"
-            class="q-mt-lg"
-            :to="data.link"
-            size="lg"
-          />
-        </div>
+          {{ data.title }}
+        </h1>
+        <p
+          v-if="data.message"
+          class="q-mt-md"
+          :class="$q.screen.gt.xs ? 'text-h4' : 'text-h5'"
+        >
+          {{ data.message }}
+        </p>
+        <q-btn
+          v-if="data.callToAction && data.link"
+          unelevated
+          color="primary"
+          :label="data.callToAction"
+          class="q-mt-lg"
+          :to="data.link"
+          size="lg"
+        />
       </div>
-    </q-img>
-  </q-card>
+    </div>
+  </q-img>
 </template>
 
 <script setup lang="ts">

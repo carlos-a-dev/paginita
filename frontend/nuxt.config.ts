@@ -79,11 +79,7 @@ export default defineNuxtConfig({
     components: {
       defaults: {
         QBtn: {
-          rounded: true,
           noCaps: true,
-        },
-        QBtnGroup: {
-          rounded: true,
         },
         QImg: {
           loadingShowDelay: 300,

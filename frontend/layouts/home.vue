@@ -1,9 +1,24 @@
 <template>
-  <q-layout view="hHh lpR fff">
+  <q-layout view="hhh lpR fff">
     <app-header class="transparent" />
 
-    <q-page-container style="padding-top: 0!important;">
+    <q-page-container>
       <slot />
+
+      <!-- For Larger formats -->
+      <app-nav-links
+        class="gt-sm fixed-top-left q-mt-md z-top"
+        style="left: 50%; transform: translateX(-50%);"
+      />
+      <!-- For Smaller formats -->
+      <q-page-sticky
+        position="bottom"
+        class="lt-md"
+      >
+        <app-nav-links
+          class="q-mb-lg"
+        />
+      </q-page-sticky>
     </q-page-container>
 
     <app-footer />

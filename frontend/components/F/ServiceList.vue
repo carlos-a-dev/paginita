@@ -1,7 +1,7 @@
 <template>
   <q-card
     v-once
-    class="q-pa-xs q-pa-md-xl"
+    class="q-px-md-lg"
   >
     <q-card-section class="text-h3 text-center">
       {{ data.title }}

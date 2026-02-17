@@ -1,6 +1,7 @@
 <template>
   <q-card
     v-once
+    class="q-px-md-lg"
   >
     <q-card-section>
       <!-- eslint-disable-next-line vue/no-v-html -->

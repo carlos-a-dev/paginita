@@ -69,7 +69,7 @@ body.body--dark .q-btn-group {
 }
 
 .q-btn {
-  border-radius: 28px !important;
+  border-radius: 0 !important;
   font-weight: bold;
 }
 </style>

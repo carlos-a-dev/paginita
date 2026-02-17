@@ -5,6 +5,7 @@
     v-bind="$props"
     height-hint="90px"
     style="height: 90px;"
+    elevated
   >
     <q-toolbar class="full-height">
       <q-avatar size="60px">
