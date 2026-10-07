@@ -34,6 +34,7 @@ export const useMarkdown = () => {
 
   md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
     const token = tokens[idx]
+    if (!token) return ''
     // Add a class depending on the heading level
     token.attrJoin('class', `text-${token.tag}`)
     return self.renderToken(tokens, idx, options)
@@ -41,11 +42,12 @@ export const useMarkdown = () => {
 
   md.renderer.rules.image = (tokens, idx, options, env, self) => {
     const token = tokens[idx]
+    if (!token) return ''
     const src = token.attrGet('src')
     const alt = token.content
 
     if (src) {
-      const { src: newSrc, srcset, sizes } = useResponsiveImage(src, alt)
+      const { src: newSrc, srcset, sizes } = useResponsiveImage(String(src), alt)
       token.attrSet('src', newSrc ?? '')
       if (srcset) {
         token.attrSet('srcset', srcset)

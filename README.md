@@ -4,6 +4,18 @@ This project consists of a frontend and a backend application.
 
 ## Development
 
+Use the Node version pinned in `.nvmrc` (24.21.0) and pnpm 10.12.1. Nuxt 4.6
+requires Node 22.22.3+, 24.15.0+, or 26+; Node 20 and older Node 24 releases
+cannot run the frontend.
+
+From the repository root:
+
+```bash
+nvm install
+nvm use
+pnpm install --frozen-lockfile
+```
+
 To start both the frontend and backend services for development, use the `paginita_dev.sh` script:
 
 ```bash
@@ -23,6 +35,11 @@ The `deploy.sh` script automates the deployment process for the production envir
 
 ### Prerequisites
 
+*   Install the Node version from `.nvmrc` before deploying the Nuxt upgrade.
+    Select it for both builds and PM2 application processes; production's
+    previously used Node 24.12.0 does not meet Nuxt 4.6's minimum requirement.
+*   Use the workspace root lockfile and pnpm version pinned in the root
+    `package.json`.
 *   `git` installed and configured.
 *   The current local branch must be tracking a remote upstream branch (e.g., `origin/main`).
 *   `pnpm` installed.

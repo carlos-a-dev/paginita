@@ -27,42 +27,46 @@ export default () => {
       return page
     }
 
-    const response = await useStrapi<Page>().find('pages', {
-      filters: {
-        slug: {
-          $eq: slug,
-        },
-      },
-      populate: {
-        props: {
-          populate: '*',
-        },
-        seo: {
-          populate: {
-            openGraph: {
-              populate: '*',
-            },
-            metaImage: {
-              populate: '*',
-            },
+    const response = await useStrapiClient()<{ data: Page[] }>('/pages', {
+      method: 'GET',
+      params: {
+        filters: {
+          slug: {
+            $eq: slug,
           },
         },
-        body: {
-          populate: '*',
-          on: {
-            'f.hero': componentPopulate,
-            'f.content': componentPopulate,
-            'f.service-list': componentPopulate,
-            'f.contact-form': componentPopulate,
-            'f.about': { populate: { data: { populate: { stories: { populate: '*' } } }, props: { populate: '*' } }, filters: { visible: { $eq: true } } },
+        populate: {
+          props: {
+            populate: '*',
+          },
+          seo: {
+            populate: {
+              openGraph: {
+                populate: '*',
+              },
+              metaImage: {
+                populate: '*',
+              },
+            },
+          },
+          body: {
+            populate: '*',
+            on: {
+              'f.hero': componentPopulate,
+              'f.content': componentPopulate,
+              'f.service-list': componentPopulate,
+              'f.contact-form': componentPopulate,
+              'f.about': { populate: { data: { populate: { stories: { populate: '*' } } }, props: { populate: '*' } }, filters: { visible: { $eq: true } } },
+            },
           },
         },
       },
     })
 
-    if (response.data.length > 0) {
-      delete response.data[0].props?.id
-      page.value = response.data[0]
+    const firstPage = response.data[0]
+    if (firstPage) {
+      delete firstPage.props?.id
+      page.value = firstPage
     }
 
     return page

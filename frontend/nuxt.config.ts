@@ -36,6 +36,7 @@ export default defineNuxtConfig({
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     },
   },
+  srcDir: '.',
   compatibilityDate: '2025-05-15',
   eslint: {
     config: {
@@ -65,7 +66,7 @@ export default defineNuxtConfig({
   },
   quasar: {
     extras: {
-      fontIcons: ['fontawesome-v6'],
+      fontIcons: ['fontawesome-v7'],
       animations: [
         'fadeIn',
         'fadeOut',

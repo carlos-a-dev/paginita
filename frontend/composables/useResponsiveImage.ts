@@ -4,8 +4,8 @@ import type { MediaImage } from '~/types/strapi/strapi'
 export function useResponsiveImage(src: string, alt?: string, options: ImageOptions = {}) {
   options = {
     sizes: 'xs:100vw sm:100vw md:100vw lg:100vw xl:100vw',
-    height: '80vh',
     ...options,
+    modifiers: { format: 'webp', quality: 80, ...options.modifiers },
   }
 
   return {

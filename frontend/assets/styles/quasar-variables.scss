@@ -1,6 +1,6 @@
 // Quasar variable overrides
 
-@use 'quasar/src/css/variables.sass';
+@forward 'quasar/src/css/variables.sass';
 
 $h1:        (size: 6rem,     line-height: 6rem,     letter-spacing: -.01562em, weight: 200) !default;
 $h2:        (size: 3.75rem,  line-height: 3.75rem,  letter-spacing: -.00833em, weight: 200) !default;

@@ -37,7 +37,7 @@ export const useGlobalSettings = () => {
       },
     }
 
-    const { data: global } = await useStrapi().findOne<Global>('global', params)
+    const { data: global } = await useStrapiClient()<{ data: Global }>('/global', { method: 'GET', params })
 
     globalSettings.value = globalToGlobalSettings(global)
   }
