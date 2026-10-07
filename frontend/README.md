@@ -87,3 +87,17 @@ and `NUXT_PUBLIC_STRAPI_URL` to the production URLs.
 Quasar Extras v2 uses the `fontawesome-v7` font package. The custom Sass module
 forwards Quasar variables so the existing styles remain available under the
 Quasar module's `@use` pipeline.
+
+## SEO integration
+
+CMS page SEO is required for new pages. Set a distinct title and description
+and use the page's own URL for canonical and Open Graph fields. Global SEO
+provides defaults; global canonical/OG URLs do not override other pages.
+
+`useSeo()` updates metadata reactively, supplies absolute sharing images and
+safe JSON-LD, and removes tracking parameters from generated canonicals.
+`/sitemap.xml` lists published, indexable pages; `/robots.txt` advertises its
+URL. Demo and error pages are marked `noindex`.
+
+See [the SEO audit](../docs/seo-audit.md) for the data correction plan,
+backup procedure, configuration, and validation.

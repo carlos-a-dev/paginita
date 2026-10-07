@@ -1,0 +1,35 @@
+{
+  "siteUrl": "https://alvasori.net/",
+  "globalDescription": "AlvaSori helps small businesses improve processes, automate workflows, and implement technology to save time and grow.",
+  "pages": {
+    "index": {
+      "title": "Business Systems & Workflow Automation | AlvaSori",
+      "description": "AlvaSori helps small businesses improve processes, automate workflows, and implement practical technology to save time and support growth.",
+      "keywords": "business systems, workflow automation, process improvement, small business consulting, AlvaSori"
+    },
+    "contact": {
+      "title": "Contact AlvaSori | Business & Digital Solutions",
+      "description": "Tell AlvaSori about your business goals and operational challenges. Get help with workflows, automation, websites, and practical technology solutions."
+    },
+    "about": {
+      "title": "About AlvaSori | Business & Digital Solutions",
+      "description": "Learn about AlvaSori's approach to helping small businesses improve processes, automate workflows, and use practical digital tools."
+    },
+    "links": {
+      "title": "Useful Links & Social Profiles | AlvaSori",
+      "description": "Find AlvaSori's contact information, social profiles, and useful links to connect with us and explore our business and digital solutions."
+    },
+    "privacy-policy": {
+      "title": "Privacy Policy | AlvaSori",
+      "description": "Read AlvaSori's privacy policy to learn how we collect, use, and protect personal information and how to contact us about your data."
+    },
+    "terms-of-service": {
+      "title": "Terms of Service | AlvaSori",
+      "description": "Review the terms for using AlvaSori's website, including user responsibilities, intellectual property, liability, and contact information."
+    },
+    "asas-creativo": {
+      "title": "ASAS Creativo: Custom Merchandise | AlvaSori",
+      "description": "Discover ASAS Creativo's custom promotional products, sublimation, and 3D printing solutions for distinctive merchandise and brand development."
+    }
+  }
+}

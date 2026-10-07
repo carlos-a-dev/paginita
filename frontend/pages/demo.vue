@@ -529,6 +529,8 @@
 <script setup>
 import { ref } from 'vue'
 
+useSeoMeta({ robots: 'noindex, follow' })
+
 definePageMeta({
   middleware: [
     function () {
