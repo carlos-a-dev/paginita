@@ -2420,7 +2420,7 @@ export interface SharedTheme extends Struct.ComponentSchema {
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
       'data.about': DataAbout;
       'data.contact-form': DataContactForm;

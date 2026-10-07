@@ -1,5 +1,26 @@
 # 🚀 Getting started with Strapi
 
+## Strapi version and upgrades
+
+The backend uses Strapi **5.57.0**, with the official color picker,
+users-permissions plugin, SendGrid provider, and utilities pinned to the same
+version. The SEO plugin has its own release numbering and stays pinned to
+**2.0.9**; do not change it to the Strapi core version.
+
+Use Node 24 LTS for production. The package engine range matches Strapi's
+published range (`>=20.0.0 <=26.x.x`). Install dependencies from the repository
+root with `pnpm install --frozen-lockfile`; the workspace's root `pnpm-lock.yaml`
+is the lockfile used for deployment.
+
+Before deploying an upgrade, take a consistent database backup. Strapi applies
+its internal database migrations during startup. If rolling back after startup,
+restore both the previous application version and the pre-upgrade database.
+
+The 5.57.0 upgrade was applied with the official upgrade tool and tested against
+a separate copy of the production database with contact email delivery disabled.
+Production must keep its own `.env` and database configuration; the local test
+database is not part of the deployment.
+
 Contact submissions accept only name (1–100 characters), email (up to 254), optional
 phone (up to 50), and message (21–500). The server sets IP and delivery state.
 One validated attempt per IP or normalized email is allowed every two minutes;
