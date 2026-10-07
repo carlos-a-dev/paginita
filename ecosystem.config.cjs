@@ -1,11 +1,13 @@
+const path = require('node:path')
+
 module.exports = {
   apps: [
     {
       name: 'paginita-frontend',
       script: '.output/server/index.mjs',
-      cwd: '/var/www/paginita/frontend/',
-      interpreter: 'node',
-      max_memory_restart: '200M',
+      cwd: path.join(__dirname, 'frontend'),
+      interpreter: process.execPath,
+      max_memory_restart: '512M',
 
       // Logging
       out_file: './logs/frontend_out.log',
@@ -29,10 +31,11 @@ module.exports = {
     },
     {
       name: 'paginita-backend',
-      script: 'pnpm',
+      script: path.join(__dirname, 'backend/node_modules/@strapi/strapi/bin/strapi.js'),
       args: 'start',
-      cwd: '/var/www/paginita/backend/',
-      max_memory_restart: '200M',
+      interpreter: process.execPath,
+      cwd: path.join(__dirname, 'backend'),
+      max_memory_restart: '512M',
 
       // Logging
       out_file: './logs/backend_out.log',

@@ -31,39 +31,40 @@ Both services will output their logs prefixed with `[BACKEND]` and `[FRONTEND]` 
 
 ## Deployment (`deploy.sh`)
 
-The `deploy.sh` script automates the deployment process for the production environment.
+Install the Node version in `.nvmrc` before deploying. The script selects that
+version through NVM and requires pnpm 10.12.1 and PM2 in its environment. Both
+PM2 applications use paths relative to the repository and the selected Node
+interpreter. Keep production `.env` files and database backups on the server.
 
-### Prerequisites
-
-*   Install the Node version from `.nvmrc` before deploying the Nuxt upgrade.
-    Select it for both builds and PM2 application processes; production's
-    previously used Node 24.12.0 does not meet Nuxt 4.6's minimum requirement.
-*   Use the workspace root lockfile and pnpm version pinned in the root
-    `package.json`.
-*   `git` installed and configured.
-*   The current local branch must be tracking a remote upstream branch (e.g., `origin/main`).
-*   `pnpm` installed.
-*   `pm2` installed and configured to manage your applications (see `ecosystem.config.cjs`).
-
-### How it Works
-
-1.  **Checks for Remote Changes**: Fetches updates from the remote repository and checks if there are new commits on the upstream branch.
-2.  **Exits if No Changes**: If the local branch is up-to-date, the script exits without performing a deployment.
-3.  **Pulls Changes**: If new commits are found, it pulls the latest code.
-4.  **Builds Backend**: Navigates to the `backend` directory, installs dependencies (`pnpm install`), and builds the backend (`pnpm build`).
-5.  **Builds Frontend**: Navigates to the `frontend` directory, installs dependencies (`pnpm install`), and builds the frontend (`pnpm build`).
-6.  **Restarts Services**: Restarts the applications managed by PM2 using the `ecosystem.config.cjs` file in the production environment.
-
-### Usage
-
-Run the script from the project root directory:
+Run from the repository root:
 
 ```bash
 ./deploy.sh
+# Rebuild the current commit even if it was already deployed:
+./deploy.sh --force
 ```
 
-This script is suitable for automation, such as being run by a cron job to periodically check for updates and deploy them.
+The script fetches the upstream branch and updates with a fast-forward merge,
+installs the root lockfile, builds each workspace in sequence, and restarts
+PM2 in production mode. It checks the backend on port 1337 and frontend on
+port 5000 before saving PM2 state and recording the successfully deployed commit.
+A failed deployment is retried on the next run, even if Git already pulled that
+commit. An unhealthy current release also triggers recovery.
 
-### PM2 Configuration
+State and an atomic deployment lock live in
+`${XDG_STATE_HOME:-$HOME/.local/state}/paginita`. Set `DEPLOY_NODE_OPTIONS` to
+adjust the default 3072 MB build heap limit. PM2 restarts an application if it
+exceeds 512 MB.
 
-The `ecosystem.config.cjs` file defines how PM2 should run the frontend and backend applications, including environment variables, logging, and instance management for production.
+For the current production checkout, create the durable log directory and use:
+
+```bash
+mkdir -p /home/carlos/.local/state/paginita
+```
+
+```cron
+*/5 * * * * /var/www/alvasori.net/deploy.sh >> /home/carlos/.local/state/paginita/deploy.log 2>&1
+```
+
+The cron command must match the actual checkout path. Log redirection must
+point to an existing directory; `/tmp` directories may disappear after reboot.
