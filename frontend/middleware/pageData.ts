@@ -1,11 +1,11 @@
 import type { LayoutKey } from '#build/types/layouts'
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { fetchRoutePage, layout } = usePage()
+  const { fetchRoutePage } = usePage()
 
   const page = await fetchRoutePage(to)
   if (page.value) {
-    layout.value = page.value.layout as LayoutKey
+    setPageLayout(page.value.layout as LayoutKey)
   }
   else {
     throw createError({

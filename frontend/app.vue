@@ -1,22 +1,11 @@
 <template>
-  <NuxtLayout :name="nLayout">
+  <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 const { globalSettings } = useGlobalSettings()
-
-// Layout
-const { layout } = usePage()
-const route = useRoute()
-const nLayout = computed(() => {
-  if (route.params.slug === undefined) {
-    return route.meta.layout || 'default'
-  }
-
-  return layout.value
-})
 
 // Favicon
 if (globalSettings.value.favicon) {
