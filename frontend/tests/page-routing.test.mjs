@@ -23,7 +23,8 @@ function createPageHarness() {
     useStrapi: () => ({
       find: async (_type, query) => {
         requests++
-        return { data: [{ slug: query.filters.slug.$eq }] }
+        const slug = query.filters.slug.$eq
+        return { data: [{ slug, layout: slug === 'index' ? 'home' : 'default' }] }
       },
     }),
   })
@@ -59,4 +60,38 @@ test('a cached parent page never makes a nested URL resolve successfully', async
   assert.equal(about.value.slug, 'about')
   assert.throws(() => page.fetchRoutePage({ params: { slug: ['about', 'team'] }, path: '/about/team' }), error => error.statusCode === 404)
   assert.equal(requests(), 1)
+})
+
+function loadMiddleware(page, setPageLayout) {
+  const exports = {}
+  const source = ts.transpileModule(
+    readFileSync(new URL('../middleware/pageData.ts', import.meta.url), 'utf8'),
+    { compilerOptions: { module: ts.ModuleKind.CommonJS } },
+  ).outputText
+  runInNewContext(source, {
+    exports,
+    usePage: () => page,
+    defineNuxtRouteMiddleware: middleware => middleware,
+    setPageLayout,
+    createError: details => Object.assign(new Error(details.statusMessage), details),
+  })
+  return exports.default
+}
+
+test('CMS navigation selects the Nuxt layout on every visit, including cached home pages', async () => {
+  const { page, requests } = createPageHarness()
+  const layouts = []
+  const middleware = loadMiddleware(page, layout => layouts.push(layout))
+  for (const slug of ['index', 'contact', 'index', 'about', 'index']) {
+    await middleware({ params: { slug: slug === 'index' ? [] : [slug] }, path: slug === 'index' ? '/' : `/${slug}` })
+  }
+  assert.deepEqual(layouts, ['home', 'default', 'home', 'default', 'home'])
+  assert.equal(requests(), 3)
+})
+
+test('missing CMS pages return 404 without changing the layout', async () => {
+  const layouts = []
+  const middleware = loadMiddleware({ fetchRoutePage: async () => ({ value: undefined }) }, layout => layouts.push(layout))
+  await assert.rejects(middleware({ params: { slug: ['missing'] }, path: '/missing' }), error => error.statusCode === 404 && error.fatal === true)
+  assert.deepEqual(layouts, [])
 })

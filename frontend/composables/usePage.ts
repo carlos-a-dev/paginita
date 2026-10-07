@@ -1,11 +1,8 @@
 import type { Page } from '~/types/strapi/page'
-import type { LayoutKey } from '#build/types/layouts'
 
 const componentPopulate = { populate: { data: { populate: '*' }, props: { populate: '*' } }, filters: { visible: { $eq: true } } }
 
 export default () => {
-  const layout = useState<LayoutKey>('layout', () => 'default')
-
   const getSlug = (route = useRoute()) => {
     const slug = route.params.slug
     const segments = slug !== undefined
@@ -76,7 +73,6 @@ export default () => {
   }
 
   return {
-    layout,
     fetchPage,
     fetchRoutePage,
     getSlug,
