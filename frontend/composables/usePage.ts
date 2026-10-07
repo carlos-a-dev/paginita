@@ -7,9 +7,21 @@ export default () => {
   const layout = useState<LayoutKey>('layout', () => 'default')
 
   const getSlug = (route = useRoute()) => {
-    return route.params.slug !== undefined
-      ? (route.params.slug[0] ?? route.params.slug) || 'index'
-      : route.path.split('/').pop() || 'index'
+    const slug = route.params.slug
+    const segments = slug !== undefined
+      ? Array.isArray(slug) ? slug : slug ? [slug] : []
+      : route.path.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean)
+
+    // CMS pages have a single slug. Never alias a nested URL to its parent page.
+    if (segments.length > 1 || segments.some(segment => segment.includes('/'))) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Page not found',
+        fatal: true,
+      })
+    }
+
+    return segments[0] || 'index'
   }
 
   const fetchPage = async (slug: string) => {
