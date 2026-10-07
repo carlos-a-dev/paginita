@@ -8,7 +8,9 @@
     <q-btn
       v-bind="$props"
       :key="darkMode ? 'dark_mode' : 'light_mode'"
-      :title="darkMode ? 'Dark Mode' : 'Light Mode'"
+      aria-label="Toggle dark mode"
+      :aria-pressed="darkMode"
+      :title="darkMode ? 'Switch to light mode' : 'Switch to dark mode'"
       :icon="darkMode ? 'dark_mode' : 'light_mode'"
       @click="toggleDarkMode"
     />

@@ -1,27 +1,34 @@
 <template>
   <q-header
+    class="site-header"
     :class="$q.dark.isActive ? 'text-white' : 'text-dark'"
-    class="q-px-md-lg"
-    v-bind="$props"
-    height-hint="90px"
-    style="height: 90px;"
-    elevated
+    height-hint="88"
   >
-    <q-toolbar class="full-height">
-      <q-avatar size="60px">
-        <NuxtLink to="/">
-          <app-logo />
-        </NuxtLink>
-      </q-avatar>
+    <a
+      href="#main-content"
+      class="skip-link"
+    >Skip to content</a>
+    <q-toolbar class="site-toolbar">
+      <NuxtLink
+        to="/"
+        class="site-brand"
+        :aria-label="`${globalSettings?.siteName} home`"
+      >
+        <q-avatar size="46px"><app-logo /></q-avatar>
+        <!-- eslint-disable vue/no-v-html -->
+        <span
+          class="site-brand-name"
+          v-html="globalSettings?.siteNameStyled"
+        />
+        <!-- eslint-enable vue/no-v-html -->
+      </NuxtLink>
 
-      <q-toolbar-title>
-        <h2 v-html="globalSettings?.siteNameStyled" />
-      </q-toolbar-title>
+      <app-nav-links class="desktop-navigation gt-sm" />
 
-      <social-networks class="text-secondary gt-xs" />
-      <lazy-app-dark-btn
-        class="q-ml-md"
-      />
+      <div class="site-header-actions">
+        <social-networks class="gt-sm" />
+        <app-dark-btn />
+      </div>
     </q-toolbar>
   </q-header>
 </template>

@@ -1,9 +1,11 @@
 <template>
   <q-page
     v-bind="page?.props"
-    class="col-xs-12 col-md-10 col-lg-8"
+    id="main-content"
+    tabindex="-1"
+    class="site-page"
   >
-    <div class="q-gutter-y-xl">
+    <div class="page-sections">
       <component-renderer
         v-for="(component, index) in page?.body"
         :key="index"

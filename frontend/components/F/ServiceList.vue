@@ -1,28 +1,31 @@
 <template>
   <q-card
     v-once
-    class="q-px-md-lg"
+    class="services-card"
   >
-    <q-card-section class="text-h3 text-center">
+    <q-card-section class="section-heading">
       {{ data.title }}
     </q-card-section>
-    <q-card-section class="q-gutter-y-lg row justify-center">
+    <q-card-section class="services-grid">
       <q-card
         v-for="service in services"
         :key="service.id"
         flat
-        class="col-xs-12 col-md-6 col-xl-4 text-center"
+        class="service-card"
       >
         <q-card-section>
-          <q-icon
-            :name="service.icon"
-            size="64px"
-            color="secondary"
-          />
-          <div class="text-h4 text-weight-regular q-mt-md">
-            {{ service.title }}
+          <div class="service-icon">
+            <q-icon
+              :name="service.icon === 'rule_settings' ? 'settings' : service.icon"
+              size="32px"
+              color="primary"
+              aria-hidden="true"
+            />
           </div>
-          <p class="text-plus-1 text-weight-light">
+          <h3 class="service-title">
+            {{ service.title?.replace(/^[^\p{L}\p{N}]+/u, '') }}
+          </h3>
+          <p class="service-description">
             {{ service.description }}
           </p>
         </q-card-section>

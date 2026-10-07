@@ -1,12 +1,22 @@
-// Set base body font to Inter
+// Body copy uses Poppins
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", system-ui, sans-serif;
 }
 
 // Headings use Montserrat
-h1, h2, h3, h4, h5, h6,
-.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
-  font-family: 'Montserrat', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.text-h1,
+.text-h2,
+.text-h3,
+.text-h4,
+.text-h5,
+.text-h6 {
+  font-family: "Montserrat", system-ui, sans-serif;
 }
 
 @for $i from 1 through 5 {

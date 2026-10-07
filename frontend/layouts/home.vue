@@ -1,26 +1,15 @@
 <template>
-  <q-layout view="hhh lpR fff">
-    <app-header class="transparent" />
-
-    <q-page-container>
+  <q-layout
+    view="hHh lpr fff"
+    class="site-layout home-layout"
+  >
+    <app-header />
+    <q-page-container class="site-page-container">
       <slot />
-
-      <!-- For Larger formats -->
-      <app-nav-links
-        class="gt-sm fixed-top-left q-mt-md z-top"
-        style="left: 50%; transform: translateX(-50%);"
-      />
-      <!-- For Smaller formats -->
-      <q-page-sticky
-        position="bottom"
-        class="lt-md"
-      >
-        <app-nav-links
-          class="q-mb-lg"
-        />
-      </q-page-sticky>
     </q-page-container>
-
+    <div class="mobile-navigation lt-md">
+      <app-nav-links />
+    </div>
     <app-footer />
   </q-layout>
 </template>
