@@ -45,9 +45,9 @@ defineProps<{
 
 const { data: services } = await useAsyncData<Partial<Service>[]>(
   async () => {
-    const serviceList = useState<Partial<ServiceList>[] | null>('service-list')
+    const serviceList = useState<Partial<Service>[] | null>('service-list')
     if (!serviceList.value) {
-      serviceList.value = (await useStrapi().findOne<ServiceList>('service-list', {
+      serviceList.value = (await useStrapi().findOne<ServiceList>('service-list', '', {
         populate: {
           services: {
             fields: ['id', 'title', 'description', 'icon'],

@@ -4,5 +4,9 @@
   "workspaces": [
     "frontend",
     "backend"
-  ]
+  ],
+  "packageManager": "pnpm@10.12.1",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  }
 }

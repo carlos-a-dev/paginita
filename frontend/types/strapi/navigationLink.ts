@@ -4,6 +4,7 @@ export type NavigationLinkItem = {
   id: number
   label: string
   url: string
+  visible: boolean
 }
 
 export type NavigationLink = SingleType & {

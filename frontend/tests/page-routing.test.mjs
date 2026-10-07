@@ -20,13 +20,11 @@ function createPageHarness() {
       return states.get(key)
     },
     createError: details => Object.assign(new Error(details.statusMessage), details),
-    useStrapi: () => ({
-      find: async (_type, query) => {
-        requests++
-        const slug = query.filters.slug.$eq
-        return { data: [{ slug, layout: slug === 'index' ? 'home' : 'default' }] }
-      },
-    }),
+    useStrapiClient: () => async (_url, { params: query }) => {
+      requests++
+      const slug = query.filters.slug.$eq
+      return { data: [{ slug, layout: slug === 'index' ? 'home' : 'default' }] }
+    },
   })
   return { page: exports.default(), requests: () => requests }
 }

@@ -1,6 +1,26 @@
-# Nuxt Minimal Starter
+# Paginita frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+The frontend uses Nuxt 4.6.0, Vue 3.5, Vue Router 5, Quasar 2.35, and the
+current Nuxt Quasar, Image, Strapi, and ESLint modules. The existing pages,
+components, layouts, and composables remain in the frontend root through
+`srcDir: '.'`.
+
+Use Node 24.21.0 from the repository's `.nvmrc` and pnpm 10.12.1. Install from
+the repository root with `pnpm install --frozen-lockfile`. The frontend uses
+Nuxt 4's TypeScript project references; run `pnpm --dir frontend typecheck`
+from the root to check app, server, shared, and configuration code.
+
+The Strapi module's single-type requests pass an empty document ID before
+query parameters. Complex page/global population queries use `useStrapiClient`
+with typed response data. Nuxt Image's custom `xs`/`xxl` screens are retained,
+and responsive image helpers set WebP format and quality through modifiers.
+
+TypeScript stays on 5.9.3 to support the compiler API used by Vue tooling and
+the regression harness. The unused direct `qs` dependency was removed.
+
+The shared SQLite driver was updated to 12.11.1 for Node 24 compatibility.
+Strapi upgrade validation continues to use a separate local database with
+email delivery disabled.
 
 ## CMS page URLs
 
@@ -29,74 +49,41 @@ node frontend/tests/page-routing.test.mjs
 The tests cover the homepage, complete single-segment slugs, nested paths,
 decoded slashes, and rejection of nested paths after a parent page is cached.
 
-## Setup
+## Development
 
-Make sure to install dependencies:
+From the repository root, select the pinned Node runtime and install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+nvm install
+nvm use
+pnpm install --frozen-lockfile
 ```
 
-## Development Server
+Start Strapi and Nuxt together with `./paginita_dev.sh`, or run the frontend
+with `pnpm --dir frontend dev`. It serves `http://localhost:3000` and expects
+Strapi at `NUXT_PUBLIC_STRAPI_URL` (by default `http://localhost:1337`).
 
-Start the development server on `http://localhost:3000`:
+## Validation
+
+From the repository root:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+pnpm --dir frontend lint
+pnpm --dir frontend typecheck
+node frontend/tests/page-routing.test.mjs
+pnpm --dir frontend build
 ```
 
 ## Production
 
-Build the application for production:
+Build with `pnpm --dir frontend build` and start with
+`pnpm --dir frontend start`. The generated Node server stays at
+`frontend/.output/server/index.mjs`, matching the PM2 configuration.
 
-```bash
-# npm
-npm run build
+Install and select Node 24.21.0 before deploying; both the build process and
+PM2's frontend process must use a supported runtime. Set `NUXT_PUBLIC_SITE_URL`
+and `NUXT_PUBLIC_STRAPI_URL` to the production URLs.
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Quasar Extras v2 uses the `fontawesome-v7` font package. The custom Sass module
+forwards Quasar variables so the existing styles remain available under the
+Quasar module's `@use` pipeline.

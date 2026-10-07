@@ -1,4 +1,4 @@
-import type { LayoutKey } from '#build/types/layouts'
+import type { LayoutKey } from 'nuxt/app'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const { fetchRoutePage } = usePage()

@@ -45,7 +45,7 @@
 import type { NavigationLink } from '~/types/strapi/navigationLink'
 
 const { data: links } = useAsyncData('nav-links', async () => {
-  return (await useStrapi().findOne<NavigationLink>('navigation-link', {
+  return (await useStrapi().findOne<NavigationLink>('navigation-link', '', {
     populate: {
       links: {
         filters: {
