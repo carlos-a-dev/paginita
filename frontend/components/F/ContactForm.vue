@@ -111,23 +111,17 @@ const formData = ref({
   message: '',
 })
 const lastName = ref('')
-const renderTime = ref(0)
 
 async function submitForm() {
   $q.loading.show()
   try {
-    if (!contactForm.value?.validate()) {
+    if (!await contactForm.value?.validate()) {
       return
     }
 
-    if ((!renderTime.value || Date.now() - renderTime.value > 5000) && !lastName.value) {
-      renderTime.value = Date.now()
-      const ip_data = await $fetch('/api/ip')
-      await useStrapi().create('contact-messages', {
-        ...formData.value,
-        ip: ip_data.ip ?? '',
-      })
-    }
+    if (lastName.value) return
+
+    await useStrapi().create('contact-messages', formData.value)
 
     $q.notify({
       type: 'positive',
@@ -169,8 +163,6 @@ function onReset() {
     message: '',
   }
 
-  onMounted(() => {
-    renderTime.value = Date.now()
-  })
+  lastName.value = ''
 }
 </script>

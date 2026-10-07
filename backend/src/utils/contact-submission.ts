@@ -1,0 +1,60 @@
+import { isIP } from 'node:net';
+
+export const SUBMISSION_TIMEFRAME_MS = 2 * 60 * 1000;
+
+export function normalizeIP(value: string): string {
+  const ip = value.trim();
+  if (ip.startsWith('::ffff:') && isIP(ip.slice(7)) === 4) return ip.slice(7);
+  if (isIP(ip) === 6) return new URL(`http://[${ip}]`).hostname.slice(1, -1);
+  return isIP(ip) === 4 ? ip : '';
+}
+
+export function getClientIP(peer: string, forwarded: string, trustedProxies: string[]): string {
+  const trusted = new Set(trustedProxies.map(normalizeIP).filter(Boolean));
+  let ip = normalizeIP(peer);
+  // Walk from the socket towards the client; never trust hops beyond an untrusted peer.
+  for (const hop of forwarded.split(',').reverse()) {
+    if (!trusted.has(ip)) break;
+    const next = normalizeIP(hop);
+    if (!next) break;
+    ip = next;
+  }
+  return ip;
+}
+
+export function validateContact(data: Record<string, unknown>): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [field, min, max] of [
+    ['name', 1, 100],
+    ['email', 3, 254],
+    ['phone', 0, 50],
+    ['message', 21, 500]
+  ] as const) {
+    const value = field === 'phone' && data[field] === undefined ? '' : data[field];
+    if (typeof value !== 'string' || value.trim().length < min || value.length > max) {
+      throw new Error(`${field} must contain ${min}–${max} characters.`);
+    }
+    result[field] = value.trim();
+  }
+  result.email = result.email.toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(result.email)) {
+    throw new Error('Enter a valid email address.');
+  }
+  return result;
+}
+
+export function createSubmissionLimiter() {
+  const deadlines = new Map<string, number>();
+  return (ip: string, email: string, now = Date.now()): number => {
+    for (const [key, deadline] of deadlines) {
+      if (deadline <= now) deadlines.delete(key);
+    }
+    const keys = [`ip:${ip}`, `email:${email}`];
+    const remaining = Math.max(...keys.map((key) => (deadlines.get(key) ?? 0) - now));
+    if (remaining > 0) return Math.ceil(remaining / 1000);
+    // Bound memory and fail closed if flooded with unique addresses.
+    if (deadlines.size >= 10000) return SUBMISSION_TIMEFRAME_MS / 1000;
+    for (const key of keys) deadlines.set(key, now + SUBMISSION_TIMEFRAME_MS);
+    return 0;
+  };
+}
