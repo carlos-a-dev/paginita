@@ -10,7 +10,8 @@
       :aria-label="`Follow us on ${socialNetwork.name}`"
       :href="socialNetwork.url"
       target="_blank"
-      class="q-ml-xs"
+      rel="noopener noreferrer"
+      class="social-link"
     />
   </div>
 </template>

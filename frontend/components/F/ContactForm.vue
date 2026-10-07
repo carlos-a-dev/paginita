@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html -->
 <template>
-  <q-card style="max-width: 600px;">
+  <q-card class="contact-card">
     <q-card-section
       v-if="data?.header"
-      class="text-center"
+      class="contact-intro cms-prose text-center"
       v-html="useMarkdown().md.render(data.header)"
     />
     <q-form
@@ -11,12 +11,14 @@
       @submit.prevent="submitForm"
       @reset="onReset"
     >
-      <q-card-section class="q-gutter-y-sm fit">
+      <q-card-section class="contact-fields">
         <q-input
           v-model="formData.name"
           outlined
           label="Name"
           name="name"
+          autocomplete="name"
+          maxlength="100"
           :rules="[val => !!val || 'Name is required']"
           lazy-rules
         >
@@ -37,6 +39,8 @@
           outlined
           label="Email"
           name="email"
+          autocomplete="email"
+          maxlength="254"
           type="email"
           :rules="[
             val => !!val || 'Email is required',
@@ -48,24 +52,14 @@
             <q-icon name="email" />
           </template>
         </q-input>
-        <!-- <q-input
-          v-model="formData.phone"
-          outlined
-          label="Phone"
-          name="phone"
-          type="tel"
-          bottom-slots
-        >
-          <template #prepend>
-            <q-icon name="phone" />
-          </template>
-        </q-input> -->
         <q-input
           v-model="formData.message"
           outlined
           label="Message"
           name="message"
           type="textarea"
+          placeholder="Tell us a little about your business and how we can help."
+          :input-style="{ minHeight: '140px' }"
           :rules="[
             val => !!val || 'Message is required',
             val => val.length <= 500 || 'Message must be less than 500 characters',
@@ -84,8 +78,12 @@
           icon="send"
           label="Send Message"
           color="primary"
+          text-color="dark"
           type="submit"
-          class="full-width"
+          class="full-width contact-submit"
+          unelevated
+          :loading="submitting"
+          :disable="submitting"
         />
       </q-card-actions>
     </q-form>
@@ -111,9 +109,11 @@ const formData = ref({
   message: '',
 })
 const lastName = ref('')
+const submitting = ref(false)
 
 async function submitForm() {
-  $q.loading.show()
+  if (submitting.value) return
+  submitting.value = true
   try {
     if (!await contactForm.value?.validate()) {
       return
@@ -126,6 +126,7 @@ async function submitForm() {
     $q.notify({
       type: 'positive',
       message: 'Message sent successfully!',
+      position: 'top-right',
     })
 
     contactForm.value?.reset()
@@ -151,7 +152,7 @@ async function submitForm() {
     }
   }
   finally {
-    $q.loading.hide()
+    submitting.value = false
   }
 }
 

@@ -1,28 +1,29 @@
 <template>
-  <q-img
-    v-if="props.data.background"
-    v-bind="imgProps"
-    fetchpriority="high"
-    loading="eager"
-    height="calc(100vh - 90px)"
-    no-transition
-  >
-    <div class="fit flex flex-center text-center transparent">
+  <section class="site-hero">
+    <q-img
+      v-if="props.data.background"
+      v-bind="imgProps"
+      fetchpriority="high"
+      loading="eager"
+      class="hero-image"
+      height="100%"
+      no-transition
+      @error="imageError = true"
+    />
+    <div class="hero-overlay">
       <div
-        class="q-px-xs-md q-py-xs-lg q-pa-sm-lg q-pa-md-xl q-mx-xs-0 q-mx-sm-lg q-mx-md-xl"
+        class="hero-content"
         :class="highlightClass"
       >
         <h1
           v-if="data.title"
-          :class="$q.screen.gt.xs ? 'text-h2' : 'text-h3'"
-          class="q-my-none"
+          class="hero-title"
         >
           {{ data.title }}
         </h1>
         <p
           v-if="data.message"
-          class="q-mt-md"
-          :class="$q.screen.gt.xs ? 'text-h4' : 'text-h5'"
+          class="hero-message"
         >
           {{ data.message }}
         </p>
@@ -31,13 +32,14 @@
           unelevated
           color="primary"
           :label="data.callToAction"
-          class="q-mt-lg"
+          class="hero-cta"
+          icon-right="arrow_forward"
           :to="data.link"
-          size="lg"
+          size="md"
         />
       </div>
     </div>
-  </q-img>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -66,9 +68,14 @@ const highlightClass = computed(() => {
   }
 })
 
+const imageError = ref(false)
+
 const imgProps = computed(() => {
   if (!props.data.background) {
     return { src: undefined } // Ensure q-img doesn't complain if v-if was only on props.data.background
+  }
+  if (imageError.value) {
+    return { src: useStrapiMedia(props.data.background.url), alt: props.data.background.alternativeText || '' }
   }
   return useStrapiImage(props.data.background, {
     sizes: 'xs:125vw sm:100vw md:100vw lg:100vw xl:100vw',

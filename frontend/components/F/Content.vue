@@ -1,11 +1,15 @@
 <template>
   <q-card
     v-once
-    class="q-px-md-lg"
+    class="content-card"
   >
     <q-card-section>
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-html="result" />
+      <!-- eslint-disable vue/no-v-html -->
+      <div
+        class="cms-prose"
+        v-html="result"
+      />
+      <!-- eslint-enable vue/no-v-html -->
     </q-card-section>
   </q-card>
 </template>

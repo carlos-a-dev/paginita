@@ -1,23 +1,25 @@
 <template>
-  <q-btn-group
-    class="q-py-sm q-px-xs text-secondary"
-    flat
+  <nav
+    aria-label="Main navigation"
+    class="site-navigation"
   >
     <q-btn
       v-for="link in links?.slice(0, 3)"
       :key="link.id"
       :label="link.label"
       :to="link.url"
-      size="md"
-      :color="$route.path === link.url ? 'primary' : undefined"
-      :class="{ 'btn-active': $route.path === link.url }"
-      class="q-mx-sm"
+      :class="{ 'navigation-active': $route.path === link.url }"
+      flat
+      no-caps
+      :aria-current="$route.path === link.url ? 'page' : undefined"
     />
 
     <q-btn-dropdown
       v-if="links && links?.length > 3"
       auto-close
-      size="md"
+      flat
+      aria-label="More pages"
+      label="More"
     >
       <q-list
         padding
@@ -26,6 +28,8 @@
           v-for="link in links?.slice(3)"
           :key="link.id"
           clickable
+          :active="$route.path === link.url"
+          :aria-current="$route.path === link.url ? 'page' : undefined"
           :to="link.url"
         >
           <q-item-section>
@@ -34,7 +38,7 @@
         </q-item>
       </q-list>
     </q-btn-dropdown>
-  </q-btn-group>
+  </nav>
 </template>
 
 <script setup lang="ts">
@@ -54,22 +58,3 @@ const { data: links } = useAsyncData('nav-links', async () => {
   })).data.links
 })
 </script>
-
-<style scoped>
-.q-btn-group {
-  backdrop-filter: blur(5px);
-}
-
-body.body--light .q-btn-group {
-  background: hsla(0, 0%, 90%, .4);
-}
-
-body.body--dark .q-btn-group {
-  background: hsla(0, 0%, 20%, .4);
-}
-
-.q-btn {
-  border-radius: 0 !important;
-  font-weight: bold;
-}
-</style>

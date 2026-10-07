@@ -1,20 +1,20 @@
 <template>
-  <q-card class="about-card q-pa-md">
+  <q-card class="about-card">
     <q-card-section class="text-center">
-      <div class="text-h2 q-mb-md">
+      <h2 class="section-heading">
         About Us
-      </div>
-      <div class="text-h6">
+      </h2>
+      <div class="section-intro">
         {{ data.text }}
       </div>
     </q-card-section>
 
-    <q-card-section class="q-gutter-md row justify-center">
+    <q-card-section class="stories-grid">
       <q-card
         v-for="story in data.stories"
         :key="story.id"
         flat
-        class="col-xs-12 col-sm-6 col-md-4 about-story-card"
+        class="about-story-card"
       >
         <q-card-section class="text-center">
           <q-avatar
@@ -24,7 +24,7 @@
           >
             <img v-bind="useStrapiImage(story.avatarImage, { sizes: '100px' })">
           </q-avatar>
-          <div class="text-h4">
+          <div class="story-name">
             {{ story.name }}
           </div>
           <div class="text-body1 q-mt-sm">

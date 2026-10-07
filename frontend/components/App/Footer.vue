@@ -1,31 +1,25 @@
 <template>
-  <q-footer class="bg-dark text-white q-pa-md">
-    <q-toolbar class="justify-between">
-      <div class="row items-center">
+  <q-footer class="site-footer">
+    <div class="site-footer-inner">
+      <NuxtLink
+        to="/"
+        class="site-brand"
+        :aria-label="`${globalSettings?.siteName} home`"
+      >
         <q-avatar
-          v-if="logoSrc"
-          size="42px"
-          class="q-mr-sm"
-        >
-          <app-logo />
-        </q-avatar>
-        <div class="text-h6">
-          {{ globalSettings?.siteName }}
-        </div>
-      </div>
-
+          v-if="globalSettings?.siteLogo"
+          size="38px"
+        ><app-logo /></q-avatar>
+        <span class="site-footer-brand">{{ globalSettings?.siteName }}</span>
+      </NuxtLink>
       <social-networks />
-    </q-toolbar>
-    <div class="text-caption text-grey-4 text-center q-mt-sm">
-      &copy; {{ new Date().getFullYear() }} {{ globalSettings?.siteName }}. All rights reserved.
+      <p class="site-copyright">
+        &copy; {{ new Date().getFullYear() }} {{ globalSettings?.siteName }}. All rights reserved.
+      </p>
     </div>
   </q-footer>
 </template>
 
 <script setup lang="ts">
 const { globalSettings } = useGlobalSettings()
-
-const logoSrc = computed(() => {
-  return globalSettings.value?.siteLogo ? useStrapiMedia(globalSettings.value?.siteLogo) : ''
-})
 </script>
