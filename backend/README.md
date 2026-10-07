@@ -1,5 +1,24 @@
 # 🚀 Getting started with Strapi
 
+Contact submissions accept only name (1–100 characters), email (up to 254), optional
+phone (up to 50), and message (21–500). The server sets IP and delivery state.
+One validated attempt per IP or normalized email is allowed every two minutes;
+rejected attempts return HTTP 429 with `Retry-After`.
+
+Forwarded headers are ignored by default. Set `CONTACT_TRUSTED_PROXIES` to the
+exact socket addresses of your reverse proxies, for example `127.0.0.1,::1` for
+a local proxy. Configure each trusted proxy to overwrite or append the actual
+peer to `X-Forwarded-For`. IP resolution walks the chain from right to left and
+stops at the first untrusted address. Do not list client addresses as proxies.
+
+The concurrency limiter runs in memory in the single backend process configured
+in `ecosystem.config.cjs`; database checks preserve successful-submission limits
+after restarts. Multiple backend processes require a shared atomic limiter before
+scaling. Keep public role permissions restricted to contact-message `create`;
+read, update, and delete must remain restricted to administrators.
+
+Run contact protection regression tests with `node --test tests/contact-submission.test.cjs`.
+
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`

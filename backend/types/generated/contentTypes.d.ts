@@ -400,14 +400,30 @@ export interface ApiContactMessageContactMessage extends Struct.CollectionTypeSc
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
-    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 254;
+      }>;
     ip: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::contact-message.contact-message'> &
       Schema.Attribute.Private;
-    message: Schema.Attribute.String & Schema.Attribute.Required;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    phone: Schema.Attribute.String;
+    message: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+        minLength: 21;
+      }>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    phone: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     sent: Schema.Attribute.Boolean & Schema.Attribute.Required & Schema.Attribute.DefaultTo<false>;
     updatedAt: Schema.Attribute.DateTime;

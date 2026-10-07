@@ -44,4 +44,14 @@ export default [
 
   // Turn off ESLint formatting rules that Prettier handles
   prettier,
+  {
+    files: ['tests/**/*.cjs'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: globals.node,
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 ];

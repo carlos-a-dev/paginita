@@ -1,7 +1,6 @@
 import { Data } from '@strapi/strapi';
 import { errors } from '@strapi/utils';
-
-const SUBMISSION_TIMEFRAME_MS = 2 * 60 * 1000; // 2 minutes
+import { SUBMISSION_TIMEFRAME_MS } from '../../../../utils/contact-submission';
 
 const lifecycles = {
   async beforeCreate(event) {
@@ -19,7 +18,7 @@ const lifecycles = {
           $gte: new Date(Date.now() - SUBMISSION_TIMEFRAME_MS)
         }
       },
-      orderBy: {
+      sort: {
         createdAt: 'desc'
       }
     });
@@ -38,7 +37,7 @@ const lifecycles = {
       populate: ['blacklist']
     })) as Data.ContentType<'api::contact-setting.contact-setting'>;
 
-    settings.blacklist.forEach((rule) => {
+    (settings?.blacklist ?? []).forEach((rule) => {
       const regex = new RegExp(rule.rule);
       if (regex.test(data[rule.field])) {
         // A recent message from this IP or email already exists.
