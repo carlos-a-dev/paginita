@@ -99,3 +99,20 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+
+## Contact email delivery
+
+A received contact enquiry is stored before email forwarding. `sent: true`
+means the provider accepted it; it does not prove inbox delivery. Provider
+failures leave the stored enquiry unsent and log its message ID, HTTP status,
+and sanitized provider reason without logging the submission or credentials.
+
+Sending requires enabled contact settings, recipients, an existing template
+reference, a valid SendGrid sender/API key, and available sending allowance.
+The production investigation on 2026-10-08 found a valid key with `mail.send`
+permission, but sandbox mail validation returned HTTP 401 with
+`Maximum credits exceeded`. Restore the account's allowance in SendGrid before
+retesting. A sandbox request validates configuration without delivering mail.
+
+Existing unsent messages remain available in Strapi. Do not automatically
+replay them; select the enquiries to forward after provider access is restored.

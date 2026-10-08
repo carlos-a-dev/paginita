@@ -125,7 +125,7 @@ async function submitForm() {
 
     $q.notify({
       type: 'positive',
-      message: 'Message sent successfully!',
+      message: 'Your message has been received. Thank you for getting in touch!',
       position: 'top-right',
     })
 
