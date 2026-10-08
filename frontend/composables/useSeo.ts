@@ -1,64 +1,44 @@
+import type { MaybeRefOrGetter } from 'vue'
 import type { SEO } from '~/types/strapi/seo'
+import { buildSeo } from '~/utils/seo'
 
-export default function useSeo(seo: SEO) {
+export default function useSeo(pageSeo?: MaybeRefOrGetter<Partial<SEO> | null | undefined>) {
   const route = useRoute()
   const config = useRuntimeConfig()
   const { globalSettings } = useGlobalSettings()
+  const mediaUrl = useStrapiMedia('/')
+  const metadata = computed(() => buildSeo({
+    page: toValue(pageSeo),
+    global: globalSettings.value?.seo,
+    siteName: globalSettings.value?.siteName || 'AlvaSori',
+    siteDescription: globalSettings.value?.siteDescription,
+    siteLogo: globalSettings.value?.siteLogo,
+    siteUrl: config.public.siteUrl,
+    mediaUrl,
+    path: route.path,
+  }))
 
-  // Make sure to set NUXT_PUBLIC_SITE_URL in your .env file for production
-  const siteUrl = config.public.siteUrl || 'http://localhost:3000'
-  const pageUrl = new URL(route.fullPath, siteUrl).href
-
-  // Use the canonical URL from the CMS if provided, otherwise default to the page's URL.
-  const canonicalUrl = seo.canonicalURL || pageUrl
-
-  // Ensure image URLs are absolute. useStrapiMedia prepends the Strapi URL.
-  const metaImageUrl = seo.metaImage?.url ? useStrapiMedia(seo.metaImage.url) : undefined
-  const ogImageUrl = seo.openGraph?.ogImage?.url
-    ? useStrapiMedia(seo.openGraph.ogImage.url)
-    : metaImageUrl
-
-  // Define OpenGraph and Twitter properties with fallbacks for robustness.
-  const title = seo.metaTitle
-  const description = seo.metaDescription
-
-  const ogTitle = seo.openGraph?.ogTitle || title
-  const ogDescription = seo.openGraph?.ogDescription || description
-  const ogUrl = seo.openGraph?.ogUrl || canonicalUrl
-  const siteName = globalSettings.value?.siteName
-
-  // Filter out any tags that would have empty content.
-  const meta = [
-    // Standard meta tags
-    { name: 'description', content: description },
-    seo.keywords && { name: 'keywords', content: seo.keywords },
-    seo.metaRobots && { name: 'robots', content: seo.metaRobots },
-    seo.metaViewport && { name: 'viewport', content: seo.metaViewport },
-    metaImageUrl && { name: 'image', content: metaImageUrl },
-
-    // Open Graph
-    { property: 'og:title', content: ogTitle },
-    { property: 'og:description', content: ogDescription },
-    { property: 'og:url', content: ogUrl },
-    ogImageUrl && { property: 'og:image', content: ogImageUrl },
-    { property: 'og:type', content: seo.openGraph?.ogType || 'website' },
-    siteName && { property: 'og:site_name', content: siteName },
-
-    // Twitter Card
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: ogTitle },
-    { name: 'twitter:description', content: ogDescription },
-    ogImageUrl && { name: 'twitter:image', content: ogImageUrl },
-  ].filter(Boolean)
-
-  useHead({
-    title,
-    link: [{ rel: 'canonical', href: canonicalUrl }],
-    meta: meta as [],
-    script: [
-      seo.structuredData && Object.keys(seo.structuredData).length > 0
-        ? { type: 'application/ld+json', innerHTML: JSON.stringify(seo.structuredData, null, 2) }
-        : undefined,
-    ],
+  useSeoMeta({
+    title: () => metadata.value.title,
+    description: () => metadata.value.description,
+    robots: () => metadata.value.robots,
+    ogTitle: () => metadata.value.ogTitle,
+    ogDescription: () => metadata.value.ogDescription,
+    ogUrl: () => metadata.value.ogUrl,
+    ogType: () => metadata.value.ogType,
+    ogSiteName: () => metadata.value.siteName,
+    ogImage: () => metadata.value.image,
+    ogImageAlt: () => metadata.value.imageAlt,
+    ogImageWidth: () => metadata.value.imageWidth,
+    ogImageHeight: () => metadata.value.imageHeight,
+    twitterCard: () => metadata.value.image ? 'summary_large_image' : 'summary',
+    twitterTitle: () => metadata.value.ogTitle,
+    twitterDescription: () => metadata.value.ogDescription,
+    twitterImage: () => metadata.value.image,
   })
+  useHead(() => ({
+    meta: metadata.value.keywords ? [{ name: 'keywords', content: metadata.value.keywords }] : [],
+    link: [{ key: 'seo-canonical', rel: 'canonical', href: metadata.value.canonical }],
+    script: [{ key: 'seo-structured-data', type: 'application/ld+json', textContent: metadata.value.structuredData }],
+  }))
 }

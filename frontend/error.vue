@@ -97,6 +97,8 @@ const errorIcon = computed(() => {
   return 'fas fa-exclamation-triangle'
 })
 
+useSeoMeta({ robots: 'noindex, nofollow' })
+
 useHead({
   title: `Error ${props.error?.statusCode} - Page Not Found`,
   meta: [

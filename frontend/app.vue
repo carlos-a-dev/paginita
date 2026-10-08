@@ -21,9 +21,7 @@ if (globalSettings.value.favicon) {
 }
 
 // Default SEO
-if (globalSettings.value.seo) {
-  useSeo(globalSettings.value.seo)
-}
+useSeo()
 
 // Theme
 const { themeStyle, darkMode } = useTheme()
