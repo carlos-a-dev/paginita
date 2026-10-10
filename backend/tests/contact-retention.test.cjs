@@ -45,3 +45,26 @@ test('cleanup deletes only expired contacts and logs counts without message data
   await assert.rejects(purgeExpiredContacts(strapi, 0));
   assert.equal(filter, undefined);
 });
+
+test('each installation must choose a retention period before enabling deletion', () => {
+  const configExports = {};
+  runInNewContext(
+    ts.transpileModule(readFileSync(require.resolve('../config/server.ts'), 'utf8'), {
+      compilerOptions: { module: ts.ModuleKind.CommonJS }
+    }).outputText,
+    { exports: configExports, require: () => exportsForTest }
+  );
+  const configuration = (enabled, days) => {
+    const env = (_name, fallback) => fallback;
+    env.bool = () => enabled;
+    env.int = (name, fallback) =>
+      name === 'CONTACT_RETENTION_DAYS' ? (days ?? fallback) : fallback;
+    env.array = () => [];
+    return configExports.default({ env });
+  };
+  assert.equal(configuration(false).cron.enabled, false);
+  assert.throws(() => configuration(true));
+  assert.throws(() => configuration(true, 0));
+  assert.equal(configuration(true, 90).cron.enabled, true);
+  assert.equal(configuration(true, 365).cron.enabled, true);
+});

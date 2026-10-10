@@ -2,7 +2,7 @@ import { purgeExpiredContacts, retentionCutoff } from '../src/utils/contact-rete
 
 export default ({ env }) => {
   const retentionEnabled = env.bool('CONTACT_RETENTION_ENABLED', false);
-  const retentionDays = env.int('CONTACT_RETENTION_DAYS', 365);
+  const retentionDays = env.int('CONTACT_RETENTION_DAYS', 0);
   if (retentionEnabled) retentionCutoff(retentionDays);
   return {
     host: env('HOST', '0.0.0.0'),
