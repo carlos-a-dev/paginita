@@ -13,6 +13,12 @@
         <span class="site-footer-brand">{{ globalSettings?.siteName }}</span>
       </NuxtLink>
       <social-networks />
+      <NuxtLink
+        v-if="privacyPolicyPath"
+        :to="privacyPolicyPath"
+      >
+        Privacy Policy
+      </NuxtLink>
       <p class="site-copyright">
         &copy; {{ new Date().getFullYear() }} {{ globalSettings?.siteName }}. All rights reserved.
       </p>
@@ -22,4 +28,5 @@
 
 <script setup lang="ts">
 const { globalSettings } = useGlobalSettings()
+const privacyPolicyPath = usePrivacyPolicy()
 </script>

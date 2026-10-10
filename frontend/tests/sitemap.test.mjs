@@ -21,7 +21,7 @@ test('sitemap fetches every published page, filters nonindexable/external pages,
       if (name === 'nuxt/server') return {
         defineEventHandler: handler => handler,
         createError: details => Object.assign(new Error(details.message), details),
-        useRuntimeConfig: () => ({ public: { siteUrl: 'https://alvasori.net/', strapi: { url: 'https://strapi.alvasori.net', prefix: '/api' } } }),
+        useRuntimeConfig: () => ({ public: { siteUrl: 'https://site.example.test/', strapi: { url: 'https://cms.example.test', prefix: '/api' } } }),
       }
       throw new Error(name)
     },
@@ -40,9 +40,9 @@ test('sitemap fetches every published page, filters nonindexable/external pages,
   const xml = await module.default({ res: { headers } })
   assert.equal(calls.length, 3)
   assert.equal((xml.match(/<url>/g) || []).length, 3)
-  assert(xml.includes('<loc>https://alvasori.net/</loc>'))
+  assert(xml.includes('<loc>https://site.example.test/</loc>'))
   assert(xml.includes('<lastmod>2026-10-07T12:00:00.000Z</lastmod>'))
-  assert(xml.includes('<loc>https://alvasori.net/a&amp;b</loc>'))
+  assert(xml.includes('<loc>https://site.example.test/a&amp;b</loc>'))
   assert(!xml.includes('hidden') && !xml.includes('private') && !xml.includes('other.example'))
   assert.equal(headers.get('content-type'), 'application/xml; charset=utf-8')
 })

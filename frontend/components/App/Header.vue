@@ -18,7 +18,7 @@
         <!-- eslint-disable vue/no-v-html -->
         <span
           class="site-brand-name"
-          v-html="globalSettings?.siteNameStyled"
+          v-html="sanitizeCmsHtml(globalSettings?.siteNameStyled || '')"
         />
         <!-- eslint-enable vue/no-v-html -->
       </NuxtLink>
@@ -34,5 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import { sanitizeCmsHtml } from '~/utils/sanitizeCmsHtml'
+
 const { globalSettings } = useGlobalSettings()
 </script>
