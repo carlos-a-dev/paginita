@@ -4,14 +4,15 @@
 
 The website stores contact names, email addresses, optional phone numbers,
 messages, IP addresses, and delivery status. Configured email recipients receive
-copies through SendGrid. Abuse logs must not contain submission bodies or field
+copies through the configured email provider. Abuse logs must not contain submission bodies or field
 values; they record only the rejection reason and rule identifier.
 
 Database cleanup is opt-in. `CONTACT_RETENTION_ENABLED=false` is the default.
-The approved policy is 365 days. Set `CONTACT_RETENTION_DAYS=365` and enable
-cleanup after reviewing existing inquiries, legal holds, email retention, and
-backup expiry. The configurable range is 1 to 3650 days. This business policy
-is not a Florida statutory retention period.
+There is no shared retention period. Each site operator must choose and set
+`CONTACT_RETENTION_DAYS` to an integer from 1 to 3650 before enabling cleanup.
+Enabling it with an absent or invalid period fails configuration validation.
+Review existing inquiries, legal holds, email retention, and backup expiry first.
+The period is a business policy choice, not a statutory default.
 Restart the backend after changing configuration. Cleanup runs daily at 03:00 UTC
 and deletes all contact records created before the cutoff, including records
 whose notification email was not delivered. Review unresolved inquiries first.
@@ -28,21 +29,25 @@ it. Audit Public and Authenticated roles after CMS permission changes.
 1. Assign an incident owner and record when the incident was discovered. Preserve
    evidence and isolate compromised credentials or systems. Stop further access.
 2. Determine the information accessed, affected people, and relevant jurisdictions.
-   Ordinary names and email addresses alone do not necessarily qualify as personal
-   information under Florida's breach statute. Free-text messages may qualify.
-3. Obtain legal review promptly. Florida Statutes §501.171 generally requires
-   affected-individual notice within 30 days after determination or reason to
-   believe a qualifying breach occurred, subject to statutory exceptions. Notify
-   the Department of Legal Affairs when 500 or more Florida individuals are
-   affected; additional credit-reporting notice applies when more than 1,000
-   individuals require notice at once. The 30-day period is not permission to wait.
-4. Coordinate with hosting, email providers, and other processors. Third-party
-   agents generally have a 10-day notification deadline to the covered entity.
+   Data types and affected locations determine which breach rules apply.
+3. Obtain legal review promptly and identify required recipients, deadlines,
+   exceptions, and the evidence needed to support notification decisions.
+4. Coordinate with hosting, email providers, and other processors under their
+   contracts and applicable law. Track when each party was notified.
 5. Document remediation, notifications, and the legal basis for any exception.
    Verify restoration and monitor for recurrence. Review the retention policy.
 
-Source: https://www.flsenate.gov/Laws/Statutes/2026/501.171
+For sites with Florida obligations, see [the jurisdiction-specific reference](legal/florida.md).
+Other sites need their own legal review; Florida requirements are not CMS defaults.
 
 The operator still needs to enable cleanup, designate an incident owner,
 and verify email, backup, hosting, and access controls. This document does
 not certify legal compliance or the production infrastructure.
+
+## Deployment scope
+
+These settings and cleanup apply to the entire backend installation, not an
+individual domain. Use a separate backend/database for each independently managed
+site. This change does not add tenant identification, per-tenant cleanup, or
+access isolation to a shared backend. Do not enable cleanup in a shared database
+until its records and policies can be scoped safely.
