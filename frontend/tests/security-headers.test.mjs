@@ -17,12 +17,14 @@ test('CSP authorizes framework scripts but never hashes CMS body scripts', () =>
     require: name => name === 'nuxt/server' ? { useRuntimeConfig: () => ({ public: { strapi: { url: 'https://strapi.alvasori.net/path' } } }) } : require(name),
   })
   let policy
-  hook({ head: ['<script>window.nuxt=true</script>'], bodyPrepend: [], bodyAppend: [], body: ['<script>window.evil=true</script>'] }, { event: { node: { res: { setHeader: (_key, value) => { policy = value } } } } })
+  hook({ head: ['<script>window.nuxt=true</script>'], bodyPrepend: [], bodyAppend: [], body: ['<script>window.evil=true</script>'] }, { event: { node: { res: { setHeader: (_key, value) => {
+    policy = value
+  } } } } })
   const hash = value => createHash('sha256').update(value).digest('base64')
   assert(policy.includes(hash('window.nuxt=true')))
   assert(!policy.includes(hash('window.evil=true')))
   assert(!policy.split(';')[1].includes('unsafe-inline'))
-  assert(policy.includes("script-src-attr 'none'"))
-  assert(policy.includes("frame-ancestors 'none'"))
-  assert(policy.includes("connect-src 'self' https://strapi.alvasori.net"))
+  assert(policy.includes('script-src-attr \'none\''))
+  assert(policy.includes('frame-ancestors \'none\''))
+  assert(policy.includes('connect-src \'self\' https://strapi.alvasori.net'))
 })
