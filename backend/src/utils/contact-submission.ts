@@ -1,6 +1,16 @@
 import { isIP } from 'node:net';
 
 export const SUBMISSION_TIMEFRAME_MS = 2 * 60 * 1000;
+export const GLOBAL_SUBMISSION_WINDOW_MS = 60 * 1000;
+const configuredLimit = process.env.CONTACT_GLOBAL_SUBMISSION_LIMIT?.trim() || '120';
+if (
+  !/^\d+$/.test(configuredLimit) ||
+  Number(configuredLimit) < 1 ||
+  Number(configuredLimit) > 1000
+) {
+  throw new Error('CONTACT_GLOBAL_SUBMISSION_LIMIT must be an integer between 1 and 1000.');
+}
+export const GLOBAL_SUBMISSION_LIMIT = Number(configuredLimit);
 
 export function normalizeIP(value: string): string {
   const ip = value.trim();
@@ -23,6 +33,9 @@ export function getClientIP(peer: string, forwarded: string, trustedProxies: str
 }
 
 export function validateContact(data: Record<string, unknown>): Record<string, string> {
+  if (data.lastName !== undefined && (typeof data.lastName !== 'string' || data.lastName !== '')) {
+    throw new Error('Unable to accept this message.');
+  }
   const result: Record<string, string> = {};
   for (const [field, min, max] of [
     ['name', 1, 100],
@@ -45,16 +58,20 @@ export function validateContact(data: Record<string, unknown>): Record<string, s
 
 export function createSubmissionLimiter() {
   const deadlines = new Map<string, number>();
-  return (ip: string, email: string, now = Date.now()): number => {
+  let attempts: number[] = [];
+  return (ip: string, now = Date.now()): number => {
     for (const [key, deadline] of deadlines) {
       if (deadline <= now) deadlines.delete(key);
     }
-    const keys = [`ip:${ip}`, `email:${email}`];
-    const remaining = Math.max(...keys.map((key) => (deadlines.get(key) ?? 0) - now));
+    const remaining = (deadlines.get(ip) ?? 0) - now;
     if (remaining > 0) return Math.ceil(remaining / 1000);
-    // Bound memory and fail closed if flooded with unique addresses.
-    if (deadlines.size >= 10000) return SUBMISSION_TIMEFRAME_MS / 1000;
-    for (const key of keys) deadlines.set(key, now + SUBMISSION_TIMEFRAME_MS);
+    attempts = attempts.filter((time) => time > now - GLOBAL_SUBMISSION_WINDOW_MS);
+    if (attempts.length >= GLOBAL_SUBMISSION_LIMIT) {
+      return Math.ceil((attempts[0] + GLOBAL_SUBMISSION_WINDOW_MS - now) / 1000);
+    }
+    attempts.push(now);
+    // Unverified email addresses cannot reserve another person's submission slot.
+    deadlines.set(ip, now + SUBMISSION_TIMEFRAME_MS);
     return 0;
   };
 }

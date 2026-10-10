@@ -4,7 +4,7 @@
     <q-card-section
       v-if="data?.header"
       class="contact-intro cms-prose text-center"
-      v-html="useMarkdown().md.render(data.header)"
+      v-html="useMarkdown().render(data.header)"
     />
     <q-form
       ref="contactForm"
@@ -33,6 +33,8 @@
           label="Last Name"
           name="lastName"
           class="hidden"
+          tabindex="-1"
+          aria-hidden="true"
         />
         <q-input
           v-model="formData.email"
@@ -73,6 +75,13 @@
           </template>
         </q-input>
       </q-card-section>
+      <p class="q-px-md text-caption">
+        Please do not include passwords, payment details, government identification numbers, or medical information.
+        We use your details to respond to your inquiry.
+        <template v-if="privacyPolicyPath">
+          Read our <NuxtLink :to="privacyPolicyPath">Privacy Policy</NuxtLink>.
+        </template>
+      </p>
       <q-card-actions>
         <q-btn
           icon="send"
@@ -101,6 +110,7 @@ defineProps<{
 }>()
 
 const $q = useQuasar()
+const privacyPolicyPath = usePrivacyPolicy()
 const contactForm = ref()
 const formData = ref({
   name: '',
@@ -121,7 +131,7 @@ async function submitForm() {
 
     if (lastName.value) return
 
-    await useStrapi().create('contact-messages', formData.value)
+    await useStrapi().create('contact-messages', { ...formData.value, lastName: lastName.value })
 
     $q.notify({
       type: 'positive',

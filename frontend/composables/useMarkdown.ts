@@ -2,12 +2,12 @@ import markdownit from 'markdown-it'
 import markdownItAttrs from 'markdown-it-attrs'
 import markdownItHighlightjs from 'markdown-it-highlightjs'
 import { useResponsiveImage } from '~/composables/useResponsiveImage'
+import { sanitizeCmsHtml } from '~/utils/sanitizeCmsHtml'
 
 export const useMarkdown = () => {
   const md = markdownit()
 
-  // Allow classes and attributes
-  md.use(markdownItAttrs)
+  md.use(markdownItAttrs, { allowedAttributes: ['class', 'id'] })
 
   // Highlightjs
   md.use(markdownItHighlightjs, {
@@ -61,5 +61,6 @@ export const useMarkdown = () => {
 
   return {
     md,
+    render: (source: string) => sanitizeCmsHtml(md.render(source)),
   }
 }

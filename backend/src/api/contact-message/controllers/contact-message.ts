@@ -7,7 +7,9 @@ import {
   createSubmissionLimiter,
   getClientIP,
   validateContact,
-  SUBMISSION_TIMEFRAME_MS
+  SUBMISSION_TIMEFRAME_MS,
+  GLOBAL_SUBMISSION_LIMIT,
+  GLOBAL_SUBMISSION_WINDOW_MS
 } from '../../../utils/contact-submission';
 
 const reserveSubmission = createSubmissionLimiter();
@@ -23,6 +25,13 @@ export default factories.createCoreController(
       );
       if (!ip) return ctx.badRequest('Unable to determine client address.');
 
+      // Limit direct API calls, including invalid bodies, before doing database work.
+      const retryAfter = reserveSubmission(ip);
+      if (retryAfter) {
+        ctx.set('Retry-After', String(retryAfter));
+        return ctx.tooManyRequests('Please wait before submitting another message.');
+      }
+
       const input = ctx.request.body?.data;
       if (!input || typeof input !== 'object' || Array.isArray(input)) {
         return ctx.badRequest('Contact data is required.');
@@ -34,19 +43,22 @@ export default factories.createCoreController(
         return ctx.badRequest(error.message);
       }
 
-      const retryAfter = reserveSubmission(ip, data.email);
-      if (retryAfter) {
-        ctx.set('Retry-After', String(retryAfter));
-        return ctx.tooManyRequests('Please wait before submitting another message.');
-      }
-
       // Keep successful submissions limited across process restarts, too.
       const recent = await strapi.documents('api::contact-message.contact-message').findFirst({
         filters: {
-          $or: [{ ip }, { email: data.email }],
+          ip,
           createdAt: { $gte: new Date(Date.now() - SUBMISSION_TIMEFRAME_MS).toISOString() }
         }
       });
+      const globalCount = await strapi.documents('api::contact-message.contact-message').count({
+        filters: {
+          createdAt: { $gte: new Date(Date.now() - GLOBAL_SUBMISSION_WINDOW_MS).toISOString() }
+        }
+      });
+      if (globalCount >= GLOBAL_SUBMISSION_LIMIT) {
+        ctx.set('Retry-After', String(GLOBAL_SUBMISSION_WINDOW_MS / 1000));
+        return ctx.tooManyRequests('Please wait before submitting another message.');
+      }
       if (recent) {
         ctx.set('Retry-After', String(SUBMISSION_TIMEFRAME_MS / 1000));
         return ctx.tooManyRequests('Please wait before submitting another message.');
