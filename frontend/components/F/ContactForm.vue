@@ -77,6 +77,8 @@
       </q-card-section>
       <p class="q-px-md text-caption">
         Please do not include passwords, payment details, government identification numbers, or medical information.
+        We use your details to respond to your inquiry. Read our
+        <NuxtLink to="/privacy-policy">Privacy Policy</NuxtLink>.
       </p>
       <q-card-actions>
         <q-btn

@@ -13,6 +13,9 @@
         <span class="site-footer-brand">{{ globalSettings?.siteName }}</span>
       </NuxtLink>
       <social-networks />
+      <NuxtLink to="/privacy-policy">
+        Privacy Policy
+      </NuxtLink>
       <p class="site-copyright">
         &copy; {{ new Date().getFullYear() }} {{ globalSettings?.siteName }}. All rights reserved.
       </p>
