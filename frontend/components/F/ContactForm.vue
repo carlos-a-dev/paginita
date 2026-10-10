@@ -33,6 +33,8 @@
           label="Last Name"
           name="lastName"
           class="hidden"
+          tabindex="-1"
+          aria-hidden="true"
         />
         <q-input
           v-model="formData.email"
@@ -124,7 +126,7 @@ async function submitForm() {
 
     if (lastName.value) return
 
-    await useStrapi().create('contact-messages', formData.value)
+    await useStrapi().create('contact-messages', { ...formData.value, lastName: lastName.value })
 
     $q.notify({
       type: 'positive',

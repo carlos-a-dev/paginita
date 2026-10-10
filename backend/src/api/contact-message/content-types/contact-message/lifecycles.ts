@@ -7,14 +7,14 @@ const lifecycles = {
   async beforeCreate(event) {
     const data = event.params.data as Data.ContentType<'api::contact-message.contact-message'>;
 
-    // Check for recent submissions from the same IP or email to prevent spam/abuse
+    // Never use unverified email addresses to block the actual owner's inquiry.
     const existingMessage: Pick<
       Data.ContentType<'api::contact-message.contact-message'>,
       'id'
     > | null = await strapi.documents('api::contact-message.contact-message').findFirst({
       fields: ['id'],
       filters: {
-        $or: [{ ip: { $eq: data.ip, $notNull: true } }, { email: data.email }],
+        ip: { $eq: data.ip, $notNull: true },
         createdAt: {
           $gte: new Date(Date.now() - SUBMISSION_TIMEFRAME_MS)
         }
@@ -25,7 +25,7 @@ const lifecycles = {
     });
 
     if (existingMessage) {
-      // A recent message from this IP or email already exists.
+      // A recent message from this IP already exists.
       strapi.log.warn(
         `Duplicate contact message attempt within ${SUBMISSION_TIMEFRAME_MS / 1000 / 60} minutes.`
       );
@@ -40,7 +40,6 @@ const lifecycles = {
     (settings?.blacklist ?? []).forEach((rule) => {
       const regex = new RegExp(rule.rule);
       if (regex.test(data[rule.field])) {
-        // A recent message from this IP or email already exists.
         strapi.log.warn(`Contact message blocked. Rule: ${rule.id} | Field: ${rule.field}.`);
         throw new errors.ApplicationError('Something went wrong');
       }
