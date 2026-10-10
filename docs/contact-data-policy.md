@@ -8,9 +8,10 @@ copies through SendGrid. Abuse logs must not contain submission bodies or field
 values; they record only the rejection reason and rule identifier.
 
 Database cleanup is opt-in. `CONTACT_RETENTION_ENABLED=false` is the default.
-Choose and approve a retention period before setting it to `true`, then set
-`CONTACT_RETENTION_DAYS` to an integer from 1 to 3650. The example uses 180 days;
-that is an implementation example, not a Florida statutory retention period.
+The approved policy is 365 days. Set `CONTACT_RETENTION_DAYS=365` and enable
+cleanup after reviewing existing inquiries, legal holds, email retention, and
+backup expiry. The configurable range is 1 to 3650 days. This business policy
+is not a Florida statutory retention period.
 Restart the backend after changing configuration. Cleanup runs daily at 03:00 UTC
 and deletes all contact records created before the cutoff, including records
 whose notification email was not delivered. Review unresolved inquiries first.
@@ -42,6 +43,6 @@ it. Audit Public and Authenticated roles after CMS permission changes.
 
 Source: https://www.flsenate.gov/Laws/Statutes/2026/501.171
 
-The operator still needs to choose the retention period, designate an incident
-owner, and verify email, backup, hosting, and access controls. This document does
+The operator still needs to enable cleanup, designate an incident owner,
+and verify email, backup, hosting, and access controls. This document does
 not certify legal compliance or the production infrastructure.
