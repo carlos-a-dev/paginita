@@ -30,7 +30,7 @@ test('Markdown attributes cannot create event handlers and final HTML is sanitiz
 })
 
 test('brand formatting and responsive content survive sanitization', () => {
-  const brand = '<span class="text-primary">A</span>lva<span class="text-secondary">S</span>ori'
+  const brand = '<span class="text-primary">Example</span> <span class="text-secondary">Site</span>'
   assert.equal(sanitizeCmsHtml(brand), brand)
   const html = sanitizeCmsHtml('<h2 class="text-h2">Title</h2><pre><code class="hljs"><span class="hljs-keyword">const</span></code></pre><img src="/image.webp" srcset="/small.webp 400w, /large.webp 800w" sizes="100vw" alt="Example"><a href="/contact">Contact</a>')
   assert(html.includes('srcset='))
@@ -39,5 +39,5 @@ test('brand formatting and responsive content survive sanitization', () => {
 })
 
 test('sanitization also applies after insertion of a hostile styled site name', () => {
-  assert.equal(sanitizeCmsHtml('<p>Welcome <span onclick="alert(1)">AlvaSori</span></p>'), '<p>Welcome <span>AlvaSori</span></p>')
+  assert.equal(sanitizeCmsHtml('<p>Welcome <span onclick="alert(1)">Example Site</span></p>'), '<p>Welcome <span>Example Site</span></p>')
 })
