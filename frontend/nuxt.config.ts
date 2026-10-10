@@ -19,10 +19,8 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       link: [
         {
-          rel: 'preload',
-          as: 'style',
+          rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700;900&family=Montserrat:wght@200;300;400;500;600&display=swap',
-          onload: 'this.onload=null;this.rel=\'stylesheet\'',
         },
       ],
     },
