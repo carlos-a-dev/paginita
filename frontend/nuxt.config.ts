@@ -31,6 +31,12 @@ export default defineNuxtConfig({
     '@/assets/styles/main.scss',
   ],
   runtimeConfig: {
+    security: {
+      styleOrigins: 'https://fonts.googleapis.com',
+      fontOrigins: 'https://fonts.gstatic.com',
+      imageOrigins: '',
+      connectOrigins: '',
+    },
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     },
