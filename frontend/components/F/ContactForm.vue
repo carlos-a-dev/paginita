@@ -4,7 +4,7 @@
     <q-card-section
       v-if="data?.header"
       class="contact-intro cms-prose text-center"
-      v-html="useMarkdown().md.render(data.header)"
+      v-html="useMarkdown().render(data.header)"
     />
     <q-form
       ref="contactForm"

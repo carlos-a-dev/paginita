@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { sanitizeCmsHtml } from '~/utils/sanitizeCmsHtml'
+
 const props = defineProps<{
   data?: {
     body: string
@@ -35,6 +37,6 @@ const result = computed(() => {
     md = md.replaceAll(globalSettings.value.siteName, globalSettings.value.siteNameStyled)
   }
 
-  return md
+  return sanitizeCmsHtml(md)
 })
 </script>
