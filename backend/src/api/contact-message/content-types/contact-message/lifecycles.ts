@@ -27,8 +27,7 @@ const lifecycles = {
     if (existingMessage) {
       // A recent message from this IP or email already exists.
       strapi.log.warn(
-        `Possible bot! Duplicate contact message attempt within ${SUBMISSION_TIMEFRAME_MS / 1000 / 60} minutes.`,
-        data
+        `Duplicate contact message attempt within ${SUBMISSION_TIMEFRAME_MS / 1000 / 60} minutes.`
       );
       throw new errors.ApplicationError('Something went wrong');
     }
@@ -42,10 +41,7 @@ const lifecycles = {
       const regex = new RegExp(rule.rule);
       if (regex.test(data[rule.field])) {
         // A recent message from this IP or email already exists.
-        strapi.log.warn(
-          `Contact message blocked! Rule: ${rule.id} | Field: ${rule.field} | Value: ${data[rule.field]}.`,
-          data
-        );
+        strapi.log.warn(`Contact message blocked. Rule: ${rule.id} | Field: ${rule.field}.`);
         throw new errors.ApplicationError('Something went wrong');
       }
     });

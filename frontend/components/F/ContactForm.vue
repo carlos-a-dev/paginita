@@ -73,6 +73,9 @@
           </template>
         </q-input>
       </q-card-section>
+      <p class="q-px-md text-caption">
+        Please do not include passwords, payment details, government identification numbers, or medical information.
+      </p>
       <q-card-actions>
         <q-btn
           icon="send"
