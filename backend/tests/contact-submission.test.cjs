@@ -5,7 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const ts = require('typescript');
 
-function load(file, dependencies = {}) {
+function load(file, dependencies = {}, runtime = {}) {
   const source = ts.transpileModule(fs.readFileSync(path.join(__dirname, '../src', file), 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 }
   }).outputText;
@@ -17,7 +17,8 @@ function load(file, dependencies = {}) {
     process,
     Date,
     Map,
-    Set
+    Set,
+    ...runtime
   });
   return exports;
 }
@@ -236,5 +237,27 @@ test('one person cannot block another IP by submitting their email address', asy
       tooManyRequests: () => 429
     };
     assert.equal((await controller.create(ctx)).data.email, 'alice@example.com');
+  }
+});
+
+test('different site installations can choose independent endpoint ceilings', () => {
+  const configured = load(
+    'utils/contact-submission.ts',
+    {},
+    { process: { env: { CONTACT_GLOBAL_SUBMISSION_LIMIT: '2' } } }
+  );
+  assert.equal(configured.GLOBAL_SUBMISSION_LIMIT, 2);
+  const reserve = configured.createSubmissionLimiter();
+  assert.equal(reserve('one', 1000), 0);
+  assert.equal(reserve('two', 1000), 0);
+  assert.equal(reserve('three', 1000), 60);
+  for (const value of ['0', '-1', '1.5', '1001', 'invalid']) {
+    assert.throws(() =>
+      load(
+        'utils/contact-submission.ts',
+        {},
+        { process: { env: { CONTACT_GLOBAL_SUBMISSION_LIMIT: value } } }
+      )
+    );
   }
 });

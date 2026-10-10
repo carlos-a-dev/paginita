@@ -6,8 +6,9 @@ empty, so this is only one signal, not proof that a sender is human.
 
 The single backend process reserves IP submission slots synchronously, before
 validation or database work. One IP can attempt a submission every two minutes.
-An endpoint-wide ceiling permits at most 120 distinct eligible IP attempts in a
-rolling minute. Repeated requests from one IP do not consume additional global
+An endpoint-wide ceiling defaults to 120 distinct eligible IP attempts in a
+rolling minute. Each backend installation can set CONTACT_GLOBAL_SUBMISSION_LIMIT
+to an integer from 1 to 1000 for its own traffic. Repeated requests from one IP do not consume additional global
 slots. Both protections return HTTP 429 with Retry-After. Successful submissions
 are also checked in the database so restarting the process does not reset their
 cooldown or the recent-submission ceiling.

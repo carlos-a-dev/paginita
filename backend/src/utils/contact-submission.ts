@@ -2,7 +2,15 @@ import { isIP } from 'node:net';
 
 export const SUBMISSION_TIMEFRAME_MS = 2 * 60 * 1000;
 export const GLOBAL_SUBMISSION_WINDOW_MS = 60 * 1000;
-export const GLOBAL_SUBMISSION_LIMIT = 120;
+const configuredLimit = process.env.CONTACT_GLOBAL_SUBMISSION_LIMIT?.trim() || '120';
+if (
+  !/^\d+$/.test(configuredLimit) ||
+  Number(configuredLimit) < 1 ||
+  Number(configuredLimit) > 1000
+) {
+  throw new Error('CONTACT_GLOBAL_SUBMISSION_LIMIT must be an integer between 1 and 1000.');
+}
+export const GLOBAL_SUBMISSION_LIMIT = Number(configuredLimit);
 
 export function normalizeIP(value: string): string {
   const ip = value.trim();
