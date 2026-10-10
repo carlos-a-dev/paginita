@@ -13,7 +13,10 @@
         <span class="site-footer-brand">{{ globalSettings?.siteName }}</span>
       </NuxtLink>
       <social-networks />
-      <NuxtLink to="/privacy-policy">
+      <NuxtLink
+        v-if="privacyPolicyPath"
+        :to="privacyPolicyPath"
+      >
         Privacy Policy
       </NuxtLink>
       <p class="site-copyright">
@@ -25,4 +28,5 @@
 
 <script setup lang="ts">
 const { globalSettings } = useGlobalSettings()
+const privacyPolicyPath = usePrivacyPolicy()
 </script>

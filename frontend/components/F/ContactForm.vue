@@ -77,8 +77,10 @@
       </q-card-section>
       <p class="q-px-md text-caption">
         Please do not include passwords, payment details, government identification numbers, or medical information.
-        We use your details to respond to your inquiry. Read our
-        <NuxtLink to="/privacy-policy">Privacy Policy</NuxtLink>.
+        We use your details to respond to your inquiry.
+        <template v-if="privacyPolicyPath">
+          Read our <NuxtLink :to="privacyPolicyPath">Privacy Policy</NuxtLink>.
+        </template>
       </p>
       <q-card-actions>
         <q-btn
@@ -108,6 +110,7 @@ defineProps<{
 }>()
 
 const $q = useQuasar()
+const privacyPolicyPath = usePrivacyPolicy()
 const contactForm = ref()
 const formData = ref({
   name: '',

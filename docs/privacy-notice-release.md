@@ -1,37 +1,39 @@
-# Privacy notice release checklist
+# Per-site privacy notice
 
-The repository now owns `/privacy-policy` as an explicit Nuxt page. It takes
-precedence over the older CMS page at that URL. Update the repository page when
-practices change; editing the old CMS page will not change the public notice.
-The sitemap includes the repository route and ignores the obsolete CMS metadata.
+Privacy policies are CMS content. The normal catch-all page route serves their
+body and SEO; there is no repository page overriding a site's policy.
 
-The contact form and footer link directly to the policy. The notice describes
-IP collection and abuse controls, the theme cookie, Google Fonts, external social
-links, CMS storage, and SendGrid notifications. It avoids unverified claims about
-analytics, newsletters, selling information, or automatic regional rights.
+Publish a page in each site's Strapi installation and set
+NUXT_PUBLIC_PRIVACY_POLICY_PATH to its path. The default is /privacy-policy;
+/data-protection is another supported example. Only a single CMS slug is allowed,
+consistent with existing page routing. External URLs, nested paths, and executable
+URLs are rejected. An explicitly empty setting omits the links for deployments
+that intentionally do not provide a privacy page.
 
-The business approved a 365-day contact retention policy. Before publishing:
+The footer and contact form use this setting. The normal sitemap includes
+published CMS policies according to their own indexing and canonical settings.
+No policy URL is fabricated when its page is missing or unpublished.
 
-- Set CONTACT_RETENTION_DAYS=365 and enable database cleanup after checking legal
-  holds and unresolved inquiries. See contact-data-policy.md.
-- Apply retention procedures to recipient inboxes, exports, provider records,
-  and backups; record the backup expiry schedule. The database job cannot do this.
-- Assign responsibility for privacy requests at info@alvasori.net and incident
-  response. Verify that the mailbox is monitored.
-- Confirm the notice against actual hosting, provider, and business practices,
-  including any processing outside this application. Seek Florida legal review
-  for the final business policy and applicable obligations.
+## Content to review for each site
 
-Florida §501.204 prohibits unfair or deceptive commercial practices, including
-potentially misleading privacy promises. The lack of a cookie-consent banner is
-not automatically a Florida violation. The Digital Bill of Rights' controller
-requirements are narrow, including a revenue threshold and other criteria; do
-not apply its full notice requirements to this business without checking scope.
+Use privacy-policy-template.md as an authoring guide, not a policy to publish
+without customization. Enter the site's legal identity, privacy contact,
+effective date, service providers, processing purposes, location, and actual
+retention policy. Confirm practices outside the application as well.
 
-Sources:
-https://www.flsenate.gov/Laws/Statutes/2026/501.204
-https://www.flsenate.gov/Laws/Statutes/2026/501.702
+Describe contact fields, IP and abuse controls, the theme cookie, and providers
+actually used by that installation. The current frontend uses Google Fonts and
+the backend config uses SendGrid; update disclosures if those integrations change.
+Do not assume every site uses analytics, newsletters, social links, or WhatsApp.
+Do not publish unverified promises about selling data or regional privacy rights.
 
-No production CMS content, provider settings, inboxes, or backups were changed
-as part of this branch. Those operational steps are necessary before publication
-so the policy describes actual practice.
+Before release, apply the site's retention period to the database, inboxes,
+exports, provider records, and backups. Designate a privacy-request owner and
+incident owner. See contact-data-policy.md. Verify privacy links, published CMS
+content, SEO, and mobile navigation in that deployment.
+
+Legal requirements depend on the operator and affected jurisdictions. The original
+Florida audit is preserved separately in legal/florida.md; it is not the policy
+for every CMS installation. Obtain site-specific legal review where needed.
+
+These changes do not publish CMS content or alter live provider settings.

@@ -21,7 +21,7 @@ test('sitemap fetches every published page, filters nonindexable/external pages,
       if (name === 'nuxt/server') return {
         defineEventHandler: handler => handler,
         createError: details => Object.assign(new Error(details.message), details),
-        useRuntimeConfig: () => ({ public: { siteUrl: 'https://alvasori.net/', strapi: { url: 'https://strapi.alvasori.net', prefix: '/api' } } }),
+        useRuntimeConfig: () => ({ public: { siteUrl: 'https://site.example.test/', strapi: { url: 'https://cms.example.test', prefix: '/api' } } }),
       }
       throw new Error(name)
     },
@@ -30,7 +30,7 @@ test('sitemap fetches every published page, filters nonindexable/external pages,
       if (url.endsWith('/global')) return { data: { seo: { metaRobots: 'index, follow' } } }
       assert.equal(options.query.status, 'published')
       if (options.query['pagination[page]'] === 1) return {
-        data: [{ slug: 'index' }, { slug: 'privacy-policy', seo: { metaRobots: 'noindex', canonicalURL: '/obsolete-privacy' } }, { slug: 'hidden', seo: { metaRobots: 'noindex, follow' } }, { slug: 'private', seo: { metaRobots: 'none' } }],
+        data: [{ slug: 'index' }, { slug: 'hidden', seo: { metaRobots: 'noindex, follow' } }, { slug: 'private', seo: { metaRobots: 'none' } }],
         meta: { pagination: { pageCount: 2 } },
       }
       return { data: [{ slug: 'about', updatedAt: '2026-10-07T12:00:00.000Z' }, { slug: 'partner', seo: { canonicalURL: 'https://other.example/' } }, { slug: 'escaped', seo: { canonicalURL: '/a&b' } }] }
@@ -39,12 +39,10 @@ test('sitemap fetches every published page, filters nonindexable/external pages,
   const headers = new Headers()
   const xml = await module.default({ res: { headers } })
   assert.equal(calls.length, 3)
-  assert.equal((xml.match(/<url>/g) || []).length, 4)
-  assert(xml.includes('<loc>https://alvasori.net/privacy-policy</loc>'))
-  assert(!xml.includes('obsolete-privacy'))
-  assert(xml.includes('<loc>https://alvasori.net/</loc>'))
+  assert.equal((xml.match(/<url>/g) || []).length, 3)
+  assert(xml.includes('<loc>https://site.example.test/</loc>'))
   assert(xml.includes('<lastmod>2026-10-07T12:00:00.000Z</lastmod>'))
-  assert(xml.includes('<loc>https://alvasori.net/a&amp;b</loc>'))
+  assert(xml.includes('<loc>https://site.example.test/a&amp;b</loc>'))
   assert(!xml.includes('hidden') && !xml.includes('private') && !xml.includes('other.example'))
   assert.equal(headers.get('content-type'), 'application/xml; charset=utf-8')
 })

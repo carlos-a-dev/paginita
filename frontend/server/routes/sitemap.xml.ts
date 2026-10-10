@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
   const global = await $fetch<{ data: { seo?: { metaRobots?: string } } }>(endpoint.replace(/\/pages$/, '/global'), { query: { 'populate[seo][fields][0]': 'metaRobots' } })
   const globalRobots = global.data.seo?.metaRobots || ''
   const urls = new Map<string, string>()
-  if (isIndexable(globalRobots)) urls.set(new URL('/privacy-policy', siteUrl).href, '')
   let pageCount = 1
   for (let page = 1; page <= pageCount; page++) {
     const response = await $fetch<{
@@ -32,8 +31,6 @@ export default defineEventHandler(async (event) => {
     })
     pageCount = response.meta?.pagination?.pageCount || 1
     for (const entry of response.data) {
-      // The repository owns this route; obsolete CMS metadata does not override it.
-      if (entry.slug === 'privacy-policy') continue
       if (!entry.slug || entry.slug.includes('/') || !isIndexable(entry.seo?.metaRobots?.trim() || globalRobots)) continue
       const path = entry.slug === 'index' ? '/' : `/${encodeURIComponent(entry.slug)}`
       const url = webUrl(entry.seo?.canonicalURL, siteUrl, true) || webUrl(path, siteUrl, true)!
