@@ -68,3 +68,19 @@ mkdir -p /home/carlos/.local/state/paginita
 
 The cron command must match the actual checkout path. Log redirection must
 point to an existing directory; `/tmp` directories may disappear after reboot.
+
+## Backups (`ops/backup-db.sh`)
+
+The script copies the SQLite database with SQLite's online backup API, checks
+the copy's integrity, gzips it, and archives `backend/public/uploads`. Output
+goes to `~/backups/paginita` (`PAGINITA_BACKUP_DIR`), and files older than 14 days
+(`PAGINITA_BACKUP_KEEP_DAYS`) are deleted. Keep that window well under the contact
+retention period so deleted records don't live on in backups.
+
+```cron
+30 3 * * * /var/www/alvasori.net/ops/backup-db.sh >> /home/carlos/.local/state/paginita/backup.log 2>&1
+```
+
+To restore, stop the backend, replace `backend/.tmp/data.db` with the
+decompressed file (`gunzip -c paginita-…db.gz > data.db`), extract the uploads
+archive into `backend/public`, and start the backend again.
