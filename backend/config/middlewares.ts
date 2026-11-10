@@ -15,7 +15,7 @@ export default [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          'script-src': ['self', 'unsafe-inline', 'editor.unlayer.com', 'strapi.alvasori.net'],
+          'script-src': ['self', 'editor.unlayer.com', 'strapi.alvasori.net'],
           'frame-src': ['self', 'editor.unlayer.com', 'strapi.alvasori.net'],
           upgradeInsecureRequests: null
         }
