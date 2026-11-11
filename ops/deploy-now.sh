@@ -30,8 +30,10 @@ done
 TRIGGER="on demand by $(id -un)@$(hostname -s)"
 
 # The server-side script arrives on stdin; values are passed as arguments, never
-# interpolated into code.
-ssh -o BatchMode=yes "$REMOTE" bash -s -- "$APP_PATH" "$TRIGGER" "${ARGS[@]}" <<'REMOTE'
+# interpolated into code. ssh joins its arguments into one command line for the
+# remote shell, so each one is shell-quoted here.
+printf -v REMOTE_ARGS ' %q' "$APP_PATH" "$TRIGGER" "${ARGS[@]}"
+ssh -o BatchMode=yes "$REMOTE" "bash -s --$REMOTE_ARGS" <<'REMOTE'
 set -euo pipefail
 app_path=$1 trigger=$2; shift 2
 state="${XDG_STATE_HOME:-$HOME/.local/state}/paginita"
