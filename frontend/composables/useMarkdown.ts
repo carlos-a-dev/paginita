@@ -44,7 +44,10 @@ export const useMarkdown = () => {
     const token = tokens[idx]
     if (!token) return ''
     const src = token.attrGet('src')
-    const alt = token.content
+    // markdown-it keeps alt text in the token's children; its default image
+    // renderer copies it into the alt attribute, which this override must do too.
+    const alt = self.renderInlineAsText(token.children ?? [], options, env)
+    token.attrSet('alt', alt)
 
     if (src) {
       const { src: newSrc, srcset, sizes } = useResponsiveImage(String(src), alt)
