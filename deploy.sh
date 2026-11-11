@@ -11,21 +11,34 @@ STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/paginita"
 mkdir -p "$STATE_DIR"
 chmod 700 "$STATE_DIR"
 
-# The kernel releases this lock when the process exits, including after failures.
-exec 9>"$STATE_DIR/deploy.lock"
-if ! flock -n 9; then
-  log "Another deployment is running. Exiting."
-  exit 0
-fi
-trap 'log "Deployment failed at line $LINENO; the next run will retry."' ERR
-
 FORCE_DEPLOY=0
+WAIT_FOR_LOCK=0
 for arg in "$@"; do
   case "$arg" in
     --force) FORCE_DEPLOY=1 ;;
+    --wait) WAIT_FOR_LOCK=1 ;;
     *) log "Unknown argument: $arg"; exit 1 ;;
   esac
 done
+
+# Only one deployment runs at a time. The kernel releases this lock when the
+# process exits, including after failures. Cron runs skip when it is held;
+# --wait (on-demand runs) queue behind the running deployment instead.
+exec 9>"$STATE_DIR/deploy.lock"
+if ! flock -n 9; then
+  if [ "$WAIT_FOR_LOCK" -eq 0 ]; then
+    log "Another deployment is running. Exiting."
+    exit 0
+  fi
+  LOCK_WAIT_SECONDS="${DEPLOY_LOCK_WAIT_SECONDS:-1800}"
+  log "Another deployment is running; waiting up to ${LOCK_WAIT_SECONDS}s for it to finish..."
+  if ! flock -w "$LOCK_WAIT_SECONDS" 9; then
+    log "Timed out waiting for the running deployment. Exiting."
+    exit 1
+  fi
+fi
+trap 'log "Deployment failed at line $LINENO; the next run will retry."' ERR
+[ -n "${DEPLOY_TRIGGER:-}" ] && log "Deployment requested (${DEPLOY_TRIGGER}$([ "$FORCE_DEPLOY" -eq 1 ] && echo ', forced'))."
 
 log "Checking for remote changes..."
 git fetch origin
@@ -73,7 +86,9 @@ NODE_OPTIONS="${DEPLOY_NODE_OPTIONS:---max-old-space-size=3072}" pnpm -r --works
 
 log "Restarting production processes..."
 mkdir -p backend/logs frontend/logs
-pm2 startOrRestart ecosystem.config.cjs --env production --update-env
+# Close the lock descriptor for PM2: if this starts the long-lived PM2 daemon,
+# an inherited descriptor would keep the deploy lock held after this script exits.
+pm2 startOrRestart ecosystem.config.cjs --env production --update-env 9>&-
 
 log "Checking application health..."
 HEALTHY=0
@@ -89,7 +104,7 @@ if [ "$HEALTHY" -ne 1 ]; then
   log "Application health checks failed. Inspect PM2 logs; deployment is not marked successful."
   exit 1
 fi
-pm2 save
+pm2 save 9>&-
 printf '%s\n' "$TARGET_COMMIT" > "$STATE_DIR/deployed-commit.tmp"
 mv "$STATE_DIR/deployed-commit.tmp" "$STATE_DIR/deployed-commit"
 log "Successfully deployed $TARGET_COMMIT."

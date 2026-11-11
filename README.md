@@ -44,6 +44,22 @@ Run from the repository root:
 ./deploy.sh --force
 ```
 
+### On-demand deployment (`ops/deploy-now.sh`)
+
+From a machine with SSH access to production, trigger a deployment without
+waiting for cron and follow it to completion:
+
+```bash
+PAGINITA_DEPLOY_REMOTE=user@host ops/deploy-now.sh          # deploy if there is a new commit
+PAGINITA_DEPLOY_REMOTE=user@host ops/deploy-now.sh --force  # rebuild and restart anyway
+```
+
+It starts `deploy.sh --wait` detached on the server, so closing the terminal or
+losing the connection does not stop the build, and it waits for a running cron
+deployment rather than starting a second one. Output also goes to `deploy.log`;
+the exit status is `deploy.sh`'s. Per-run logs are kept for 14 days in
+`~/.local/state/paginita/runs`.
+
 The script fetches the upstream branch and updates with a fast-forward merge,
 installs the root lockfile, builds each workspace in sequence, and restarts
 PM2 in production mode. It checks the backend on port 1337 and frontend on
@@ -52,7 +68,10 @@ A failed deployment is retried on the next run, even if Git already pulled that
 commit. An unhealthy current release also triggers recovery.
 
 State and an atomic deployment lock live in
-`${XDG_STATE_HOME:-$HOME/.local/state}/paginita`. Set `DEPLOY_NODE_OPTIONS` to
+`${XDG_STATE_HOME:-$HOME/.local/state}/paginita`. Only one deployment runs at a
+time: a run that finds the lock held exits (cron), or with `--wait` queues behind
+the running deployment for up to `DEPLOY_LOCK_WAIT_SECONDS` (default 1800).
+Set `DEPLOY_NODE_OPTIONS` to
 adjust the default 3072 MB build heap limit. PM2 restarts an application if it
 exceeds 512 MB.
 
