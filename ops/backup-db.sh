@@ -6,6 +6,14 @@
 #   PAGINITA_BACKUP_DIR        destination (default ~/backups/paginita)
 #   PAGINITA_BACKUP_KEEP_DAYS  days to keep (default 14; keep it well under the
 #                              contact retention period so deleted records expire)
+#   PAGINITA_COPY_MAX_DAYS     age limit for any other database copy (default 30; the
+#                              privacy policy promises backups expire within 30 days)
+#
+# Each run also deletes database copies older than PAGINITA_COPY_MAX_DAYS in:
+#   - ad-hoc snapshots under ${XDG_STATE_HOME:-~/.local/state}/paginita/backups
+#   - the live database's directory (e.g. data.db.before-* copies)
+#   - the repository root (stray *.db files)
+# The live database and its -journal/-wal/-shm files are never touched.
 set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -16,6 +24,9 @@ LABEL="${1:-nightly}"
 
 [[ "$LABEL" =~ ^[A-Za-z0-9_-]+$ ]] || { echo "Invalid label: $LABEL" >&2; exit 1; }
 [[ "$KEEP_DAYS" =~ ^[0-9]+$ ]] || { echo "Invalid PAGINITA_BACKUP_KEEP_DAYS" >&2; exit 1; }
+COPY_MAX_DAYS="${PAGINITA_COPY_MAX_DAYS:-30}"
+[[ "$COPY_MAX_DAYS" =~ ^[0-9]+$ && "$COPY_MAX_DAYS" -ge 1 ]] || { echo "Invalid PAGINITA_COPY_MAX_DAYS" >&2; exit 1; }
+SNAPSHOT_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/paginita/backups"
 
 log() { echo "[$(date +'%F %T')] $*"; }
 
@@ -64,4 +75,22 @@ fi
 trap - ERR
 
 find "$BACKUP_DIR" -maxdepth 1 -name 'paginita-*' -type f -mtime +"$KEEP_DAYS" -delete
-log "Backup written: $DB_OUT.gz ($(du -h "$DB_OUT.gz" | cut -f1))${UPLOADS_OUT:+, uploads $(du -h "$UPLOADS_OUT" 2>/dev/null | cut -f1)}"
+
+# Expire other database copies. Live DB journals use "-" suffixes (data.db-wal),
+# so they never match these patterns; the live file itself is excluded by path.
+purge_old_db_copies() {
+  local dir="$1" depth="$2"
+  [[ -d "$dir" ]] || return 0
+  find "$dir" -maxdepth "$depth" -type f \
+    \( -name '*.db' -o -name '*.db.*' -o -name '*.sqlite' -o -name '*.sqlite.*' -o -name '*.sql.gz' \) \
+    ! -path "$DB_PATH" -mmin +"$((COPY_MAX_DAYS * 1440))" -print0 |
+  while IFS= read -r -d '' f; do
+    rm -f -- "$f" && log "Expired database copy: $f"
+  done
+}
+purge_old_db_copies "$SNAPSHOT_DIR" 5
+purge_old_db_copies "$(dirname "$DB_PATH")" 1
+purge_old_db_copies "$APP_DIR" 1
+[[ -d "$SNAPSHOT_DIR" ]] && find "$SNAPSHOT_DIR" -mindepth 1 -type d -empty -delete
+
+log "Backup written:$DB_OUT.gz ($(du -h "$DB_OUT.gz" | cut -f1))${UPLOADS_OUT:+, uploads $(du -h "$UPLOADS_OUT" 2>/dev/null | cut -f1)}"

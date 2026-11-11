@@ -52,7 +52,7 @@ finally:
     os.unlink(path)
 PY
 
-find "$LOCAL_DIR" -maxdepth 1 -name 'paginita-*' -type f -mtime +"$KEEP_DAYS" ! -name "$(basename "$newest")" -delete
+find "$LOCAL_DIR" -maxdepth 1 -name 'paginita-*' -type f -mmin +"$((KEEP_DAYS * 1440))" ! -name "$(basename "$newest")" -delete
 age_hours=$(( ($(date +%s) - $(stat -c %Y "$newest")) / 3600 ))
 log "Pulled to $LOCAL_DIR; newest $(basename "$newest") (${age_hours}h old), $(ls "$LOCAL_DIR" | wc -l) files"
 if (( age_hours > 48 )); then
