@@ -84,3 +84,30 @@ retention period so deleted records don't live on in backups.
 To restore, stop the backend, replace `backend/.tmp/data.db` with the
 decompressed file (`gunzip -c paginita-…db.gz > data.db`), extract the uploads
 archive into `backend/public`, and start the backend again.
+
+### Off-server copies (`ops/pull-backups.sh`)
+
+Run on a workstation with SSH access to production. It pulls new backups into
+`~/backups/alvasori-prod/paginita` (never mirroring deletions, so a wiped server
+can't erase local copies), checks the newest database copy, keeps 30 days
+locally, and exits non-zero if the newest backup is over 48 hours old.
+
+To run it daily as a systemd user timer (catches up after the machine was off):
+
+```bash
+mkdir -p ~/.config/systemd/user && cp ops/systemd/alvasori-backup-pull.* ~/.config/systemd/user/ && systemctl --user daemon-reload && systemctl --user enable --now alvasori-backup-pull.timer
+```
+
+The service path assumes the checkout is at `~/projects/paginita`.
+
+Production setup: the home server pulls with its own key, which prod's
+`authorized_keys` restricts to read-only rsync of the backup folder:
+
+```text
+command="/usr/bin/rrsync -ro /home/carlos/backups/paginita",restrict ssh-ed25519 AAAA… alvasori-backup-pull@alvasori
+```
+
+Its `~/alvasori-backups/pull.env` sets `PAGINITA_BACKUP_REMOTE`, `PAGINITA_BACKUP_SSH_KEY`,
+`PAGINITA_BACKUP_REMOTE_DIR=.` and `PAGINITA_BACKUP_LOCAL_DIR`; the service adds
+`EnvironmentFile=%h/alvasori-backups/pull.env`. Enable lingering
+(`sudo loginctl enable-linger carlos`) so the timer runs without a login session.

@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily pull of alvasori.net production backups
+
+[Timer]
+OnCalendar=*-*-* 12:00:00
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target

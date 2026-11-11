@@ -1,0 +1,8 @@
+[Unit]
+Description=Pull alvasori.net production backups
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/projects/paginita/ops/pull-backups.sh
