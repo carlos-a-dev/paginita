@@ -33,6 +33,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Read at build time: PM2 does not load frontend/.env at runtime.
     blockAiTraining: process.env.NUXT_BLOCK_AI_TRAINING === 'true',
+    indexNowKey: process.env.NUXT_INDEXNOW_KEY || '',
     security: {
       styleOrigins: 'https://fonts.googleapis.com',
       fontOrigins: 'https://fonts.gstatic.com',

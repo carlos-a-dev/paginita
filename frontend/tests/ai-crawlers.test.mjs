@@ -50,3 +50,9 @@ test('llms.txt summarizes the business from CMS data', () => {
     '## Pages', '', '- [Home](https://alvasori.net/)', '- [About](https://alvasori.net/about): Who we are', '',
   ].join('\n'))
 })
+
+test('IndexNow keys follow the protocol format', () => {
+  const { indexNowKey } = load('indexNow.ts')
+  assert.equal(indexNowKey(' 0123456789abcdef0123456789abcdef '), '0123456789abcdef0123456789abcdef')
+  for (const bad of [undefined, '', 'short', 'has space inside', 'a/b/c/d/e/f', 'x'.repeat(129)]) assert.equal(indexNowKey(bad), '')
+})

@@ -88,6 +88,17 @@ mkdir -p /home/carlos/.local/state/paginita
 The cron command must match the actual checkout path. Log redirection must
 point to an existing directory; `/tmp` directories may disappear after reboot.
 
+## Search engine notification (`ops/indexnow.sh`)
+
+Set `NUXT_INDEXNOW_KEY` in `frontend/.env` (8-128 letters, digits or dashes, e.g. `openssl rand -hex 16`) and redeploy; the site then serves the key at `/indexnow-key.txt`. After content changes, tell IndexNow engines (Bing, which also feeds ChatGPT search and Copilot, plus Yandex, Seznam and Naver):
+
+```bash
+ops/indexnow.sh https://example.com                       # every URL in sitemap.xml
+ops/indexnow.sh https://example.com https://example.com/about   # specific pages
+```
+
+Google does not use IndexNow; submit the sitemap and request indexing in Google Search Console.
+
 ## Backups (`ops/backup-db.sh`)
 
 The script copies the SQLite database with SQLite's online backup API, checks
