@@ -6,16 +6,15 @@
   --site-border: #e2e7ed;
   --site-glass: rgba(255, 255, 255, 0.94);
   --site-shadow: 0 12px 36px rgba(25, 37, 53, 0.055);
-  // Text links: 5.9:1 on white.
+  // Text links: 5.9:1 on white. Darker than the logo blue (--q-primary, 3.1:1 on
+  // white), which is only used for large text, icons, and buttons with dark text.
   --site-link: #0369a1;
-  // Blue for text in dark mode (6.5:1 on the dark surface). Buttons keep
-  // --q-primary, which must carry white text at 4.5:1 or more.
+  // Blue text in dark mode: the logo blue reads at 5.4:1 on the dark surface.
   --site-primary-text: var(--q-primary);
 }
 
 body.body--dark {
   --site-link: #4cc3f5;
-  --site-primary-text: #00adef;
   --site-background: #10151c;
   --site-surface: #181f29;
   --site-ink: #edf2f7;
@@ -166,8 +165,7 @@ body {
 body.body--dark .page-sections > .q-card.bg-white {
   background: var(--site-surface) !important;
 }
-// The primary blue is dark enough for white button text; use a lighter blue for
-// blue text on dark backgrounds.
+// Hook to adjust primary-coloured text in dark mode (currently the same blue).
 body.body--dark .text-primary {
   color: var(--site-primary-text) !important;
 }
@@ -255,7 +253,8 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   max-width: 100%;
 }
 .hero-cta .q-btn__content {
-  color: var(--hero-body-color);
+  // Dark text: the logo blue (primary) carries 5.9:1 with dark text, 3.1:1 with white.
+  color: #10151c;
   gap: 10px;
 }
 
