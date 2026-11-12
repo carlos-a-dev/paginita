@@ -31,6 +31,8 @@ export default defineNuxtConfig({
     '@/assets/styles/main.scss',
   ],
   runtimeConfig: {
+    // Read at build time: PM2 does not load frontend/.env at runtime.
+    blockAiTraining: process.env.NUXT_BLOCK_AI_TRAINING === 'true',
     security: {
       styleOrigins: 'https://fonts.googleapis.com',
       fontOrigins: 'https://fonts.gstatic.com',

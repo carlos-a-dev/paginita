@@ -49,12 +49,13 @@ test('sitemap fetches every published page, filters nonindexable/external pages,
 
 test('robots blocks local-development origins', async () => {
   const module = transpile('../server/routes/robots.txt.ts', {
-    require: name => name === '~/utils/seo'
-      ? helpers
-      : {
-          defineEventHandler: handler => handler,
-          useRuntimeConfig: () => ({ public: { siteUrl: 'http://localhost:3000' } }),
-        },
+    require: name => ({
+      '~/utils/seo': helpers,
+      '~/utils/aiCrawlers': transpile('../utils/aiCrawlers.ts', {}),
+    })[name] || {
+      defineEventHandler: handler => handler,
+      useRuntimeConfig: () => ({ public: { siteUrl: 'http://localhost:3000' } }),
+    },
   })
   const response = await module.default({ res: { headers: new Headers() } })
   assert.equal(response, 'User-agent: *\nDisallow: /\n')

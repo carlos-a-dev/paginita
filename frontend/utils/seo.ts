@@ -154,3 +154,28 @@ export function buildSeo(options: {
 export function isIndexable(robots?: string): boolean {
   return !/(?:^|[,\s])(noindex|none)(?:$|[,\s])/i.test(robots || '')
 }
+
+export type FaqItem = { question?: string, answer?: string }
+
+export function faqItems(items: FaqItem[] | undefined) {
+  return (items || [])
+    .map(item => ({ question: item.question?.trim() || '', answer: item.answer?.trim() || '' }))
+    .filter(item => item.question && item.answer)
+}
+
+// Questions and answers shown on a page, as schema.org FAQPage.
+export function faqSchema(options: { pageUrl: string, items: FaqItem[] | undefined }) {
+  const items = faqItems(options.items)
+  if (!items.length) return undefined
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${options.pageUrl}#faq`,
+    'url': options.pageUrl,
+    'mainEntity': items.map(item => ({
+      '@type': 'Question',
+      'name': item.question,
+      'acceptedAnswer': { '@type': 'Answer', 'text': item.answer },
+    })),
+  }
+}

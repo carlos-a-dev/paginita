@@ -271,6 +271,7 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
 
 .content-card > .q-card__section,
 .services-card > .q-card__section,
+.faq-card > .q-card__section,
 .about-card > .q-card__section {
   padding: clamp(24px, 4vw, 48px);
 }
@@ -363,11 +364,43 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   font-weight: 500;
   letter-spacing: -0.035em;
 }
+.faq-list {
+  display: grid;
+  gap: 8px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.faq-item {
+  padding: 20px 0;
+  border-top: 1px solid var(--site-border);
+}
+.faq-item:first-child {
+  border-top: 0;
+}
+.faq-question {
+  margin: 0 0 10px;
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.faq-answer {
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--site-muted);
+}
+.faq-answer:last-child {
+  margin-bottom: 0;
+}
 .section-intro {
   max-width: 64ch;
   margin: 20px auto 0;
   color: var(--site-muted);
   line-height: 1.8;
+}
+.faq-card > .faq-list {
+  padding-top: 0;
 }
 .services-card > .services-grid {
   padding-top: 0;

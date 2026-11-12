@@ -34,6 +34,17 @@ export interface DataContent extends Struct.ComponentSchema {
   };
 }
 
+export interface DataFaq extends Struct.ComponentSchema {
+  collectionName: 'components_data_faqs';
+  info: {
+    displayName: 'FAQ';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'shared.faq-item', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface DataHero extends Struct.ComponentSchema {
   collectionName: 'components_data_heroes';
   info: {
@@ -95,6 +106,21 @@ export interface FContent extends Struct.ComponentSchema {
   };
   attributes: {
     data: Schema.Attribute.Component<'data.content', false> & Schema.Attribute.Required;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface FFaq extends Struct.ComponentSchema {
+  collectionName: 'components_f_faqs';
+  info: {
+    description: 'Questions and answers, published with FAQPage structured data';
+    displayName: 'FAQ';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.faq', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -2292,6 +2318,18 @@ export interface SharedEmails extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_faq_items';
+  info: {
+    displayName: 'FAQ item';
+    icon: 'question';
+  };
+  attributes: {
+    answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedNavLink extends Struct.ComponentSchema {
   collectionName: 'components_shared_nav_links';
   info: {
@@ -2446,11 +2484,13 @@ declare module '@strapi/strapi' {
       'data.about': DataAbout;
       'data.contact-form': DataContactForm;
       'data.content': DataContent;
+      'data.faq': DataFaq;
       'data.hero': DataHero;
       'data.service-list': DataServiceList;
       'f.about': FAbout;
       'f.contact-form': FContactForm;
       'f.content': FContent;
+      'f.faq': FFaq;
       'f.hero': FHero;
       'f.service-list': FServiceList;
       'props.q-card': PropsQCard;
@@ -2458,6 +2498,7 @@ declare module '@strapi/strapi' {
       'shared.b-lacklist-rule': SharedBLacklistRule;
       'shared.class': SharedClass;
       'shared.emails': SharedEmails;
+      'shared.faq-item': SharedFaqItem;
       'shared.nav-link': SharedNavLink;
       'shared.open-graph': SharedOpenGraph;
       'shared.organization': SharedOrganization;
