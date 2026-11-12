@@ -13,12 +13,24 @@
         <span class="site-footer-brand">{{ globalSettings?.siteName }}</span>
       </NuxtLink>
       <social-networks />
-      <NuxtLink
-        v-if="privacyPolicyPath"
-        :to="privacyPolicyPath"
+      <nav
+        v-if="privacyPolicyPath || accessibilityPath"
+        class="site-footer-links"
+        aria-label="Legal"
       >
-        Privacy Policy
-      </NuxtLink>
+        <NuxtLink
+          v-if="privacyPolicyPath"
+          :to="privacyPolicyPath"
+        >
+          Privacy Policy
+        </NuxtLink>
+        <NuxtLink
+          v-if="accessibilityPath"
+          :to="accessibilityPath"
+        >
+          Accessibility
+        </NuxtLink>
+      </nav>
       <p class="site-copyright">
         &copy; {{ new Date().getFullYear() }} {{ globalSettings?.siteName }}. All rights reserved.
       </p>
@@ -29,4 +41,5 @@
 <script setup lang="ts">
 const { globalSettings } = useGlobalSettings()
 const privacyPolicyPath = usePrivacyPolicy()
+const accessibilityPath = useAccessibilityStatement()
 </script>

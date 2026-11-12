@@ -8,6 +8,7 @@
     />
     <q-form
       ref="contactForm"
+      greedy
       @submit.prevent="submitForm"
       @reset="onReset"
     >
@@ -17,6 +18,7 @@
           outlined
           label="Name"
           name="name"
+          aria-required="true"
           autocomplete="name"
           maxlength="100"
           :rules="[val => !!val || 'Name is required']"
@@ -41,6 +43,7 @@
           outlined
           label="Email"
           name="email"
+          aria-required="true"
           autocomplete="email"
           maxlength="254"
           type="email"
@@ -59,6 +62,7 @@
           outlined
           label="Message"
           name="message"
+          aria-required="true"
           type="textarea"
           placeholder="Tell us a little about your business and how we can help."
           :input-style="{ minHeight: '140px' }"
@@ -76,6 +80,7 @@
         </q-input>
       </q-card-section>
       <p class="q-px-md text-caption">
+        All fields are required.
         Please do not include passwords, payment details, government identification numbers, or medical information.
         We use your details to respond to your inquiry.
         <template v-if="privacyPolicyPath">

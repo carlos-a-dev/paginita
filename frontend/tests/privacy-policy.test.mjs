@@ -21,6 +21,12 @@ test('privacy links cannot navigate to external, executable, or nested destinati
   }
 })
 
+test('the accessibility statement path follows the same CMS slug rules', () => {
+  assert.equal(exports.accessibilityStatementPath('/accessibility'), '/accessibility')
+  assert.equal(exports.accessibilityStatementPath(''), '')
+  assert.throws(() => exports.accessibilityStatementPath('https://other.test/a11y'), /NUXT_PUBLIC_ACCESSIBILITY_STATEMENT_PATH/)
+})
+
 test('CMS page routing remains authoritative for privacy content and SEO', () => {
   assert.equal(existsSync(new URL('../pages/privacy-policy.vue', import.meta.url)), false)
   const sitemap = readFileSync(new URL('../server/routes/sitemap.xml.ts', import.meta.url), 'utf8')

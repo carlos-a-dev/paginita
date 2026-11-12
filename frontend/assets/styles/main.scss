@@ -467,6 +467,16 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   font-weight: 500;
   letter-spacing: -0.03em;
 }
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+.site-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+}
 .site-copyright {
   flex-basis: 100%;
   margin: 0;
