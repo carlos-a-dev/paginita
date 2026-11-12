@@ -389,7 +389,8 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   padding: 28px;
 }
 .service-icon {
-  display: inline-flex;
+  display: flex;
+  margin: 0 auto;
   align-items: center;
   justify-content: center;
   width: 60px;
