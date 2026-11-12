@@ -36,6 +36,7 @@ export default defineNuxtConfig({
       fontOrigins: 'https://fonts.gstatic.com',
       imageOrigins: '',
       connectOrigins: '',
+      hstsIncludeSubdomains: false,
     },
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
