@@ -399,6 +399,10 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   color: var(--site-muted);
   line-height: 1.8;
 }
+// Menu links to /#faq land below the sticky header.
+#faq {
+  scroll-margin-top: 104px;
+}
 .faq-card > .faq-list {
   padding-top: 0;
 }

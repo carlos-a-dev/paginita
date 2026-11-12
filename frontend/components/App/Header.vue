@@ -23,7 +23,10 @@
         <!-- eslint-enable vue/no-v-html -->
       </NuxtLink>
 
-      <app-nav-links class="desktop-navigation gt-sm" />
+      <app-nav-links
+        class="desktop-navigation gt-sm"
+        :primary="4"
+      />
 
       <div class="site-header-actions">
         <social-networks class="gt-sm" />

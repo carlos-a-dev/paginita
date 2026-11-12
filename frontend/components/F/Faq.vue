@@ -1,5 +1,8 @@
 <template>
-  <q-card class="faq-card">
+  <q-card
+    id="faq"
+    class="faq-card"
+  >
     <q-card-section>
       <h2 class="section-heading">
         {{ data?.title }}
