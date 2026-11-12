@@ -252,9 +252,15 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   font-weight: 600;
   max-width: 100%;
 }
+// White on the logo blue (primary) is 3.1:1, which passes WCAG AA only as large
+// text (bold, at least 18.66px). Keep primary button labels bold and 19px.
+.hero-cta .q-btn__content,
+.contact-submit .q-btn__content {
+  font-size: 19px;
+  font-weight: 700;
+}
 .hero-cta .q-btn__content {
-  // Dark text: the logo blue (primary) carries 5.9:1 with dark text, 3.1:1 with white.
-  color: #10151c;
+  color: #fff;
   gap: 10px;
 }
 
