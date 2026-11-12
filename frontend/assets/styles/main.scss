@@ -262,6 +262,11 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
 .hero-cta .q-btn__content {
   color: #fff;
   gap: 10px;
+  // On narrow screens wrap the label, not the arrow onto its own line.
+  flex-wrap: nowrap;
+}
+.hero-cta .q-btn__content > .block {
+  min-width: 0;
 }
 
 .content-card > .q-card__section,
