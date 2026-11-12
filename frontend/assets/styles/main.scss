@@ -220,6 +220,21 @@ body {
   margin: clamp(32px, 5vw, 56px) auto;
 }
 
+// Markdown content on section pages: a full-width reading band, not a card.
+.home-layout .page-sections > .content-card {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.home-layout .page-sections > .content-card > .q-card__section {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 88px) 24px;
+}
+
 .page-sections > .q-card {
   background: var(--site-surface);
   color: var(--site-ink);
@@ -635,6 +650,22 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   height: clamp(300px, 42vw, 540px);
   object-fit: cover;
   border-radius: 28px;
+}
+.hero-split-media-wide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px solid var(--site-border);
+  border-radius: 28px;
+  // Logos are drawn for a light background, so keep the card white in dark mode.
+  background: #fff;
+}
+.hero-split-media-wide .hero-split-image {
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: 0;
 }
 .hero-eyebrow {
   display: inline-flex;

@@ -57,14 +57,15 @@
       <div
         v-if="variant === 'split' && data.background"
         class="hero-split-media"
+        :class="{ 'hero-split-media-wide': wideImage }"
       >
         <img
           v-bind="splitImage"
           class="hero-split-image"
           fetchpriority="high"
           loading="eager"
-          width="1200"
-          height="800"
+          :width="data.background.width || 1200"
+          :height="data.background.height || 800"
         >
       </div>
     </div>
@@ -149,6 +150,12 @@ const imgProps = computed(() => {
   return useStrapiImage(props.data.background, {
     sizes: 'xs:125vw sm:100vw md:100vw lg:100vw xl:100vw',
   })
+})
+
+// Wide images (logos, banners) are shown whole on a card instead of cropped.
+const wideImage = computed(() => {
+  const { width, height } = props.data.background || {}
+  return !!(width && height && width / height > 1.8)
 })
 
 // Half the page width on desktop, full width on phones.
