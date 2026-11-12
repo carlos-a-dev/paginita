@@ -36,7 +36,8 @@ export default defineNuxtConfig({
       fontOrigins: 'https://fonts.gstatic.com',
       imageOrigins: '',
       connectOrigins: '',
-      hstsIncludeSubdomains: false,
+      // Read at build time: PM2 does not load frontend/.env at runtime.
+      hstsIncludeSubdomains: process.env.NUXT_SECURITY_HSTS_INCLUDE_SUBDOMAINS === 'true',
     },
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
