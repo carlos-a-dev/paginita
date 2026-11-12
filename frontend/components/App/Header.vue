@@ -29,8 +29,14 @@
       />
 
       <div class="site-header-actions">
-        <social-networks class="gt-sm" />
         <app-dark-btn />
+        <NuxtLink
+          v-if="navigation?.cta"
+          :to="navigation.cta.url"
+          class="site-btn site-btn-dark header-cta gt-sm"
+        >
+          {{ navigation.cta.label }}
+        </NuxtLink>
       </div>
     </q-toolbar>
   </q-header>
@@ -40,4 +46,5 @@
 import { sanitizeCmsHtml } from '~/utils/sanitizeCmsHtml'
 
 const { globalSettings } = useGlobalSettings()
+const { data: navigation } = useNavigation()
 </script>

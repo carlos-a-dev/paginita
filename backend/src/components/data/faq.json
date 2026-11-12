@@ -13,6 +13,12 @@
       "type": "component",
       "component": "shared.faq-item",
       "repeatable": true
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "richtext"
     }
   },
   "config": {}

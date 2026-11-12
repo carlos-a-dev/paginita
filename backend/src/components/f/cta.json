@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_f_ctas",
+  "info": {
+    "displayName": "Call to action",
+    "description": "A centered heading with one button"
+  },
+  "options": {},
+  "attributes": {
+    "visible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "data": {
+      "type": "component",
+      "component": "data.cta",
+      "repeatable": false,
+      "required": true
+    },
+    "props": {
+      "type": "component",
+      "component": "props.q-card",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

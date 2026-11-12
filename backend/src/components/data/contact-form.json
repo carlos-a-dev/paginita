@@ -7,6 +7,26 @@
   "attributes": {
     "header": {
       "type": "richtext"
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "formTitle": {
+      "type": "string"
+    },
+    "details": {
+      "type": "component",
+      "component": "shared.highlight",
+      "repeatable": true
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "muted",
+        "dark"
+      ],
+      "default": "default"
     }
   },
   "config": {}

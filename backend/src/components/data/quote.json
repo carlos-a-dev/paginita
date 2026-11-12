@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_data_quotes",
+  "info": {
+    "displayName": "Quote"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "muted",
+        "dark"
+      ],
+      "default": "dark"
+    }
+  },
+  "config": {}
+}

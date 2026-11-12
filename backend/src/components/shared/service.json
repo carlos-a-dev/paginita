@@ -21,6 +21,9 @@
       "type": "boolean",
       "required": true,
       "default": true
+    },
+    "group": {
+      "type": "string"
     }
   },
   "config": {}

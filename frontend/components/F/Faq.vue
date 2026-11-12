@@ -1,32 +1,46 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
-  <q-card
+  <app-section
     id="faq"
-    class="faq-card"
+    class="faq-section"
   >
-    <q-card-section>
-      <h2 class="section-heading">
-        {{ data?.title }}
-      </h2>
-    </q-card-section>
-    <q-card-section class="faq-list">
-      <div
-        v-for="(item, index) in items"
-        :key="index"
-        class="faq-item"
-      >
-        <h3 class="faq-question">
-          {{ item.question }}
-        </h3>
+    <div class="split split-top">
+      <div class="split-main faq-intro">
         <p
-          v-for="(paragraph, pIndex) in item.answer.split(/\n\s*\n/)"
-          :key="pIndex"
-          class="faq-answer"
+          v-if="data?.eyebrow"
+          class="eyebrow"
         >
-          {{ paragraph }}
+          {{ data.eyebrow }}
         </p>
+        <h2 class="section-title">
+          {{ data?.title }}
+        </h2>
+        <div
+          v-if="intro"
+          class="section-body cms-prose"
+          v-html="intro"
+        />
       </div>
-    </q-card-section>
-  </q-card>
+      <div class="faq-list">
+        <div
+          v-for="(item, index) in items"
+          :key="index"
+          class="faq-item"
+        >
+          <h3 class="faq-question">
+            {{ item.question }}
+          </h3>
+          <p
+            v-for="(paragraph, pIndex) in item.answer.split(/\n\s*\n/)"
+            :key="pIndex"
+            class="faq-answer"
+          >
+            {{ paragraph }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </app-section>
 </template>
 
 <script setup lang="ts">
@@ -36,12 +50,16 @@ import type { FaqItem } from '~/utils/seo'
 const props = defineProps<{
   data?: {
     title?: string
+    eyebrow?: string | null
+    intro?: string | null
     items?: FaqItem[]
   }
 }>()
 
 // Answers stay visible (no accordion) so readers, screen readers and crawlers get the full text.
 const items = computed(() => faqItems(props.data?.items))
+const render = useCmsHtml()
+const intro = computed(() => render(props.data?.intro))
 
 const config = useRuntimeConfig()
 const route = useRoute()

@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_data_ctas",
+  "info": {
+    "displayName": "Call to action"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "text"
+    },
+    "buttonLabel": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "muted",
+        "dark"
+      ],
+      "default": "default"
+    }
+  },
+  "config": {}
+}

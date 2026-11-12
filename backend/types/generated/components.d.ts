@@ -11,13 +11,36 @@ export interface DataAbout extends Struct.ComponentSchema {
   };
 }
 
+export interface DataCards extends Struct.ComponentSchema {
+  collectionName: 'components_data_cards';
+  info: {
+    displayName: 'Cards';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'shared.card', true>;
+    centered: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    eyebrow: Schema.Attribute.String;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    intro: Schema.Attribute.Text;
+    style: Schema.Attribute.Enumeration<['plain', 'numbered', 'tinted']> &
+      Schema.Attribute.DefaultTo<'plain'>;
+    tone: Schema.Attribute.Enumeration<['default', 'muted', 'dark']> &
+      Schema.Attribute.DefaultTo<'default'>;
+  };
+}
+
 export interface DataContactForm extends Struct.ComponentSchema {
   collectionName: 'components_data_contact_forms';
   info: {
     displayName: 'ContactForm';
   };
   attributes: {
+    details: Schema.Attribute.Component<'shared.highlight', true>;
+    eyebrow: Schema.Attribute.String;
+    formTitle: Schema.Attribute.String;
     header: Schema.Attribute.RichText;
+    tone: Schema.Attribute.Enumeration<['default', 'muted', 'dark']> &
+      Schema.Attribute.DefaultTo<'default'>;
   };
 }
 
@@ -34,12 +57,29 @@ export interface DataContent extends Struct.ComponentSchema {
   };
 }
 
+export interface DataCta extends Struct.ComponentSchema {
+  collectionName: 'components_data_ctas';
+  info: {
+    displayName: 'Call to action';
+  };
+  attributes: {
+    buttonLabel: Schema.Attribute.String;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    link: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
+    tone: Schema.Attribute.Enumeration<['default', 'muted', 'dark']> &
+      Schema.Attribute.DefaultTo<'default'>;
+  };
+}
+
 export interface DataFaq extends Struct.ComponentSchema {
   collectionName: 'components_data_faqs';
   info: {
     displayName: 'FAQ';
   };
   attributes: {
+    eyebrow: Schema.Attribute.String;
+    intro: Schema.Attribute.RichText;
     items: Schema.Attribute.Component<'shared.faq-item', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -53,11 +93,30 @@ export interface DataHero extends Struct.ComponentSchema {
   attributes: {
     background: Schema.Attribute.Media<'images'>;
     callToAction: Schema.Attribute.String;
+    eyebrow: Schema.Attribute.String;
     highlight: Schema.Attribute.Enumeration<['dark', 'light', 'none']> &
       Schema.Attribute.DefaultTo<'none'>;
+    highlights: Schema.Attribute.Component<'shared.highlight', true>;
     link: Schema.Attribute.String;
-    message: Schema.Attribute.String;
+    message: Schema.Attribute.Text;
+    secondaryCallToAction: Schema.Attribute.String;
+    secondaryLink: Schema.Attribute.String;
     title: Schema.Attribute.String;
+    variant: Schema.Attribute.Enumeration<['overlay', 'split', 'intro']> &
+      Schema.Attribute.DefaultTo<'overlay'>;
+  };
+}
+
+export interface DataQuote extends Struct.ComponentSchema {
+  collectionName: 'components_data_quotes';
+  info: {
+    displayName: 'Quote';
+  };
+  attributes: {
+    eyebrow: Schema.Attribute.String;
+    quote: Schema.Attribute.Text & Schema.Attribute.Required;
+    tone: Schema.Attribute.Enumeration<['default', 'muted', 'dark']> &
+      Schema.Attribute.DefaultTo<'dark'>;
   };
 }
 
@@ -67,7 +126,25 @@ export interface DataServiceList extends Struct.ComponentSchema {
     displayName: 'ServiceList';
   };
   attributes: {
+    eyebrow: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface DataSplit extends Struct.ComponentSchema {
+  collectionName: 'components_data_splits';
+  info: {
+    displayName: 'Split';
+  };
+  attributes: {
+    asideItems: Schema.Attribute.Text;
+    asideTitle: Schema.Attribute.String;
+    body: Schema.Attribute.RichText;
+    eyebrow: Schema.Attribute.String;
+    facts: Schema.Attribute.Component<'shared.highlight', true>;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    tone: Schema.Attribute.Enumeration<['default', 'muted', 'dark']> &
+      Schema.Attribute.DefaultTo<'default'>;
   };
 }
 
@@ -78,6 +155,21 @@ export interface FAbout extends Struct.ComponentSchema {
   };
   attributes: {
     data: Schema.Attribute.Component<'data.about', false>;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface FCards extends Struct.ComponentSchema {
+  collectionName: 'components_f_cardss';
+  info: {
+    description: 'A heading with a row of cards: numbered steps, tinted values or plain';
+    displayName: 'Cards';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.cards', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -106,6 +198,21 @@ export interface FContent extends Struct.ComponentSchema {
   };
   attributes: {
     data: Schema.Attribute.Component<'data.content', false> & Schema.Attribute.Required;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface FCta extends Struct.ComponentSchema {
+  collectionName: 'components_f_ctas';
+  info: {
+    description: 'A centered heading with one button';
+    displayName: 'Call to action';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.cta', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -142,6 +249,21 @@ export interface FHero extends Struct.ComponentSchema {
   };
 }
 
+export interface FQuote extends Struct.ComponentSchema {
+  collectionName: 'components_f_quotes';
+  info: {
+    description: 'A highlighted statement, such as a mission';
+    displayName: 'Quote';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.quote', false> & Schema.Attribute.Required;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
 export interface FServiceList extends Struct.ComponentSchema {
   collectionName: 'components_f_service_lists';
   info: {
@@ -149,6 +271,21 @@ export interface FServiceList extends Struct.ComponentSchema {
   };
   attributes: {
     data: Schema.Attribute.Component<'data.service-list', false>;
+    props: Schema.Attribute.Component<'props.q-card', false>;
+    visible: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface FSplit extends Struct.ComponentSchema {
+  collectionName: 'components_f_splits';
+  info: {
+    description: 'Text beside a checklist (one item per line) or fact cards';
+    displayName: 'Split';
+  };
+  attributes: {
+    data: Schema.Attribute.Component<'data.split', false> & Schema.Attribute.Required;
     props: Schema.Attribute.Component<'props.q-card', false>;
     visible: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
@@ -2300,6 +2437,18 @@ export interface SharedBLacklistRule extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCard extends Struct.ComponentSchema {
+  collectionName: 'components_shared_cards';
+  info: {
+    displayName: 'Card';
+    icon: 'layout';
+  };
+  attributes: {
+    text: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedClass extends Struct.ComponentSchema {
   collectionName: 'components_shared_classes';
   info: {
@@ -2327,6 +2476,21 @@ export interface SharedFaqItem extends Struct.ComponentSchema {
   attributes: {
     answer: Schema.Attribute.Text & Schema.Attribute.Required;
     question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedHighlight extends Struct.ComponentSchema {
+  collectionName: 'components_shared_highlights';
+  info: {
+    description: 'A short fact with an optional icon (Material icon name), detail and link';
+    displayName: 'Highlight';
+    icon: 'star';
+  };
+  attributes: {
+    icon: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -2424,6 +2588,7 @@ export interface SharedService extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
+    group: Schema.Attribute.String;
     icon: Schema.Attribute.String & Schema.Attribute.CustomField<'plugin::material-symbols.icon'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     visible: Schema.Attribute.Boolean &
@@ -2482,23 +2647,33 @@ declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
       'data.about': DataAbout;
+      'data.cards': DataCards;
       'data.contact-form': DataContactForm;
       'data.content': DataContent;
+      'data.cta': DataCta;
       'data.faq': DataFaq;
       'data.hero': DataHero;
+      'data.quote': DataQuote;
       'data.service-list': DataServiceList;
+      'data.split': DataSplit;
       'f.about': FAbout;
+      'f.cards': FCards;
       'f.contact-form': FContactForm;
       'f.content': FContent;
+      'f.cta': FCta;
       'f.faq': FFaq;
       'f.hero': FHero;
+      'f.quote': FQuote;
       'f.service-list': FServiceList;
+      'f.split': FSplit;
       'props.q-card': PropsQCard;
       'props.q-page': PropsQPage;
       'shared.b-lacklist-rule': SharedBLacklistRule;
+      'shared.card': SharedCard;
       'shared.class': SharedClass;
       'shared.emails': SharedEmails;
       'shared.faq-item': SharedFaqItem;
+      'shared.highlight': SharedHighlight;
       'shared.nav-link': SharedNavLink;
       'shared.open-graph': SharedOpenGraph;
       'shared.organization': SharedOrganization;

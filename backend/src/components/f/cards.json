@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_f_cardss",
+  "info": {
+    "displayName": "Cards",
+    "description": "A heading with a row of cards: numbered steps, tinted values or plain"
+  },
+  "options": {},
+  "attributes": {
+    "visible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "data": {
+      "type": "component",
+      "component": "data.cards",
+      "repeatable": false,
+      "required": true
+    },
+    "props": {
+      "type": "component",
+      "component": "props.q-card",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

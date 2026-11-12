@@ -1,5 +1,79 @@
 <template>
-  <section class="site-hero">
+  <!-- Text beside an image (home), or a tinted page intro without one. -->
+  <section
+    v-if="variant !== 'overlay'"
+    class="site-section"
+    :class="variant === 'intro' ? 'tone-muted hero-intro' : 'tone-default hero-split'"
+  >
+    <div class="section-inner hero-split-inner">
+      <div class="hero-split-text">
+        <p
+          v-if="data.eyebrow"
+          :class="variant === 'split' ? 'hero-eyebrow' : 'eyebrow'"
+        >
+          {{ data.eyebrow }}
+        </p>
+        <h1
+          v-if="data.title"
+          class="hero-split-title"
+        >
+          {{ data.title }}
+        </h1>
+        <p
+          v-if="data.message"
+          class="hero-split-message"
+        >
+          {{ data.message }}
+        </p>
+        <div
+          v-if="hasPrimary || hasSecondary"
+          class="hero-actions"
+        >
+          <NuxtLink
+            v-if="hasPrimary"
+            :to="data.link"
+            class="site-btn site-btn-primary"
+          >
+            {{ data.callToAction }}
+            <q-icon
+              name="arrow_forward"
+              aria-hidden="true"
+            />
+          </NuxtLink>
+          <NuxtLink
+            v-if="hasSecondary"
+            :to="data.secondaryLink!"
+            class="site-btn site-btn-secondary"
+          >
+            {{ data.secondaryCallToAction }}
+          </NuxtLink>
+        </div>
+        <app-highlights
+          v-if="data.highlights?.length"
+          :items="data.highlights"
+          class="hero-highlights"
+        />
+      </div>
+      <div
+        v-if="variant === 'split' && data.background"
+        class="hero-split-media"
+      >
+        <img
+          v-bind="splitImage"
+          class="hero-split-image"
+          fetchpriority="high"
+          loading="eager"
+          width="1200"
+          height="800"
+        >
+      </div>
+    </div>
+  </section>
+
+  <section
+    v-else
+    class="site-hero"
+  >
     <q-img
       v-if="props.data.background"
       v-bind="imgProps"
@@ -43,18 +117,13 @@
 </template>
 
 <script setup lang="ts">
-import type { MediaImage } from '~/types/strapi/strapi'
+import type { HeroData } from '~/types/strapi/blocks'
 
-const props = defineProps<{
-  data: {
-    title?: string
-    message?: string
-    callToAction?: string
-    link?: string
-    background?: MediaImage
-    highlight?: 'dark' | 'light' | 'none'
-  }
-}>()
+const props = defineProps<{ data: HeroData }>()
+
+const variant = computed(() => props.data.variant || 'overlay')
+const hasPrimary = computed(() => !!(props.data.callToAction && props.data.link))
+const hasSecondary = computed(() => !!(props.data.secondaryCallToAction && props.data.secondaryLink))
 
 const highlightClass = computed(() => {
   switch (props.data.highlight) {
@@ -80,5 +149,12 @@ const imgProps = computed(() => {
   return useStrapiImage(props.data.background, {
     sizes: 'xs:125vw sm:100vw md:100vw lg:100vw xl:100vw',
   })
+})
+
+// Half the page width on desktop, full width on phones.
+const splitImage = computed(() => {
+  if (!props.data.background) return {}
+  const image = useStrapiImage(props.data.background, { sizes: 'xs:100vw sm:100vw md:50vw lg:600px xl:600px' })
+  return { ...image, alt: props.data.background.alternativeText || '' }
 })
 </script>

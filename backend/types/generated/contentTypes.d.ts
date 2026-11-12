@@ -519,6 +519,7 @@ export interface ApiNavigationLinkNavigationLink extends Struct.SingleTypeSchema
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    cta: Schema.Attribute.Component<'shared.nav-link', false>;
     links: Schema.Attribute.Component<'shared.nav-link', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -550,7 +551,18 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   };
   attributes: {
     body: Schema.Attribute.DynamicZone<
-      ['f.service-list', 'f.hero', 'f.content', 'f.contact-form', 'f.about', 'f.faq']
+      [
+        'f.service-list',
+        'f.hero',
+        'f.content',
+        'f.contact-form',
+        'f.about',
+        'f.faq',
+        'f.split',
+        'f.cards',
+        'f.quote',
+        'f.cta'
+      ]
     > &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{

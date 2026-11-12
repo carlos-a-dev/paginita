@@ -9,7 +9,7 @@
       "type": "string"
     },
     "message": {
-      "type": "string"
+      "type": "text"
     },
     "callToAction": {
       "type": "string"
@@ -32,6 +32,29 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "overlay",
+        "split",
+        "intro"
+      ],
+      "default": "overlay"
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "secondaryCallToAction": {
+      "type": "string"
+    },
+    "secondaryLink": {
+      "type": "string"
+    },
+    "highlights": {
+      "type": "component",
+      "component": "shared.highlight",
+      "repeatable": true
     }
   },
   "config": {}

@@ -51,7 +51,11 @@
         "f.content",
         "f.contact-form",
         "f.about",
-        "f.faq"
+        "f.faq",
+        "f.split",
+        "f.cards",
+        "f.quote",
+        "f.cta"
       ],
       "required": true
     },

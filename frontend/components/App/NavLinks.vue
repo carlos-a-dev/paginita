@@ -18,6 +18,7 @@
       v-if="links && links?.length > primary"
       auto-close
       flat
+      no-caps
       aria-label="More pages"
       label="More"
     >
@@ -42,22 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import type { NavigationLink } from '~/types/strapi/navigationLink'
-
 // Links shown before the More menu; the narrow mobile bar fits three.
 withDefaults(defineProps<{ primary?: number }>(), { primary: 3 })
 
-const { data: links } = useAsyncData('nav-links', async () => {
-  return (await useStrapi().findOne<NavigationLink>('navigation-link', '', {
-    populate: {
-      links: {
-        filters: {
-          visible: {
-            $eq: true,
-          },
-        },
-      },
-    },
-  })).data.links
-})
+const { data: navigation } = useNavigation()
+const links = computed(() => navigation.value?.links)
 </script>

@@ -1,5 +1,23 @@
 <template>
-  <div class="row items-center">
+  <ul
+    v-if="variant === 'list'"
+    class="footer-list"
+  >
+    <li
+      v-for="socialNetwork in socialNetworks"
+      :key="socialNetwork.id"
+    >
+      <a
+        :href="socialNetwork.url"
+        target="_blank"
+        rel="noopener noreferrer"
+      >{{ socialNetwork.name }}</a>
+    </li>
+  </ul>
+  <div
+    v-else
+    class="row items-center"
+  >
     <q-btn
       v-for="socialNetwork in socialNetworks"
       :key="socialNetwork.id"
@@ -18,6 +36,9 @@
 
 <script setup lang="ts">
 import type { SocialNetworks, SocialNetwork } from '~/types/strapi/socialNetwork'
+
+// icons: icon buttons; list: plain text links (footer).
+withDefaults(defineProps<{ variant?: 'icons' | 'list' }>(), { variant: 'icons' })
 
 const { data: socialNetworks } = await useAsyncData<SocialNetwork[]>('socialNetworks', async () => {
   return (await useStrapi().findOne<SocialNetworks>('social-network', '', {

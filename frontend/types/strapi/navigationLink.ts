@@ -9,4 +9,6 @@ export type NavigationLinkItem = {
 
 export type NavigationLink = SingleType & {
   links: NavigationLinkItem[]
+  // Optional in the CMS: may be null.
+  cta: NavigationLinkItem
 }

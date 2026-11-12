@@ -24,6 +24,11 @@
       },
       "component": "shared.nav-link",
       "repeatable": true
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.nav-link",
+      "repeatable": false
     }
   }
 }

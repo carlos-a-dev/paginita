@@ -1,37 +1,57 @@
 <template>
-  <q-card
+  <app-section
     v-once
-    class="services-card"
+    id="services"
+    tone="muted"
+    class="services-section"
   >
-    <q-card-section class="section-heading">
-      {{ data.title }}
-    </q-card-section>
-    <q-card-section class="services-grid">
-      <q-card
-        v-for="service in services"
-        :key="service.id"
-        flat
-        class="service-card"
+    <div class="section-header">
+      <p
+        v-if="data.eyebrow"
+        class="eyebrow"
       >
-        <q-card-section>
-          <div class="service-icon">
+        {{ data.eyebrow }}
+      </p>
+      <h2 class="section-title">
+        {{ data.title }}
+      </h2>
+    </div>
+    <div
+      v-for="group in groups"
+      :key="group.name"
+      class="service-group"
+    >
+      <h3
+        v-if="group.name"
+        class="service-group-title"
+      >
+        {{ group.name }}
+      </h3>
+      <div class="services-grid">
+        <article
+          v-for="service in group.services"
+          :key="service.id"
+          class="service-card"
+        >
+          <div
+            class="service-icon"
+            aria-hidden="true"
+          >
             <q-icon
               :name="service.icon === 'rule_settings' ? 'settings' : service.icon"
-              size="32px"
-              color="primary"
-              aria-hidden="true"
+              size="28px"
             />
           </div>
-          <h3 class="service-title">
+          <h4 class="service-title">
             {{ service.title?.replace(/^[^\p{L}\p{N}]+/u, '') }}
-          </h3>
+          </h4>
           <p class="service-description">
             {{ service.description }}
           </p>
-        </q-card-section>
-      </q-card>
-    </q-card-section>
-  </q-card>
+        </article>
+      </div>
+    </div>
+  </app-section>
 </template>
 
 <script setup lang="ts">
@@ -41,6 +61,7 @@ import { serializeSchema, servicesSchema, webUrl } from '~/utils/seo'
 defineProps<{
   data: {
     title: string
+    eyebrow?: string | null
   }
 }>()
 
@@ -51,7 +72,7 @@ const { data: services } = await useAsyncData<Partial<Service>[]>(
       serviceList.value = (await useStrapi().findOne<ServiceList>('service-list', '', {
         populate: {
           services: {
-            fields: ['id', 'title', 'description', 'icon'],
+            fields: ['id', 'title', 'description', 'icon', 'group'],
             filters: { visible: { $eq: true } },
           },
         },
@@ -61,6 +82,16 @@ const { data: services } = await useAsyncData<Partial<Service>[]>(
     return serviceList.value
   },
 )
+
+// Services in CMS order, grouped by their group name (in order of first appearance).
+const groups = computed(() => {
+  const byName = new Map<string, Partial<Service>[]>()
+  for (const service of services.value || []) {
+    const name = service.group?.trim() || ''
+    byName.set(name, [...(byName.get(name) || []), service])
+  }
+  return [...byName].map(([name, list]) => ({ name, services: list }))
+})
 
 const config = useRuntimeConfig()
 const route = useRoute()

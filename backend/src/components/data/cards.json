@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_data_cards",
+  "info": {
+    "displayName": "Cards"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "intro": {
+      "type": "text"
+    },
+    "cards": {
+      "type": "component",
+      "component": "shared.card",
+      "repeatable": true
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": [
+        "plain",
+        "numbered",
+        "tinted"
+      ],
+      "default": "plain"
+    },
+    "centered": {
+      "type": "boolean",
+      "default": false
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "muted",
+        "dark"
+      ],
+      "default": "default"
+    }
+  },
+  "config": {}
+}

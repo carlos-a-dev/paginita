@@ -46,6 +46,7 @@ export default defineNuxtConfig({
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
       privacyPolicyPath: '/privacy-policy',
       accessibilityStatementPath: '/accessibility',
+      termsOfServicePath: '/terms-of-service',
     },
   },
   srcDir: '.',

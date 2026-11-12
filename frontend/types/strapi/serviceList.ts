@@ -5,6 +5,7 @@ export type Service = {
   title: string
   description: string
   icon: string
+  group?: string | null
   visible: boolean
 }
 

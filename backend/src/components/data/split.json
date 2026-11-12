@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_data_splits",
+  "info": {
+    "displayName": "Split"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "richtext"
+    },
+    "asideTitle": {
+      "type": "string"
+    },
+    "asideItems": {
+      "type": "text"
+    },
+    "facts": {
+      "type": "component",
+      "component": "shared.highlight",
+      "repeatable": true
+    },
+    "tone": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "muted",
+        "dark"
+      ],
+      "default": "default"
+    }
+  },
+  "config": {}
+}
