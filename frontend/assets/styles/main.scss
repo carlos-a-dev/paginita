@@ -172,7 +172,8 @@ body.body--dark .text-primary {
   color: var(--site-primary-text) !important;
 }
 // Unstyled links otherwise get the browser's default blue, unreadable in dark mode.
-a:where(:not([class])) {
+// NuxtLink renders class="" when it has no classes, so match that too.
+a:where(:not([class]), [class='']) {
   color: var(--site-link);
 }
 // Inline code: plain text colour instead of syntax-highlight colours.

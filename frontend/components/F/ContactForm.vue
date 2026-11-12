@@ -87,7 +87,7 @@
           icon="send"
           label="Send Message"
           color="primary"
-          text-color="dark"
+          text-color="white"
           type="submit"
           class="full-width contact-submit"
           unelevated
