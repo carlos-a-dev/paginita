@@ -622,11 +622,11 @@ a:where(:not([class]), [class=''], [class^='router-link']) {
   gap: clamp(32px, 5vw, 64px);
 }
 .hero-split-text {
-  flex: 1.3 1 460px;
+  flex: 1 1 560px;
   min-width: 0;
 }
 .hero-split-media {
-  flex: 1 1 420px;
+  flex: 1 1 360px;
   min-width: 0;
 }
 .hero-split-image {
