@@ -55,7 +55,7 @@
         <app-highlights
           v-if="data.facts?.length"
           :items="data.facts"
-          variant="facts"
+          :variant="data.facts.some(fact => fact.icon) ? 'cards' : 'facts'"
         />
       </div>
     </div>
