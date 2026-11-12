@@ -6,9 +6,16 @@
   --site-border: #e2e7ed;
   --site-glass: rgba(255, 255, 255, 0.94);
   --site-shadow: 0 12px 36px rgba(25, 37, 53, 0.055);
+  // Text links: 5.9:1 on white.
+  --site-link: #0369a1;
+  // Blue for text in dark mode (6.5:1 on the dark surface). Buttons keep
+  // --q-primary, which must carry white text at 4.5:1 or more.
+  --site-primary-text: var(--q-primary);
 }
 
 body.body--dark {
+  --site-link: #4cc3f5;
+  --site-primary-text: #00adef;
   --site-background: #10151c;
   --site-surface: #181f29;
   --site-ink: #edf2f7;
@@ -152,6 +159,27 @@ body {
   border: 1px solid var(--site-border);
   border-radius: 24px;
   box-shadow: var(--site-shadow);
+}
+
+// --- Contrast (WCAG AA) ---
+// CMS card props may add bg-white (!important in Quasar); keep cards dark in dark mode.
+body.body--dark .page-sections > .q-card.bg-white {
+  background: var(--site-surface) !important;
+}
+// The primary blue is dark enough for white button text; use a lighter blue for
+// blue text on dark backgrounds.
+body.body--dark .text-primary {
+  color: var(--site-primary-text) !important;
+}
+// Unstyled links otherwise get the browser's default blue, unreadable in dark mode.
+a:where(:not([class])) {
+  color: var(--site-link);
+}
+// Inline code: plain text colour instead of syntax-highlight colours.
+// !important: the highlight.js theme uses more specific body.body--* selectors.
+:not(pre) > code,
+:not(pre) > code [class^='hljs-'] {
+  color: inherit !important;
 }
 
 .site-hero {
