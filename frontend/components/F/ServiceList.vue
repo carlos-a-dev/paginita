@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import type { Service, ServiceList } from '~/types/strapi/serviceList'
+import { serializeSchema, servicesSchema, webUrl } from '~/utils/seo'
 
 defineProps<{
   data: {
@@ -60,4 +61,22 @@ const { data: services } = await useAsyncData<Partial<Service>[]>(
     return serviceList.value
   },
 )
+
+const config = useRuntimeConfig()
+const route = useRoute()
+const { globalSettings } = useGlobalSettings()
+const servicesJsonLd = computed(() => {
+  const siteUrl = webUrl(config.public.siteUrl, config.public.siteUrl, true)
+  if (!siteUrl) return undefined
+  const schema = servicesSchema({
+    siteUrl,
+    pageUrl: webUrl(route.path, siteUrl, true) || siteUrl,
+    services: services.value || [],
+    areaServed: globalSettings.value?.organization?.areaServed,
+  })
+  return schema && serializeSchema(schema)
+})
+useHead(() => ({
+  script: servicesJsonLd.value ? [{ key: 'seo-services', type: 'application/ld+json', textContent: servicesJsonLd.value }] : [],
+}))
 </script>

@@ -1,4 +1,4 @@
-import type { QuasarTheme } from './strapi/global'
+import type { Organization, QuasarTheme } from './strapi/global'
 import type { SEO } from './strapi/seo'
 
 export type GlobalSettings = {
@@ -9,4 +9,5 @@ export type GlobalSettings = {
   favicon: string
   quasarTheme: QuasarTheme
   seo?: SEO
+  organization?: Organization | null
 }

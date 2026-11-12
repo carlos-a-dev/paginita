@@ -1,5 +1,6 @@
 import type { MaybeRefOrGetter } from 'vue'
 import type { SEO } from '~/types/strapi/seo'
+import type { SocialNetwork } from '~/types/strapi/socialNetwork'
 import { buildSeo } from '~/utils/seo'
 
 export default function useSeo(pageSeo?: MaybeRefOrGetter<Partial<SEO> | null | undefined>) {
@@ -7,6 +8,8 @@ export default function useSeo(pageSeo?: MaybeRefOrGetter<Partial<SEO> | null | 
   const config = useRuntimeConfig()
   const { globalSettings } = useGlobalSettings()
   const mediaUrl = useStrapiMedia('/')
+  // Loaded by the SocialNetworks component in the header and footer.
+  const { data: socialNetworks } = useNuxtData<SocialNetwork[]>('socialNetworks')
   const metadata = computed(() => buildSeo({
     page: toValue(pageSeo),
     global: globalSettings.value?.seo,
@@ -16,6 +19,8 @@ export default function useSeo(pageSeo?: MaybeRefOrGetter<Partial<SEO> | null | 
     siteUrl: config.public.siteUrl,
     mediaUrl,
     path: route.path,
+    organization: globalSettings.value?.organization,
+    socialUrls: socialNetworks.value?.map(network => network.url),
   }))
 
   useSeoMeta({

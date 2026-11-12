@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_shared_organizations",
+  "info": {
+    "displayName": "organization",
+    "icon": "briefcase",
+    "description": "Business details published to search engines and AI assistants as schema.org structured data"
+  },
+  "options": {},
+  "attributes": {
+    "legalName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "addressLocality": {
+      "type": "string"
+    },
+    "addressRegion": {
+      "type": "string"
+    },
+    "addressCountry": {
+      "type": "string",
+      "maxLength": 2,
+      "regex": "^[A-Z]{2}$"
+    },
+    "areaServed": {
+      "type": "text"
+    }
+  }
+}

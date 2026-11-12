@@ -2330,6 +2330,27 @@ export interface SharedOpenGraph extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedOrganization extends Struct.ComponentSchema {
+  collectionName: 'components_shared_organizations';
+  info: {
+    description: 'Business details published to search engines and AI assistants as schema.org structured data';
+    displayName: 'organization';
+    icon: 'briefcase';
+  };
+  attributes: {
+    addressCountry: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 2;
+      }>;
+    addressLocality: Schema.Attribute.String;
+    addressRegion: Schema.Attribute.String;
+    areaServed: Schema.Attribute.Text;
+    email: Schema.Attribute.Email;
+    legalName: Schema.Attribute.String;
+    telephone: Schema.Attribute.String;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -2439,6 +2460,7 @@ declare module '@strapi/strapi' {
       'shared.emails': SharedEmails;
       'shared.nav-link': SharedNavLink;
       'shared.open-graph': SharedOpenGraph;
+      'shared.organization': SharedOrganization;
       'shared.seo': SharedSeo;
       'shared.service': SharedService;
       'shared.social-network': SharedSocialNetwork;

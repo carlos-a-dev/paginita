@@ -13,6 +13,16 @@ export type QuasarTheme = {
   warning: string
 }
 
+export type Organization = {
+  legalName?: string | null
+  email?: string | null
+  telephone?: string | null
+  addressLocality?: string | null
+  addressRegion?: string | null
+  addressCountry?: string | null
+  areaServed?: string | null
+}
+
 export type Global = SingleType & {
   siteName: string
   siteNameStyled: string
@@ -21,4 +31,5 @@ export type Global = SingleType & {
   siteLogo: MediaImage
   quasarTheme: QuasarTheme
   seo?: SEO
+  organization?: Organization | null
 }

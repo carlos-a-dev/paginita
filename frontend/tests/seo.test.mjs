@@ -8,7 +8,7 @@ const exports = {}
 runInNewContext(ts.transpileModule(readFileSync(new URL('../utils/seo.ts', import.meta.url), 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.CommonJS },
 }).outputText, { exports, URL })
-const { buildSeo, serializeSchema, isIndexable } = exports
+const { buildSeo, serializeSchema, isIndexable, servicesSchema, parseAreaServed } = exports
 const base = {
   siteUrl: 'https://alvasori.net/', mediaUrl: 'https://strapi.alvasori.net/', siteName: 'AlvaSori',
   siteDescription: 'Business systems and digital solutions', siteLogo: '/strapi/uploads/logo.png', path: '/contact?utm_source=test#form',
@@ -61,4 +61,37 @@ test('noindex and none directives exclude a page while ordinary directives do no
   assert.equal(isIndexable('noindex, follow'), false)
   assert.equal(isIndexable('NONE'), false)
   assert.equal(isIndexable('max-snippet:0'), true)
+})
+
+const organization = {
+  legalName: 'AlvaSori LLC', email: 'info@alvasori.net', telephone: ' ',
+  addressLocality: 'St. Johns', addressRegion: 'FL', addressCountry: 'US', areaServed: 'Florida\nUnited States, Florida',
+}
+
+test('organization data comes from the CMS and omits empty fields', () => {
+  const socialUrls = ['https://www.instagram.com/alvasorillc', 'https://wa.me/15555550100?text=hi', 'javascript:alert(1)', 'https://x.com/AlvaSoriLLC', 'https://www.instagram.com/alvasorillc']
+  const org = JSON.parse(buildSeo({ ...base, organization, socialUrls }).structuredData)['@graph'][0]
+  assert.equal(org.legalName, 'AlvaSori LLC')
+  assert.equal(org.description, 'Business systems and digital solutions')
+  assert.deepEqual(org.address, { '@type': 'PostalAddress', 'addressLocality': 'St. Johns', 'addressRegion': 'FL', 'addressCountry': 'US' })
+  assert.deepEqual(org.areaServed, ['Florida', 'United States'])
+  assert.deepEqual(org.sameAs, ['https://www.instagram.com/alvasorillc', 'https://x.com/AlvaSoriLLC'])
+  assert.equal(org.telephone, undefined)
+  assert.deepEqual(org.contactPoint, { '@type': 'ContactPoint', 'contactType': 'customer support', 'email': 'info@alvasori.net', 'url': 'https://alvasori.net/contact' })
+
+  const bare = JSON.parse(buildSeo(base).structuredData)['@graph'][0]
+  assert.deepEqual(Object.keys(bare).sort(), ['@id', '@type', 'description', 'logo', 'name', 'url'])
+})
+
+test('services become Service offers provided by the organization', () => {
+  const catalog = JSON.parse(JSON.stringify(servicesSchema({
+    siteUrl: 'https://alvasori.net/', pageUrl: 'https://alvasori.net/', areaServed: organization.areaServed,
+    services: [{ title: '🎨 Web Design', description: 'Websites' }, { title: '  ', description: 'no name' }, { title: 'SEO' }],
+  })))
+  assert.equal(catalog['@type'], 'OfferCatalog')
+  assert.deepEqual(catalog.itemListElement.map(offer => offer.itemOffered.name), ['Web Design', 'SEO'])
+  assert.deepEqual(catalog.itemListElement[0].itemOffered.provider, { '@id': 'https://alvasori.net/#organization' })
+  assert.deepEqual(catalog.itemListElement[0].itemOffered.areaServed, ['Florida', 'United States'])
+  assert.equal(servicesSchema({ siteUrl: 'https://alvasori.net/', pageUrl: 'https://alvasori.net/', services: [] }), undefined)
+  assert.equal(parseAreaServed(undefined).length, 0)
 })

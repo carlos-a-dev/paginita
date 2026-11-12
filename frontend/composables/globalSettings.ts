@@ -12,6 +12,7 @@ const globalToGlobalSettings = (global: Global): GlobalSettings => {
     favicon: global.favicon?.url ?? '',
     quasarTheme: global.quasarTheme,
     seo: global.seo,
+    organization: global.organization,
   }
 }
 
@@ -24,6 +25,7 @@ export const useGlobalSettings = () => {
         favicon: { fields: ['url'] },
         siteLogo: { fields: ['url'] },
         quasarTheme: '*',
+        organization: '*',
         seo: {
           populate: {
             openGraph: {

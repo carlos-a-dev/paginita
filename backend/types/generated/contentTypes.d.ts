@@ -488,6 +488,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::global.global'> &
       Schema.Attribute.Private;
+    organization: Schema.Attribute.Component<'shared.organization', false>;
     publishedAt: Schema.Attribute.DateTime;
     quasarTheme: Schema.Attribute.Component<'shared.theme', false>;
     seo: Schema.Attribute.Component<'shared.seo', false>;
