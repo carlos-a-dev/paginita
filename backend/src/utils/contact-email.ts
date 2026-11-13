@@ -25,39 +25,55 @@ export function deliveryError(error: unknown): { status?: number; reason: string
   };
 }
 
+/**
+ * Sends the notification email for a contact message and marks it as sent.
+ * Throws with the provider's reason when it can't be delivered.
+ * With requireEnabled (the contact form), it does nothing while "Send contact
+ * messages" is off in Contact settings; a manual send from the admin ignores that switch.
+ */
+export async function sendContactEmail(
+  strapi: Core.Strapi,
+  result: Data.ContentType<'api::contact-message.contact-message'>,
+  { requireEnabled = true }: { requireEnabled?: boolean } = {}
+): Promise<boolean> {
+  const settings = (await strapi.db.query('api::contact-setting.contact-setting').findOne({
+    populate: ['to', 'cc', 'bcc']
+  })) as Data.ContentType<'api::contact-setting.contact-setting'> | null;
+  if (requireEnabled && !settings?.sendContactMessages) return false;
+  if (!settings?.to?.length) throw new Error('Contact email has no configured recipients');
+  if (!settings.emailTemplateId) throw new Error('Contact email has no configured template');
+  const template = await strapi.db
+    .query('plugin::email-designer-v5.email-designer-template')
+    .findOne({ where: { templateReferenceId: settings.emailTemplateId }, select: ['id'] });
+  if (!template) throw new Error('The configured contact email template does not exist');
+
+  await strapi
+    .plugin('email-designer-v5')
+    .service('email')
+    .sendTemplatedEmail(
+      {
+        to: settings.to.map((recipient) => recipient.email),
+        cc: settings.cc?.map((recipient) => recipient.email) ?? [],
+        bcc: settings.bcc?.map((recipient) => recipient.email) ?? [],
+        replyTo: result.email
+      },
+      { templateReferenceId: settings.emailTemplateId },
+      { name: result.name, email: result.email, phone: result.phone, message: result.message }
+    );
+  await strapi.db.query('api::contact-message.contact-message').update({
+    where: { id: result.id },
+    data: { sent: true }
+  });
+  return true;
+}
+
+/** Contact form: send if enabled; never fail the visitor's submission over email. */
 export async function deliverContactEmail(
   strapi: Core.Strapi,
   result: Data.ContentType<'api::contact-message.contact-message'>
 ): Promise<void> {
   try {
-    const settings = (await strapi.db.query('api::contact-setting.contact-setting').findOne({
-      populate: ['to', 'cc', 'bcc']
-    })) as Data.ContentType<'api::contact-setting.contact-setting'> | null;
-    if (!settings?.sendContactMessages) return;
-    if (!settings.to?.length) throw new Error('Contact email has no configured recipients');
-    if (!settings.emailTemplateId) throw new Error('Contact email has no configured template');
-    const template = await strapi.db
-      .query('plugin::email-designer-v5.email-designer-template')
-      .findOne({ where: { templateReferenceId: settings.emailTemplateId }, select: ['id'] });
-    if (!template) throw new Error('The configured contact email template does not exist');
-
-    await strapi
-      .plugin('email-designer-v5')
-      .service('email')
-      .sendTemplatedEmail(
-        {
-          to: settings.to.map((recipient) => recipient.email),
-          cc: settings.cc?.map((recipient) => recipient.email) ?? [],
-          bcc: settings.bcc?.map((recipient) => recipient.email) ?? [],
-          replyTo: result.email
-        },
-        { templateReferenceId: settings.emailTemplateId },
-        { name: result.name, email: result.email, phone: result.phone, message: result.message }
-      );
-    await strapi.db.query('api::contact-message.contact-message').update({
-      where: { id: result.id },
-      data: { sent: true }
-    });
+    await sendContactEmail(strapi, result);
   } catch (error) {
     // Preserve the saved enquiry. Log the actionable provider reason without its payload/PII.
     strapi.log.error('Contact email delivery failed', {
