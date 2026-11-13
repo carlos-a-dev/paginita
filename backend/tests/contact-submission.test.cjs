@@ -22,7 +22,7 @@ function load(file, dependencies = {}, runtime = {}) {
   });
   return exports;
 }
-const helpers = load('utils/contact-submission.ts');
+const helpers = load('utils/contact-submission.ts', {}, { Buffer });
 const valid = {
   name: ' Alice ',
   email: 'Alice@Example.com',
@@ -260,4 +260,39 @@ test('different site installations can choose independent endpoint ceilings', ()
       )
     );
   }
+});
+
+test('spam checks block the patterns seen in real spam', () => {
+  const spam = [
+    { name: 'MbiXMuXHJcVfosjDkfYVHGPI', email: 'someone@example.com', message: 'tKkRENbizAfXplvjRwrkdtf' },
+    { name: 'Real Name', email: 'di.re.go.ku.ka0.6.4@gmail.com', message: 'Hello, I would like to know more about your services.' },
+    { name: 'CmRCbPTIRPlOauvzBax', email: 'x@example.com', message: 'This message has words but the name is noise.' },
+    { name: 'Seller', email: 'seller@example.com', message: 'Cheap links http://a.example and https://b.example today' },
+  ];
+  for (const data of spam) assert.notEqual(helpers.spamReason(data), null, JSON.stringify(data));
+  assert.equal(helpers.spamReason(spam[0]), 'message has fewer than 3 words');
+  assert.equal(helpers.spamReason(spam[1]), 'dot-padded Gmail address');
+});
+
+test('spam checks let ordinary messages through', () => {
+  const ok = [
+    { name: 'Carlos Alvarez', email: 'carlos.alexander.dev@gmail.com', message: 'this is a test. asd asd fdg dfg dfg' },
+    { name: 'Mary McDonald', email: 'mary@example.com', message: 'Please call me back about a website for my bakery.' },
+    { name: 'José Pérez', email: 'jose@example.com', message: 'Necesito ayuda con mi tienda en línea, gracias.' },
+    { name: 'Ann', email: 'ann@example.com', message: 'Our site is https://ann.example, can you improve the SEO?' },
+  ];
+  for (const data of ok) assert.equal(helpers.spamReason(data), null, JSON.stringify(data));
+});
+
+test('form tokens require a valid signature and a human-plausible age', () => {
+  const secret = 'test-secret';
+  const loaded = 1_800_000_000_000;
+  const token = helpers.createFormToken(secret, loaded);
+  assert.equal(helpers.checkFormToken(token, secret, loaded + 10_000), 'ok');
+  assert.equal(helpers.checkFormToken(token, secret, loaded + 1_000), 'too-fast');
+  assert.equal(helpers.checkFormToken(token, secret, loaded + helpers.FORM_TOKEN_MAX_AGE_MS + 1), 'expired');
+  assert.equal(helpers.checkFormToken(token, 'other-secret', loaded + 10_000), 'invalid');
+  assert.equal(helpers.checkFormToken(`${loaded + 5}.${token.split('.')[1]}`, secret, loaded + 10_000), 'invalid');
+  assert.equal(helpers.checkFormToken(undefined, secret, loaded), 'missing');
+  assert.equal(helpers.checkFormToken('garbage', secret, loaded), 'invalid');
 });

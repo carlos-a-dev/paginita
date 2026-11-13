@@ -149,6 +149,20 @@ const formData = ref({
   message: '',
 })
 const lastName = ref('')
+
+// Anti-spam token from the site, fetched when the form loads and refreshed if
+// the page has been open a long time. The CMS rejects posts without one.
+const formToken = ref<{ value: string, fetchedAt: number } | null>(null)
+async function loadFormToken() {
+  try {
+    const { token } = await $fetch<{ token: string }>('/api/contact-token')
+    formToken.value = { value: token, fetchedAt: Date.now() }
+  }
+  catch {
+    formToken.value = null
+  }
+}
+onMounted(loadFormToken)
 const submitting = ref(false)
 
 async function submitForm() {
@@ -161,7 +175,8 @@ async function submitForm() {
 
     if (lastName.value) return
 
-    await useStrapi().create('contact-messages', { ...formData.value, lastName: lastName.value })
+    if (!formToken.value || Date.now() - formToken.value.fetchedAt > 60 * 60 * 1000) await loadFormToken()
+    await useStrapi().create('contact-messages', { ...formData.value, lastName: lastName.value, formToken: formToken.value?.value })
 
     $q.notify({
       type: 'positive',

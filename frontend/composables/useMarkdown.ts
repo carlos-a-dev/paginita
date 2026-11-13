@@ -9,8 +9,9 @@ export const useMarkdown = () => {
 
   md.use(markdownItAttrs, { allowedAttributes: ['class', 'id'] })
 
-  // Highlightjs
-  md.use(markdownItHighlightjs, {
+  // Highlightjs. Its published types lag markdown-it 14.3's stricter plugin
+  // signature (the runtime contract is unchanged), so cast to the plugin type.
+  md.use(markdownItHighlightjs as unknown as Parameters<typeof md.use>[0], {
     inline: true,
   })
 

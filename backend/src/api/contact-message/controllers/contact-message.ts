@@ -4,7 +4,9 @@
 
 import { factories } from '@strapi/strapi';
 import {
+  checkFormToken,
   createSubmissionLimiter,
+  spamReason,
   getClientIP,
   validateContact,
   SUBMISSION_TIMEFRAME_MS,
@@ -41,6 +43,28 @@ export default factories.createCoreController(
         data = validateContact(input);
       } catch (error) {
         return ctx.badRequest(error.message);
+      }
+
+      // Spam: answer as if accepted, but don't save or notify, so bots learn nothing.
+      const accepted = () => {
+        ctx.status = 201;
+        ctx.body = { data: { accepted: true } };
+      };
+      const secret = process.env.CONTACT_FORM_SECRET?.trim();
+      if (secret) {
+        const token = checkFormToken(input.formToken, secret);
+        if (token === 'too-fast') {
+          strapi.log.warn('Contact message dropped as spam: sent too soon after the form loaded.');
+          return accepted();
+        }
+        if (token !== 'ok') {
+          return ctx.badRequest('This form has expired. Please reload the page and try again.');
+        }
+      }
+      const reason = spamReason(data as { name: string; email: string; message: string });
+      if (reason) {
+        strapi.log.warn(`Contact message dropped as spam: ${reason}.`);
+        return accepted();
       }
 
       // Keep successful submissions limited across process restarts, too.
