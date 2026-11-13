@@ -14,7 +14,8 @@ export function deliveryError(error: unknown): { status?: number; reason: string
   const raw = messages.length
     ? messages.join('; ')
     : String(details.message || 'Unknown delivery error');
-  const code = Number(details.code || response.statusCode);
+  // SendGrid: code / response.statusCode; SMTP (nodemailer): responseCode, e.g. 535.
+  const code = Number(details.responseCode || details.code || response.statusCode);
   return {
     status: code >= 400 && code <= 599 ? code : undefined,
     reason: raw

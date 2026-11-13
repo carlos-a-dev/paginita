@@ -19,6 +19,9 @@ importers:
       '@strapi/plugin-users-permissions':
         specifier: 5.62.0
         version: 5.62.0(962c0ad8b63448ee6580a56b38b0951e)
+      '@strapi/provider-email-nodemailer':
+        specifier: 5.62.0
+        version: 5.62.0
       '@strapi/provider-email-sendgrid':
         specifier: 5.62.0
         version: 5.62.0(ts-toolbelt@9.6.0)
@@ -4186,6 +4189,10 @@ packages:
       react-dom: ^18.0.0
       react-router-dom: ^6.30.3
       styled-components: ^6.0.0
+
+  '@strapi/provider-email-nodemailer@5.62.0':
+    resolution: {integrity: sha512-s8Rxhs+IJrZlIByjgpJ44Amk7f/xKvM+YFL169GwzWwGlOQcQCSVhl3nE1Z0DirMVU0SSgcsjPCehQm37tVBpw==}
+    engines: {node: '>=22.0.0 <=26.x.x', npm: '>=6.0.0'}
 
   '@strapi/provider-email-sendgrid@5.62.0':
     resolution: {integrity: sha512-W5eNZmenXGpuE0ZuUTKkgWzJ8hS5YnM6SGB7YFEUBcAj2SmuBNG+z7pI1CIrncwzP0MsNjfBxkuleeho1j09Ug==}
@@ -16733,6 +16740,10 @@ snapshots:
       - supports-color
       - ts-toolbelt
       - typescript
+
+  '@strapi/provider-email-nodemailer@5.62.0':
+    dependencies:
+      nodemailer: 10.1.4
 
   '@strapi/provider-email-sendgrid@5.62.0(ts-toolbelt@9.6.0)':
     dependencies:
